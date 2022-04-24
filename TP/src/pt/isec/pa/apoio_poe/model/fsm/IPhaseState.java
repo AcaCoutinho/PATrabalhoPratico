@@ -9,9 +9,9 @@ public interface IPhaseState {
 
 
 
-    void previousPhase();
-    void closePhase();
-    void nextPhase();
+    boolean previousPhase();
+    boolean closePhase();
+    boolean nextPhase();
 
     PhaseState getPhaseState();
 }
