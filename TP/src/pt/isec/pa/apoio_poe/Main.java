@@ -1,5 +1,6 @@
 package pt.isec.pa.apoio_poe;
 
+import pt.isec.pa.apoio_poe.model.data.Aluno;
 import pt.isec.pa.apoio_poe.model.fsm.PhaseContext;
 import pt.isec.pa.apoio_poe.ui.text.UI;
 
