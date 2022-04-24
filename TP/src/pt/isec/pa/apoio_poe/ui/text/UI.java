@@ -26,27 +26,37 @@ public class UI {
     }
 
     public void phase1UI() {
-        int option = PAInput.chooseOption("Configuracao:","1 - Student", "2 - Docente", "3 - Proposta");
+        int option = PAInput.chooseOption("Fase 1 - Configuracao:","1 - Student", "2 - Docente", "3 - Proposta");
         switch (option) {
-            case 1 -> phase1Aluno();
-            case 2 -> phase;
-            case
+
         }
     }
 
     public void phase2UI() {
+        int option = PAInput.chooseOption("Fase 1 - Configuracao:","1 - Student", "2 - Docente", "3 - Proposta");
+        switch (option) {
 
+        }
     }
 
     public void phase3UI() {
+        int option = PAInput.chooseOption("Fase 1 - Configuracao:","1 - Student", "2 - Docente", "3 - Proposta");
+        switch (option) {
 
+        }
     }
 
     public void phase4UI() {
+        int option = PAInput.chooseOption("Fase 1 - Configuracao:","1 - Student", "2 - Docente", "3 - Proposta");
+        switch (option) {
 
+        }
     }
 
     public void phase5UI() {
+        int option = PAInput.chooseOption("Fase 1 - Configuracao:","1 - Student", "2 - Docente", "3 - Proposta");
+        switch (option) {
 
+        }
     }
 }
