@@ -8,6 +8,16 @@ public class Phase2State extends PhaseStateAdapter{
     }
 
     @Override
+    public boolean nextPhase(){
+        return(changePhaseState(PhaseState.PHASE_3));
+    }
+
+    @Override
+    public boolean previousPhase() {
+        return(changePhaseState(PhaseState.PHASE_1));
+    }
+
+    @Override
     public PhaseState getPhaseState() {
         return PhaseState.PHASE_2;
     }

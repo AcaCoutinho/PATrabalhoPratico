@@ -5,10 +5,16 @@ import pt.isec.pa.apoio_poe.model.data.Phase;
 abstract class PhaseStateAdapter implements IPhaseState{
     protected Phase phase;
     protected PhaseContext context;
+    protected boolean status;
 
     PhaseStateAdapter(Phase phase, PhaseContext context) {
         this.phase = phase;
         this.context = context;
+    }
+
+    final protected boolean changePhaseState(PhaseState state){
+        context.changeState(state.createState(context, phase));
+        return true;
     }
 
     @Override

@@ -14,5 +14,42 @@ public class Phase {
         propostas = new ArrayList<>();
     }
 
+    public boolean adicionaAluno(Aluno aluno){
+        if(alunos.contains(aluno)){
+            return false;
+        }else{
+            alunos.add(aluno);
+            return true;
+        }
+    }
 
+    public boolean removeAluno(long n_aluno){
+        for(var i : alunos){
+            if(i.getN_aluno() == n_aluno){
+                alunos.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean removeDocente(String email){
+        for(var i : docentes){
+            if(i.getEmail() == email){
+                docentes.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean removeProposta(String ca){
+        for(var i : propostas){
+            if(i.getCa() == ca){
+                propostas.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
 }
