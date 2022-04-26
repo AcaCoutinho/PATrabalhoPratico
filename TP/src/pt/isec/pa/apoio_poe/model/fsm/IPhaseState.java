@@ -2,10 +2,10 @@ package pt.isec.pa.apoio_poe.model.fsm;
 
 public interface IPhaseState {
 
-    void insert();
-    void consult();
-    void edit();
-    void remove();
+    void insert(int i);
+    void consult(int i);
+    void edit(int i);
+    void remove(int i);
 
 
 

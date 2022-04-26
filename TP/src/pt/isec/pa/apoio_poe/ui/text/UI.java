@@ -38,10 +38,10 @@ public class UI {
         int option = PAInput.chooseOption("Configuracao Proposta:", "1 - Inserir proposta", "2 - Consultar proposta",
                 "3 - Editar proposta", "4 - Eliminar proposta");
         switch (option){
-            case 1 ->;
-            case 2 ->;
-            case 3 ->;
-            case 4 ->;
+            case 1 ->fsm.insert(2);
+            case 2 ->fsm.consult(2);
+            case 3 ->fsm.edit(2);
+            case 4 ->fsm.remove(2);
         }
     }
 
@@ -49,10 +49,10 @@ public class UI {
         int option = PAInput.chooseOption("Configuracao Docente:", "1 - Inserir docente", "2 - Consultar docente",
                 "3 - Editar docente", "4 - Eliminar docente");
         switch (option){
-            case 1 ->;
-            case 2 ->;
-            case 3 ->;
-            case 4 ->;
+            case 1 ->fsm.insert(1);
+            case 2 ->fsm.consult(1);
+            case 3 ->fsm.edit(1);
+            case 4 ->fsm.remove(1);
         }
     }
 
@@ -60,10 +60,10 @@ public class UI {
         int option = PAInput.chooseOption("Configuracao Estudante:", "1 - Inserir estudante", "2 - Consultar estudante",
                 "3 - Editar estudante", "4 - Eliminar estudante");
         switch (option){
-            case 1 ->;
-            case 2 ->;
-            case 3 ->;
-            case 4 ->;
+            case 1 ->fsm.insert(0);
+            case 2 ->fsm.consult(0);
+            case 3 ->fsm.edit(0);
+            case 4 ->fsm.remove(0);
         }
     }
 

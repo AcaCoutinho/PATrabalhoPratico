@@ -4,16 +4,12 @@ public abstract class Proposta {
     private String ca;
     private String titulo;
 
-    Proposta(String ca, String titulo){
-        this.ca = ca;
+    Proposta(String titulo){
         this.titulo = titulo;
     }
 
     String getCa(){
         return ca;
-    }
-    void setCa(String ca){
-        this.ca = ca;
     }
 
     String getTitulo(){

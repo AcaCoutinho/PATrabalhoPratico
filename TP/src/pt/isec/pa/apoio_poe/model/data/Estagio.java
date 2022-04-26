@@ -5,10 +5,18 @@ public class Estagio extends Proposta{
     private String entityId;
     private long n_alunoAt;
 
-    public Estagio(String ca, String titulo, String ad, String entityId){
-        super(ca, titulo);
+    public Estagio(String titulo, String ad, String entityId){
+        super(titulo);
         this.ad = ad;
         this.entityId = entityId;
+        n_alunoAt = 0;
+    }
+
+    public Estagio(String titulo, String ad, String entityId, long n_alunoAt){
+        super(titulo);
+        this.ad = ad;
+        this.entityId = entityId;
+        this.n_alunoAt = n_alunoAt;
     }
 
     public String getAd(){
@@ -28,14 +36,21 @@ public class Estagio extends Proposta{
     public String getCa(){
         return super.getCa();
     }
-    public void setCa(String ca){
-        super.setCa(ca);
-    }
 
     public String getTitulo(){
         return super.getTitulo();
     }
     public void setTitulo(String titulo){
         super.setTitulo(titulo);
+    }
+
+    public long getN_alunoAt(){
+        if(n_alunoAt == 0){
+            return 0;
+        }
+        return n_alunoAt;
+    }
+    public void setN_alunoAt(long n_alunoAt){
+        this.n_alunoAt = n_alunoAt;
     }
 }

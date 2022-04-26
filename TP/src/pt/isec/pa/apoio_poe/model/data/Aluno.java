@@ -1,6 +1,7 @@
 package pt.isec.pa.apoio_poe.model.data;
 
 public class Aluno {
+    private static long count = 2022000000;
     private long n_aluno;
     private String nome;
     private String email;
@@ -15,6 +16,9 @@ public class Aluno {
         this.siglaR = siglaR;
         this.grade = grade;
         access = false;
+        n_aluno = count;
+        createEmail();
+        count++;
     }
 
     public long getN_aluno(){
@@ -75,6 +79,14 @@ public class Aluno {
         }else{
             return false;
         }
+    }
+
+    public void createEmail(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("a");
+        sb.append(n_aluno);
+        sb.append("@isec.pt");
+        email = sb.toString();
     }
 
     @Override

@@ -18,22 +18,22 @@ abstract class PhaseStateAdapter implements IPhaseState{
     }
 
     @Override
-    public void insert(){
+    public void insert(int i){
 
     }
 
     @Override
-    public void consult(){
+    public void consult(int i){
 
     }
 
     @Override
-    public void edit(){
+    public void edit(int i){
 
     }
 
     @Override
-    public void remove(){
+    public void remove(int i){
 
     }
 

@@ -1,10 +1,11 @@
 package pt.isec.pa.apoio_poe.model.data;
 
-abstract class Docente {
+public class Docente {
     private String email;
     private String nome;
+    private boolean tipo; //0 -> proponente ; 1 -> orientador
 
-    Docente(String email, String nome){
+    public Docente(String email, String nome){
         this.email = email;
         this.nome = nome;
     }

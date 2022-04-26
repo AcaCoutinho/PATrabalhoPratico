@@ -23,6 +23,15 @@ public class Phase {
         }
     }
 
+    public Aluno procuraAluno(long n_aluno){
+        for(var i : alunos){
+            if(i.getN_aluno() == n_aluno){
+                return i;
+            }
+        }
+        return null;
+    }
+
     public boolean removeAluno(long n_aluno){
         for(var i : alunos){
             if(i.getN_aluno() == n_aluno){
@@ -33,6 +42,24 @@ public class Phase {
         return false;
     }
 
+    public boolean adicionaDocente(Docente docente){
+        if(docentes.contains(docente)){
+            return false;
+        }else{
+            docentes.add(docente);
+            return true;
+        }
+    }
+
+    public Docente procuraDocente(String email){
+        for(var i : docentes){
+            if(i.getEmail() == email){
+                return i;
+            }
+        }
+        return null;
+    }
+
     public boolean removeDocente(String email){
         for(var i : docentes){
             if(i.getEmail() == email){
@@ -41,6 +68,24 @@ public class Phase {
             }
         }
         return false;
+    }
+
+    public boolean adicionaProposta(Proposta proposta){
+        if(propostas.contains(proposta)){
+            return false;
+        }else{
+            propostas.add(proposta);
+            return true;
+        }
+    }
+
+    public Proposta procuraProposta(String ca){
+        for(var i : propostas){
+            if(i.getCa() == ca){
+                return i;
+            }
+        }
+        return null;
     }
 
     public boolean removeProposta(String ca){
