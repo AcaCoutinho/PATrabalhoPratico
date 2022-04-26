@@ -4,8 +4,10 @@ import pt.isec.pa.apoio_poe.model.data.*;
 import pt.isec.pa.apoio_poe.utils.PAInput;
 
 public class Phase1State extends PhaseStateAdapter{
+    private boolean isClosed;
     protected Phase1State(Phase phase, PhaseContext context) {
         super(phase, context);
+        isClosed = false;
     }
 
     @Override

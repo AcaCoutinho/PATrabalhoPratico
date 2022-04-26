@@ -14,6 +14,7 @@ public class Phase2State extends PhaseStateAdapter{
 
     @Override
     public boolean previousPhase() {
+
         return(changePhaseState(PhaseState.PHASE_1));
     }
 

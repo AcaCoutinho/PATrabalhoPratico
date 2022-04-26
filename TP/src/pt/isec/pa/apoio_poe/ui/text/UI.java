@@ -26,71 +26,153 @@ public class UI {
     }
 
     public void phase1UI() {
-        int option = PAInput.chooseOption("Fase 1 - Configuracao:","1 - Student", "2 - Docente", "3 - Proposta");
+        int option = PAInput.chooseOption("Fase 1 - Configuracao:","Student", "Docente",
+                                            "Proposta", "Fechar Configuração", "Proxima Fase");
         switch (option) {
             case 1 -> studendUI();
             case 2 -> docentUI();
             case 3 -> propostaUI();
+            case 4 -> fsm.closeState();
+            case 5 -> fsm.nextPhase();
         }
     }
 
     private void propostaUI() {
-        int option = PAInput.chooseOption("Configuracao Proposta:", "1 - Inserir proposta", "2 - Consultar proposta",
-                "3 - Editar proposta", "4 - Eliminar proposta");
+        int option = PAInput.chooseOption("Configuracao Proposta:", "Inserir proposta", "Consultar proposta",
+                                            "Editar proposta", "Eliminar proposta");
         switch (option){
-            case 1 ->fsm.insert(2);
-            case 2 ->fsm.consult(2);
-            case 3 ->fsm.edit(2);
-            case 4 ->fsm.remove(2);
+            case 1 ->insertUI("proposta");
+            case 2 ->consultUI("proposta");
+            case 3 ->editUI("proposta");
+            case 4 ->removeUI("proposta");
         }
     }
 
     private void docentUI() {
-        int option = PAInput.chooseOption("Configuracao Docente:", "1 - Inserir docente", "2 - Consultar docente",
-                "3 - Editar docente", "4 - Eliminar docente");
+        int option = PAInput.chooseOption("Configuracao Docente:", "Inserir docente", "Consultar docente",
+                                            "Editar docente", "Eliminar docente");
         switch (option){
-            case 1 ->fsm.insert(1);
-            case 2 ->fsm.consult(1);
-            case 3 ->fsm.edit(1);
-            case 4 ->fsm.remove(1);
+            case 1 ->insertUI("docente");
+            case 2 ->consultUI("docente");
+            case 3 ->editUI("docente");
+            case 4 ->removeUI("docente");
         }
     }
 
     private void studendUI() {
-        int option = PAInput.chooseOption("Configuracao Estudante:", "1 - Inserir estudante", "2 - Consultar estudante",
-                "3 - Editar estudante", "4 - Eliminar estudante");
+        int option = PAInput.chooseOption("Configuracao Estudante:", "Inserir estudante", "Consultar estudante",
+                                            "Editar estudante", "Eliminar estudante");
         switch (option){
-            case 1 ->fsm.insert(0);
-            case 2 ->fsm.consult(0);
-            case 3 ->fsm.edit(0);
-            case 4 ->fsm.remove(0);
+            case 1 ->insertUI("student");
+            case 2 ->consultUI("student");
+            case 3 ->editUI("student");
+            case 4 ->removeUI("student");
         }
     }
 
     public void phase2UI() {
-        int option = PAInput.chooseOption("Fase 1 - Configuracao:","1 - Student", "2 - Docente", "3 - Proposta");
+        int option = PAInput.chooseOption("Fase 2 - Opções de Candidatura:","",
+                                            "", "Fechar Fase", "Fase Anterior", "Proxima Fase");
         switch (option) {
-
+            //case 1 -> ;
+            //case 2 -> ;
+            case 3 -> fsm.closeState();
+            case 4 -> fsm.previousPhase();
+            case 5 -> fsm.nextPhase();
         }
     }
 
     public void phase3UI() {
-        int option = PAInput.chooseOption("Fase 1 - Configuracao:","1 - Student", "2 - Docente", "3 - Proposta");
+        int option = PAInput.chooseOption("Fase 3 - Atribuição de Propostas:","1 - Student",
+                                            "2 - Docente", "Fechar Fase", "Fase Anterior", "Proxima Fase");
         switch (option) {
-
+            //case 1 -> ;
+            //case 2 -> ;
+            case 3 -> fsm.closeState();
+            case 4 -> fsm.previousPhase();
+            case 5 -> fsm.nextPhase();
         }
     }
 
     public void phase4UI() {
-        int option = PAInput.chooseOption("Fase 1 - Configuracao:","1 - Student", "2 - Docente", "3 - Proposta");
+        int option = PAInput.chooseOption("Fase 4 - Atribuição de Orientadores:","1 - Student",
+                                            "2 - Docente", "3 - Proposta", "Fechar Fase", "Fase Anterior", "Proxima Fase");
         switch (option) {
-
+            //case 1 -> ;
+            //case 2 -> ;
+            //case 3 -> ;
+            case 4 -> fsm.closeState();
+            case 5 -> fsm.previousPhase();
+            case 6 -> fsm.nextPhase();
         }
     }
 
     public void phase5UI() {
-        int option = PAInput.chooseOption("Fase 1 - Configuracao:","1 - Student", "2 - Docente", "3 - Proposta");
+        int option = PAInput.chooseOption("Fase 5 - Consulta:","Student",
+                                            "Docente", "Sair da Aplicação");
         switch (option) {
+            case 3 -> finish = true;
+        }
+    }
+
+    private void insertUI(String tipo) {
+        boolean termino = false;
+        if(tipo.equals("proposta")) {
+
+        }
+        else if(tipo.equals("docente")){
+
+        }
+        else if(tipo.equals("student")) {
+            do {
+                String nome = PAInput.readString("Nome: ", false);
+                String siglaC = PAInput.readString("Sigla de curso: ", true);
+                String siglaR = PAInput.readString("Sigla de ramo: ", true);
+                double grade = PAInput.readNumber("Classificação do aluno: ");
+
+
+
+                if (PAInput.chooseOption("Pretende adicionar outro aluno?", " 1 - Sim", "2 - Não") == 1){
+                    continue;
+                } else {
+                    termino = true;
+                }
+            } while(!termino);
+        }
+    }
+
+    private void consultUI(String tipo) {
+        if(tipo.equals("proposta")) {
+
+        }
+        else if(tipo.equals("docente")){
+
+        }
+        else if(tipo.equals("student")) {
+
+        }
+    }
+
+    private void editUI(String tipo) {
+        if(tipo.equals("proposta")) {
+
+        }
+        else if(tipo.equals("docente")){
+
+        }
+        else if(tipo.equals("student")) {
+
+        }
+    }
+
+    private void removeUI(String tipo) {
+        if(tipo.equals("proposta")) {
+
+        }
+        else if(tipo.equals("docente")){
+
+        }
+        else if(tipo.equals("student")) {
 
         }
     }

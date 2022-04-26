@@ -7,8 +7,6 @@ public interface IPhaseState {
     void edit(int i);
     void remove(int i);
 
-
-
     boolean previousPhase();
     boolean closePhase();
     boolean nextPhase();
