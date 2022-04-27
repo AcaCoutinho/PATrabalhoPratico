@@ -3,8 +3,16 @@ package pt.isec.pa.apoio_poe.model.fsm;
 import pt.isec.pa.apoio_poe.model.data.Phase;
 
 public class Phase2State extends PhaseStateAdapter{
+    private boolean isClosed;
     protected Phase2State(Phase phase, PhaseContext context) {
         super(phase, context);
+        isClosed = false;
+    }
+
+    @Override
+    public void closePhase() {
+        isClosed = true;
+        nextPhase();
     }
 
     @Override
@@ -14,6 +22,7 @@ public class Phase2State extends PhaseStateAdapter{
 
     @Override
     public boolean previousPhase() {
+
         return(changePhaseState(PhaseState.PHASE_1));
     }
 

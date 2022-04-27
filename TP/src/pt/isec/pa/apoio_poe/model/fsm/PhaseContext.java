@@ -2,6 +2,8 @@ package pt.isec.pa.apoio_poe.model.fsm;
 
 import pt.isec.pa.apoio_poe.model.data.Phase;
 
+import java.util.ArrayList;
+
 public class PhaseContext {
     private Phase phase;
     private IPhaseState state;
@@ -20,28 +22,28 @@ public class PhaseContext {
     }
 
     //TODO: Fazer resto das funcoes da Interface
-    public void insert(int i){
-        state.insert(i);
+    public void insert(Object aux){
+        state.insert(aux);
     }
 
-    public void consult(int i){
-        state.consult(i);
+    public String consult(ArrayList<String> a){
+        return state.consult(a);
     }
 
-    public void edit(int i){
-        state.edit(i);
+    public void edit(Object aux){
+        state.edit(aux);
     }
 
-    public void remove(int i){
-        state.remove(i);
+    public void remove(Object aux){
+        state.remove(aux);
     }
 
     public boolean previousPhase() {
         return state.previousPhase();
     }
 
-    public boolean closeState() {
-        return state.closePhase();
+    public void closeState() {
+        state.closePhase();
     }
 
     public boolean nextPhase() {

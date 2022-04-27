@@ -1,7 +1,6 @@
 package pt.isec.pa.apoio_poe.model.data;
 
 public class Aluno {
-    private static long count = 2022000000;
     private long n_aluno;
     private String nome;
     private String email;
@@ -10,15 +9,14 @@ public class Aluno {
     private double grade;
     private boolean access;
 
-    public Aluno(String nome, String siglaC, String siglaR, double grade){
+    public Aluno(String nome, String siglaC, String siglaR, double grade, long n_aluno, String email){
         this.nome = nome;
         this.siglaC = siglaC;
         this.siglaR = siglaR;
         this.grade = grade;
         access = false;
-        n_aluno = count;
-        createEmail();
-        count++;
+        this.n_aluno = n_aluno;
+        this.email = email;
     }
 
     public long getN_aluno(){

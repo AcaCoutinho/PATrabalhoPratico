@@ -1,16 +1,16 @@
 package pt.isec.pa.apoio_poe.model.fsm;
 
+import java.util.ArrayList;
+
 public interface IPhaseState {
 
-    void insert(int i);
-    void consult(int i);
-    void edit(int i);
-    void remove(int i);
-
-
+    void insert(Object obj);
+    String consult(ArrayList<String> a);
+    void edit(Object obj);
+    void remove(Object obj);
 
     boolean previousPhase();
-    boolean closePhase();
+    void closePhase();
     boolean nextPhase();
 
     PhaseState getPhaseState();
