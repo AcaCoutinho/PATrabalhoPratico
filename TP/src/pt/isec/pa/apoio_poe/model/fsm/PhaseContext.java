@@ -20,28 +20,28 @@ public class PhaseContext {
     }
 
     //TODO: Fazer resto das funcoes da Interface
-    public void insert(int i){
-        state.insert(i);
+    public void insert(Object aux){
+        state.insert(aux);
     }
 
-    public void consult(int i){
-        state.consult(i);
+    public void consult(Object aux){
+        state.consult(aux);
     }
 
-    public void edit(int i){
-        state.edit(i);
+    public void edit(Object aux){
+        state.edit(aux);
     }
 
-    public void remove(int i){
-        state.remove(i);
+    public void remove(Object aux){
+        state.remove(aux);
     }
 
     public boolean previousPhase() {
         return state.previousPhase();
     }
 
-    public boolean closeState() {
-        return state.closePhase();
+    public void closeState() {
+        state.closePhase();
     }
 
     public boolean nextPhase() {

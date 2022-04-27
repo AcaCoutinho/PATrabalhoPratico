@@ -1,5 +1,7 @@
 package pt.isec.pa.apoio_poe.ui.text;
 
+import pt.isec.pa.apoio_poe.model.data.Aluno;
+import pt.isec.pa.apoio_poe.model.data.Docente;
 import pt.isec.pa.apoio_poe.model.fsm.PhaseState;
 import pt.isec.pa.apoio_poe.model.fsm.PhaseContext;
 import pt.isec.pa.apoio_poe.utils.*;
@@ -118,10 +120,37 @@ public class UI {
     private void insertUI(String tipo) {
         boolean termino = false;
         if(tipo.equals("proposta")) {
+            do {
 
+
+                int option = PAInput.chooseOption("Que tipo de proposta é?",
+                                                   "Estágio", "Projeto");
+                switch (option) {
+                    case 1 -> {
+
+                    }
+                    case 2 -> {}
+                }
+
+                if(PAInput.chooseOption("Pretende adicionar outra proposta?", "Sim", "Não") == 1) {
+                    termino = true;
+                }
+            }
+            while(!termino);
         }
         else if(tipo.equals("docente")){
+            do {
+                String nome = PAInput.readString("Nome: ", false);
+                String email = PAInput.readString("Email: ", true);
 
+
+                if(PAInput.chooseOption("Pretende adicionar outra proposta?", "Sim", "Não") == 1) {
+                    termino = true;
+                }
+                Docente aux = new Docente(email, nome);
+                fsm.insert(aux);
+            }
+            while(!termino);
         }
         else if(tipo.equals("student")) {
             do {
@@ -130,11 +159,10 @@ public class UI {
                 String siglaR = PAInput.readString("Sigla de ramo: ", true);
                 double grade = PAInput.readNumber("Classificação do aluno: ");
 
-
+                Aluno aux = new Aluno(nome, siglaC, siglaR, grade);
+                fsm.insert(aux);
 
                 if (PAInput.chooseOption("Pretende adicionar outro aluno?", " 1 - Sim", "2 - Não") == 1){
-                    continue;
-                } else {
                     termino = true;
                 }
             } while(!termino);

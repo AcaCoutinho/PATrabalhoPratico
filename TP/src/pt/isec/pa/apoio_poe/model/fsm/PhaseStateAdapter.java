@@ -18,22 +18,22 @@ abstract class PhaseStateAdapter implements IPhaseState{
     }
 
     @Override
-    public void insert(int i){
+    public void insert(Object obj){
 
     }
 
     @Override
-    public void consult(int i){
+    public void consult(Object obj){
 
     }
 
     @Override
-    public void edit(int i){
+    public void edit(Object obj){
 
     }
 
     @Override
-    public void remove(int i){
+    public void remove(Object obj){
 
     }
 
@@ -43,8 +43,8 @@ abstract class PhaseStateAdapter implements IPhaseState{
     }
 
     @Override
-    public boolean closePhase(){
-        return false;
+    public void closePhase(){
+
     }
 
     @Override

@@ -2,13 +2,13 @@ package pt.isec.pa.apoio_poe.model.fsm;
 
 public interface IPhaseState {
 
-    void insert(int i);
-    void consult(int i);
-    void edit(int i);
-    void remove(int i);
+    void insert(Object obj);
+    void consult(Object obj);
+    void edit(Object obj);
+    void remove(Object obj);
 
     boolean previousPhase();
-    boolean closePhase();
+    void closePhase();
     boolean nextPhase();
 
     PhaseState getPhaseState();
