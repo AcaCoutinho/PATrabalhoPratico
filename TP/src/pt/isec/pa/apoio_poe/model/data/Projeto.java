@@ -26,8 +26,8 @@ public class Projeto extends Proposta{
         this.rd = rd;
     }
 
-    public String getProponente(){
-        return proponente.toString();
+    public Docente getProponente(){
+        return proponente;
     }
     public void setProponente(Docente proponente){
         this.proponente = proponente;
