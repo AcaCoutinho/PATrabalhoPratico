@@ -2,6 +2,8 @@ package pt.isec.pa.apoio_poe.model.fsm;
 
 import pt.isec.pa.apoio_poe.model.data.Phase;
 
+import java.util.ArrayList;
+
 abstract class PhaseStateAdapter implements IPhaseState{
     protected Phase phase;
     protected PhaseContext context;
@@ -18,22 +20,22 @@ abstract class PhaseStateAdapter implements IPhaseState{
     }
 
     @Override
-    public void insert(int i){
+    public void insert(String filename){
 
     }
 
     @Override
-    public void consult(int i){
+    public String consult(ArrayList<String> a){
+        return null;
+    }
+
+    @Override
+    public void edit(){
 
     }
 
     @Override
-    public void edit(int i){
-
-    }
-
-    @Override
-    public void remove(int i){
+    public void remove(){
 
     }
 
@@ -43,8 +45,8 @@ abstract class PhaseStateAdapter implements IPhaseState{
     }
 
     @Override
-    public boolean closePhase(){
-        return false;
+    public void closePhase(){
+
     }
 
     @Override

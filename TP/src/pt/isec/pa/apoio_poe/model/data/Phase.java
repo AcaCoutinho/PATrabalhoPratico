@@ -7,11 +7,13 @@ public class Phase {
     private ArrayList<Aluno> alunos;
     private ArrayList<Docente> docentes;
     private ArrayList<Proposta> propostas;
+    private ArrayList<Candidatura> candidaturas;
 
     public Phase() {
         alunos = new ArrayList<>();
         docentes = new ArrayList<>();
         propostas = new ArrayList<>();
+        candidaturas = new ArrayList<>();
     }
 
     public boolean adicionaAluno(Aluno aluno){
@@ -94,6 +96,32 @@ public class Phase {
                 propostas.remove(i);
                 return true;
             }
+        }
+        return false;
+    }
+
+    public boolean adicionaCandidatura(Candidatura candidatura) {
+        if(candidaturas.contains(candidatura)) {
+            return false;
+        } else {
+            candidaturas.add(candidatura);
+            return true;
+        }
+    }
+
+    public Candidatura procuraCandidatura(long n_aluno) {
+        for (var i : candidaturas){
+            if(i.getN_aluno() == n_aluno)
+                return i;
+        }
+        return null;
+    }
+
+    public boolean removeCandidatura(long n_aluno) {
+        for (var i : candidaturas){
+            if(i.getN_aluno() == n_aluno)
+                candidaturas.remove(i);
+                return true;
         }
         return false;
     }

@@ -10,14 +10,14 @@ public class Docente {
         this.nome = nome;
     }
 
-    String getEmail(){
+    public String getEmail(){
         return email;
     }
     void setEmail(String email){
         this.email = email;
     }
 
-    String getNome(){
+    public String getNome(){
         return nome;
     }
     void setNome(String nome){
