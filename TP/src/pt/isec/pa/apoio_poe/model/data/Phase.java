@@ -44,6 +44,12 @@ public class Phase {
         return false;
     }
 
+    public void mostraAlunos(){
+        for(var i : alunos){
+            System.out.println(i.toString());
+        }
+    }
+
     public boolean adicionaDocente(Docente docente){
         if(docentes.contains(docente)){
             return false;
@@ -72,6 +78,12 @@ public class Phase {
         return false;
     }
 
+    public void mostraDocentes(){
+        for(var i : docentes){
+            System.out.println(i.toString());
+        }
+    }
+
     public boolean adicionaProposta(Proposta proposta){
         if(propostas.contains(proposta)){
             return false;
@@ -98,6 +110,12 @@ public class Phase {
             }
         }
         return false;
+    }
+
+    public void mostraPropostas(){
+        for(var i : propostas){
+            System.out.println(i.toString());
+        }
     }
 
     public boolean adicionaCandidatura(Candidatura candidatura) {

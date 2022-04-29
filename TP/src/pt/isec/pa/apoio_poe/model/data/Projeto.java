@@ -5,15 +5,15 @@ public class Projeto extends Proposta{
     private Docente proponente;
     private long n_alunoAt;
 
-    public Projeto( String titulo, String rd, Docente proponente){
-        super(titulo);
+    public Projeto(String ca,String titulo, String rd, Docente proponente){
+        super(ca, titulo);
         this.rd = rd;
         this.proponente = proponente;
         n_alunoAt = 0;
     }
 
-    public Projeto( String titulo, String rd, Docente proponente, long n_alunoAt){
-        super(titulo);
+    public Projeto(String ca, String titulo, String rd, Docente proponente, long n_alunoAt){
+        super(ca, titulo);
         this.rd = rd;
         this.proponente = proponente;
         this.n_alunoAt = n_alunoAt;
@@ -52,5 +52,16 @@ public class Projeto extends Proposta{
     }
     public void setN_alunoAt(long n_alunoAt){
         this.n_alunoAt = n_alunoAt;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("\nCódigo de identificação: " + getCa() + "\tTitulo: " + getTitulo() + "\nRamo de destino: " + rd);
+        sb.append(proponente.toString());
+        if(n_alunoAt != 0){
+            sb.append("\tNúmero de aluno atribuido: " + n_alunoAt);
+        }
+        return sb.toString();
     }
 }

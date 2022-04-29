@@ -23,4 +23,11 @@ public class Docente {
     void setNome(String nome){
         this.nome = nome;
     }
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("\nNome: " + nome + "\tEmail: " + email);
+        return sb.toString();
+    }
 }

@@ -4,7 +4,8 @@ public abstract class Proposta {
     private String ca;
     private String titulo;
 
-    Proposta(String titulo){
+    Proposta(String ca, String titulo){
+        this.ca = ca;
         this.titulo = titulo;
     }
 

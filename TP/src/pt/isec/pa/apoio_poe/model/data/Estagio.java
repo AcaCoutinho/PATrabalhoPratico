@@ -5,15 +5,15 @@ public class Estagio extends Proposta{
     private String entityId;
     private long n_alunoAt;
 
-    public Estagio(String titulo, String ad, String entityId){
-        super(titulo);
+    public Estagio(String ca, String titulo, String ad, String entityId){
+        super(ca, titulo);
         this.ad = ad;
         this.entityId = entityId;
         n_alunoAt = 0;
     }
 
-    public Estagio(String titulo, String ad, String entityId, long n_alunoAt){
-        super(titulo);
+    public Estagio(String ca, String titulo, String ad, String entityId, long n_alunoAt){
+        super(ca, titulo);
         this.ad = ad;
         this.entityId = entityId;
         this.n_alunoAt = n_alunoAt;
@@ -52,5 +52,16 @@ public class Estagio extends Proposta{
     }
     public void setN_alunoAt(long n_alunoAt){
         this.n_alunoAt = n_alunoAt;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("\nCódigo de identificação: " + getCa() + "\tTitulo: " + getTitulo() + "\nÁrea de destino: " + ad);
+        sb.append("\tEntidade de acolhimento: " + entityId);
+        if(n_alunoAt != 0){
+            sb.append("\tNúmero de aluno atribuido: " + n_alunoAt);
+        }
+        return sb.toString();
     }
 }

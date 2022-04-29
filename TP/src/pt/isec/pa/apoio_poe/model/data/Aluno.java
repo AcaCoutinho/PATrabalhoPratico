@@ -92,6 +92,11 @@ public class Aluno {
         StringBuilder sb = new StringBuilder();
         sb.append("\nNome: "+getNome()+"\tNº Aluno: "+ getN_aluno()+"\nEmail: "+getEmail()+"\tCurso: "+getSiglaC()+
                 " Ramo: "+getSiglaR()+"\nClassificação: "+getGrade());
+        if(access){
+            sb.append("\tPossui acesso");
+        }else{
+            sb.append("\tNão possui acesso");
+        }
         return sb.toString();
     }
 }

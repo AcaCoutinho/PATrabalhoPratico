@@ -42,6 +42,7 @@ public class Phase1State extends PhaseStateAdapter{
             while(i < dados.size()){
                 phase.adicionaAluno(new Aluno(Long.parseLong(dados.get(i++)), dados.get(i++), dados.get(i++), dados.get(i++), dados.get(i++), Double.parseDouble(dados.get(i++)), Boolean.parseBoolean(dados.get(i++))));
             }
+            phase.mostraAlunos();
         }
         if(tipo.equals("docente")){
             ArrayList<String> dados = new ArrayList<>();
@@ -61,14 +62,50 @@ public class Phase1State extends PhaseStateAdapter{
             }
 
             int i = 0;
-            System.out.println(dados.size());
             while(i < dados.size()){
                 phase.adicionaDocente(new Docente(dados.get(i++), dados.get(i++)));
             }
-
+            phase.mostraDocentes();
         }
         if(tipo.equals("proposta")){
+            ArrayList<String> dados = new ArrayList<>();
+            try{
+                File f = new File(fileName);
+                FileReader fr = new FileReader(f);
+                BufferedReader br = new BufferedReader(fr);
+                Scanner sc = new Scanner(br);
+                sc.useDelimiter(",|\\n");
 
+                while(sc.hasNext()){
+                    dados.add(sc.next());
+                }
+
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+            System.out.println(dados.size());
+            int i = 0;
+            while(i < dados.size()){
+                if(dados.get(i).equals("T1")){
+                    i++;
+                    if(dados.get(i+4).equals("T1") || dados.get(i+4).equals("T2")  || dados.get(i+4).equals("T3") ){
+                        phase.adicionaProposta(new Estagio(dados.get(i++), dados.get(i++), dados.get(i++), dados.get(i)));
+                    }else{
+                        phase.adicionaProposta(new Estagio(dados.get(i++), dados.get(i++), dados.get(i++), dados.get(i++), Long.parseLong(dados.get(i))));
+                    }
+                }else if(dados.get(i).equals("T2")){
+                    i++;
+                    if(dados.get(i+4).equals("T1") || dados.get(i+4).equals("T2") || dados.get(i+4).equals("T3")){
+                        phase.adicionaProposta(new Projeto(dados.get(i++), dados.get(i++), dados.get(i++), phase.procuraDocente(dados.get(i))));
+                    }else{
+                        phase.adicionaProposta(new Projeto(dados.get(i++), dados.get(i++), dados.get(i++), phase.procuraDocente(dados.get(i++)), Long.parseLong(dados.get(i))));
+                    }
+                }else{
+                    i++;
+                    phase.adicionaProposta(new Autoproposto(dados.get(i++), dados.get(i++), Long.parseLong(dados.get(i))));
+                }
+            }
+            phase.mostraPropostas();
         }
     }
 
