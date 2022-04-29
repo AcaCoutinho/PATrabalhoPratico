@@ -47,7 +47,10 @@ public class UI {
         int option = PAInput.chooseOption("Configuracao Proposta:", "Inserir proposta", "Consultar proposta",
                                             "Editar proposta", "Eliminar proposta");
         switch (option){
-            case 1 -> fsm.insert("proposta");
+            case 1 -> {
+                String fileName = PAInput.readString("Nome do ficheiro CSV com dados de propostas: ", true);
+                fsm.insert("proposta", fileName);
+            }
             case 2 -> {
                 ArrayList<String> al = new ArrayList<>();
                 al.add("proposta");
@@ -63,7 +66,10 @@ public class UI {
         int option = PAInput.chooseOption("Configuracao Docente:", "Inserir docente", "Consultar docente",
                                             "Editar docente", "Eliminar docente");
         switch (option){
-            case 1 -> fsm.insert("docente");
+            case 1 -> {
+                String fileName = PAInput.readString("Nome do ficheiro CSV com dados de docentes: ", true);
+                fsm.insert("docente", fileName);
+            }
             case 2 -> {
                 ArrayList<String> al = new ArrayList<>();
                 al.add("docente");
@@ -79,7 +85,10 @@ public class UI {
         int option = PAInput.chooseOption("Configuracao Estudante:", "Inserir estudante", "Consultar estudante",
                                             "Editar estudante", "Eliminar estudante");
         switch (option){
-            case 1 -> fsm.insert("student");
+            case 1 -> {
+                String fileName = PAInput.readString("Nome do ficheiro CSV com dados de alunos: ", true);
+                fsm.insert("student", fileName);
+            }
             case 2 -> {
                 long n_aluno = (long) PAInput.readNumber("Número de aluno a consultar: ");
                 String n_alunoS = String.valueOf(n_aluno);
@@ -97,7 +106,10 @@ public class UI {
         int option = PAInput.chooseOption("Fase 2 - Opções de Candidatura:","Insert",
                                             "", "Fechar Fase", "Fase Anterior", "Proxima Fase");
         switch (option) {
-            case 1 -> fsm.insert("");
+            case 1 -> {
+                String fileName = PAInput.readString("Nome do ficheiro CSV com dados de candidatura: ", true);
+                fsm.insert("candidatura", fileName);
+            }
             case 2 -> {
                 long n_aluno = (long) PAInput.readNumber("Numero do aluno da candidatura:");
                 String n_alunoS = String.valueOf(n_aluno);
@@ -115,7 +127,7 @@ public class UI {
         int option = PAInput.chooseOption("Fase 3 - Atribuição de Propostas:","1 - Student",
                                             "2 - Docente", "Fechar Fase", "Fase Anterior", "Proxima Fase");
         switch (option) {
-            case 1 -> fsm.insert("");
+            case 1 -> fsm.insert("", "");
             //case 2 -> fsm.consult("");
             case 3 -> fsm.closeState();
             case 4 -> fsm.previousPhase();

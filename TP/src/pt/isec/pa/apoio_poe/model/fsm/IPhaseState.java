@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface IPhaseState {
 
-    void insert(String tipo);
+    void insert(String tipo, String fileName);
     String consult(ArrayList<String> a);
     void edit();
     void remove();

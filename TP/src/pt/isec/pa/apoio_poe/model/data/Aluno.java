@@ -9,12 +9,12 @@ public class Aluno {
     private double grade;
     private boolean access;
 
-    public Aluno(String nome, String siglaC, String siglaR, double grade, long n_aluno, String email){
+    public Aluno(long n_aluno, String nome, String email, String siglaC, String siglaR, double grade, boolean access){
         this.nome = nome;
         this.siglaC = siglaC;
         this.siglaR = siglaR;
         this.grade = grade;
-        access = false;
+        this.access = access;
         this.n_aluno = n_aluno;
         this.email = email;
     }

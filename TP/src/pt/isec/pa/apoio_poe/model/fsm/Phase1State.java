@@ -4,7 +4,13 @@ import pt.isec.pa.apoio_poe.model.data.*;
 import pt.isec.pa.apoio_poe.utils.PAInput;
 
 import javax.print.Doc;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 public class Phase1State extends PhaseStateAdapter{
     private boolean isClosed;
@@ -14,11 +20,51 @@ public class Phase1State extends PhaseStateAdapter{
     }
 
     @Override
-    public void insert(String tipo){
+    public void insert(String tipo, String fileName) {
         if(tipo.equals("student")){
+            ArrayList<String> dados = new ArrayList<>();
+            try{
+                File f = new File(fileName);
+                FileReader fr = new FileReader(f);
+                BufferedReader br = new BufferedReader(fr);
+                Scanner sc = new Scanner(br);
+                sc.useDelimiter(",|\\n");
 
+                while(sc.hasNext()){
+                    dados.add(sc.next());
+                }
+
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+
+            int i = 0;
+            while(i < dados.size()){
+                phase.adicionaAluno(new Aluno(Long.parseLong(dados.get(i++)), dados.get(i++), dados.get(i++), dados.get(i++), dados.get(i++), Double.parseDouble(dados.get(i++)), Boolean.parseBoolean(dados.get(i++))));
+            }
         }
         if(tipo.equals("docente")){
+            ArrayList<String> dados = new ArrayList<>();
+            try{
+                File f = new File(fileName);
+                FileReader fr = new FileReader(f);
+                BufferedReader br = new BufferedReader(fr);
+                Scanner sc = new Scanner(br);
+                sc.useDelimiter(",|\\n");
+
+                while(sc.hasNext()){
+                    dados.add(sc.next());
+                }
+
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+
+            int i = 0;
+            System.out.println(dados.size());
+            while(i < dados.size()){
+                phase.adicionaDocente(new Docente(dados.get(i++), dados.get(i++)));
+            }
 
         }
         if(tipo.equals("proposta")){

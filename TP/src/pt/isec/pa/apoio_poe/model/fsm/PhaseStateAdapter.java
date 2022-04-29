@@ -20,7 +20,7 @@ abstract class PhaseStateAdapter implements IPhaseState{
     }
 
     @Override
-    public void insert(String filename){
+    public void insert(String tipo, String fileName){
 
     }
 

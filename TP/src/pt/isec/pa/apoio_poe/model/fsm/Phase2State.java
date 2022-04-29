@@ -12,7 +12,7 @@ public class Phase2State extends PhaseStateAdapter{
     }
 
     @Override
-    public void insert(String tipo) {
+    public void insert(String tipo, String fileName) {
 
     }
 

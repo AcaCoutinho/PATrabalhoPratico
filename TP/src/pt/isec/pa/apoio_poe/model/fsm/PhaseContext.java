@@ -22,8 +22,8 @@ public class PhaseContext {
     }
 
     //TODO: Fazer resto das funcoes da Interface
-    public void insert(String tipo){
-        state.insert(tipo);
+    public void insert(String tipo, String fileName){
+        state.insert(tipo, fileName);
     }
 
     public String consult(ArrayList<String> a){
