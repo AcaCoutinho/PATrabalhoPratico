@@ -40,6 +40,11 @@ abstract class PhaseStateAdapter implements IPhaseState{
     }
 
     @Override
+    public String lista(ArrayList<String> al) {
+        return null;
+    }
+
+    @Override
     public boolean previousPhase(){
         return false;
     }

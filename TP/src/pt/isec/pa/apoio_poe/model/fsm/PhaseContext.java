@@ -38,6 +38,10 @@ public class PhaseContext {
         state.remove();
     }
 
+    public String lista(ArrayList<String> al) {
+        return state.lista(al);
+    }
+
     public boolean previousPhase() {
         return state.previousPhase();
     }

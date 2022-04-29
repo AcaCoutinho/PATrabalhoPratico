@@ -9,6 +9,8 @@ public interface IPhaseState {
     void edit();
     void remove();
 
+    String lista(ArrayList<String> al);
+
     boolean previousPhase();
     void closePhase();
     boolean nextPhase();

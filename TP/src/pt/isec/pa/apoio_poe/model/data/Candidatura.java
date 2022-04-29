@@ -18,4 +18,9 @@ public class Candidatura {
     public long getN_aluno(){
         return n_aluno;
     }
+
+    @Override
+    public String toString() {
+        return null;
+    }
 }

@@ -18,6 +18,41 @@ public class Phase2State extends PhaseStateAdapter{
 
     @Override
     public String consult(ArrayList<String> a) {
+        long n_aluno = Long.parseLong(a.get(0));
+
+        if(phase.procuraCandidatura(n_aluno) != null) {
+            return phase.procuraCandidatura(n_aluno).toString();
+        }
+        return null;
+    }
+
+    @Override
+    public String lista(ArrayList<String> al) {
+    if(al.contains("student")) {
+        if (al.get(1).equals("autoproposta")) {
+
+        }
+        if (al.get(1).equals("candidatura")) {
+
+        }
+        if (al.get(1).equals("no_candidatura")) {
+
+        }
+    }
+        if(al.contains("proposta")){
+            if(al.get(1).equals("autoproposta")){
+
+            }
+            if(al.get(1).equals("docente")){
+
+            }
+            if(al.get(1).equals("candidatura")){
+
+            }
+            if(al.get(1).equals("no_candidatura")){
+
+            }
+        }
         return null;
     }
 
