@@ -16,6 +16,22 @@ public class Phase {
         candidaturas = new ArrayList<>();
     }
 
+    public ArrayList<Aluno> getAlunos() {
+        return alunos;
+    }
+
+    public ArrayList<Docente> getDocentes() {
+        return docentes;
+    }
+
+    public ArrayList<Proposta> getPropostas() {
+        return propostas;
+    }
+
+    public ArrayList<Candidatura> getCandidaturas() {
+        return candidaturas;
+    }
+
     public boolean adicionaAluno(Aluno aluno){
         if(alunos.contains(aluno)){
             return false;
