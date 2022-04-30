@@ -8,6 +8,7 @@ public class Aluno {
     private String siglaR;
     private double grade;
     private boolean access;
+    private Proposta propAtribuida;
 
     public Aluno(long n_aluno, String nome, String email, String siglaC, String siglaR, double grade, boolean access){
         this.nome = nome;
@@ -61,6 +62,9 @@ public class Aluno {
         this.grade = grade;
     }
 
+    public Proposta getPropAtribuida(){ return propAtribuida; }
+    public void setPropAtribuida(Proposta propAtribuida){ this.propAtribuida = propAtribuida; }
+
     public boolean turnOnAccess(){
         if(!access){
             access = true;
@@ -79,23 +83,18 @@ public class Aluno {
         }
     }
 
-    public void createEmail(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("a");
-        sb.append(n_aluno);
-        sb.append("@isec.pt");
-        email = sb.toString();
-    }
-
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("\nNome: "+getNome()+"\tNº Aluno: "+ getN_aluno()+"\nEmail: "+getEmail()+"\tCurso: "+getSiglaC()+
                 " Ramo: "+getSiglaR()+"\nClassificação: "+getGrade());
+        if(propAtribuida != null){
+            sb.append("\nPROPOSTA-----" + propAtribuida.toString() + "\n----------\n");
+        }
         if(access){
-            sb.append("\tPossui acesso");
+            sb.append("Possui acesso a estágio");
         }else{
-            sb.append("\tNão possui acesso");
+            sb.append("Não possui acesso a estágio");
         }
         return sb.toString();
     }

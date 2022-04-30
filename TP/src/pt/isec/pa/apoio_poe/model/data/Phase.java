@@ -2,6 +2,7 @@ package pt.isec.pa.apoio_poe.model.data;
 
 import javax.print.Doc;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Phase {
     private ArrayList<Aluno> alunos;
@@ -14,22 +15,6 @@ public class Phase {
         docentes = new ArrayList<>();
         propostas = new ArrayList<>();
         candidaturas = new ArrayList<>();
-    }
-
-    public ArrayList<Aluno> getAlunos() {
-        return alunos;
-    }
-
-    public ArrayList<Docente> getDocentes() {
-        return docentes;
-    }
-
-    public ArrayList<Proposta> getPropostas() {
-        return propostas;
-    }
-
-    public ArrayList<Candidatura> getCandidaturas() {
-        return candidaturas;
     }
 
     public boolean adicionaAluno(Aluno aluno){
@@ -158,5 +143,28 @@ public class Phase {
                 return true;
         }
         return false;
+    }
+
+    public ArrayList<Aluno> getAlunos(){
+        ArrayList<Aluno> tmp = new ArrayList<>(alunos);
+        return tmp;
+    }
+
+    public ArrayList<Docente> getDocentes(){
+        ArrayList<Docente> tmp = new ArrayList<>(docentes);
+        return tmp;
+    }
+
+    public ArrayList<Proposta> getPropostas(){
+        ArrayList<Proposta> tmp = new ArrayList<>(propostas);
+        return tmp;
+    }
+
+    public HashMap<String, Long> getPropAndAlunos(){
+        HashMap<String, Long> tmp = new HashMap<>();
+        for(var i : propostas){
+            tmp.put(i.getCa(), i.getN_alunoAt());
+        }
+        return tmp;
     }
 }

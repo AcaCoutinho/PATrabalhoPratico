@@ -3,20 +3,17 @@ package pt.isec.pa.apoio_poe.model.data;
 public class Estagio extends Proposta{
     private String ad;
     private String entityId;
-    private long n_alunoAt;
 
     public Estagio(String ca, String ad, String titulo, String entityId){
-        super(ca, titulo);
+        super(ca, titulo, 0);
         this.ad = ad;
         this.entityId = entityId;
-        n_alunoAt = 0;
     }
 
     public Estagio(String ca, String ad, String titulo, String entityId, long n_alunoAt){
-        super(ca, titulo);
+        super(ca, titulo, n_alunoAt);
         this.ad = ad;
         this.entityId = entityId;
-        this.n_alunoAt = n_alunoAt;
     }
 
     public String getAd(){
@@ -44,14 +41,9 @@ public class Estagio extends Proposta{
         super.setTitulo(titulo);
     }
 
-    public long getN_alunoAt(){
-        if(n_alunoAt == 0){
-            return 0;
-        }
-        return n_alunoAt;
-    }
+    public long getN_alunoAt(){ return super.getN_alunoAt(); }
     public void setN_alunoAt(long n_alunoAt){
-        this.n_alunoAt = n_alunoAt;
+        super.setN_alunoAt(n_alunoAt);
     }
 
     @Override
@@ -59,8 +51,8 @@ public class Estagio extends Proposta{
         StringBuilder sb = new StringBuilder();
         sb.append("\nCódigo de identificação: " + getCa() + "\tTitulo: " + getTitulo() + "\nÁrea de destino: " + ad);
         sb.append("\tEntidade de acolhimento: " + entityId);
-        if(n_alunoAt != 0){
-            sb.append("\tNúmero de aluno atribuido: " + n_alunoAt);
+        if(getN_alunoAt() != 0){
+            sb.append("\tNúmero de aluno atribuido: " + getN_alunoAt());
         }
         return sb.toString();
     }

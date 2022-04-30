@@ -3,20 +3,17 @@ package pt.isec.pa.apoio_poe.model.data;
 public class Projeto extends Proposta{
     private String rd;
     private Docente proponente;
-    private long n_alunoAt;
 
     public Projeto(String ca, String rd, String titulo, Docente proponente){
-        super(ca, titulo);
+        super(ca, titulo, 0);
         this.rd = rd;
         this.proponente = proponente;
-        n_alunoAt = 0;
     }
 
     public Projeto(String ca, String rd, String titulo, Docente proponente, long n_alunoAt){
-        super(ca, titulo);
+        super(ca, titulo, n_alunoAt);
         this.rd = rd;
         this.proponente = proponente;
-        this.n_alunoAt = n_alunoAt;
     }
 
     public String getRd(){
@@ -44,14 +41,9 @@ public class Projeto extends Proposta{
         super.setTitulo(titulo);
     }
 
-    public long getN_alunoAt(){
-        if(n_alunoAt == 0){
-            return 0;
-        }
-        return n_alunoAt;
-    }
+    public long getN_alunoAt(){ return super.getN_alunoAt(); }
     public void setN_alunoAt(long n_alunoAt){
-        this.n_alunoAt = n_alunoAt;
+        super.setN_alunoAt(n_alunoAt);
     }
 
     @Override
@@ -59,8 +51,8 @@ public class Projeto extends Proposta{
         StringBuilder sb = new StringBuilder();
         sb.append("\nCódigo de identificação: " + getCa() + "\tTitulo: " + getTitulo() + "\nRamo de destino: " + rd);
         sb.append(proponente.toString());
-        if(n_alunoAt != 0){
-            sb.append("\tNúmero de aluno atribuido: " + n_alunoAt);
+        if(getN_alunoAt() != 0){
+            sb.append("\tNúmero de aluno atribuido: " + getN_alunoAt());
         }
         return sb.toString();
     }
