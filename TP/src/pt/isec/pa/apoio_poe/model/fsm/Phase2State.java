@@ -1,8 +1,13 @@
 package pt.isec.pa.apoio_poe.model.fsm;
 
-import pt.isec.pa.apoio_poe.model.data.Phase;
+import pt.isec.pa.apoio_poe.model.data.*;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Phase2State extends PhaseStateAdapter{
     private boolean isClosed;
@@ -28,28 +33,88 @@ public class Phase2State extends PhaseStateAdapter{
 
     @Override
     public String lista(ArrayList<String> al) {
-    if(al.contains("student")) {
-        if (al.get(1).equals("autoproposta")) {
+        StringBuilder sb = new StringBuilder();
+        Aluno aux1;
+        if(al.contains("student")) {
+            if (al.get(1).equals("autoproposta")) {
+                for(int i = 0; i < phase.getPropostas().size(); i++){
+                    if(phase.getPropostas().get(i) instanceof Autoproposto aux){
+                        aux1 = phase.procuraAluno(aux.getN_alunoPro());
+                        sb.append(aux1.toString());
+                    }
+                }
+                return sb.toString();
+            }
+            if (al.get(1).equals("candidatura")) {
+                for(int i = 0; i < phase.getPropostas().size(); i++){
+                    if(phase.getPropostas().get(i) instanceof Autoproposto aux){
+                        aux1 = phase.procuraAluno(aux.getN_alunoPro());
+                        sb.append(aux1.toString());
+                    }
+                    if(phase.getPropostas().get(i) instanceof Projeto aux){
+                        if(aux.getN_alunoAt() != 0){
+                            aux1 = phase.procuraAluno(aux.getN_alunoAt());
+                            sb.append(aux1.toString());
+                        }
+                    }
+                    if(phase.getPropostas().get(i) instanceof Estagio aux){
+                        if(aux.getN_alunoAt() != 0){
+                            aux1 = phase.procuraAluno(aux.getN_alunoAt());
+                            sb.append(aux1.toString());
+                        }
+                    }
+                }
+                return sb.toString();
+            }
+            if (al.get(1).equals("no_candidatura")) {
 
-        }
-        if (al.get(1).equals("candidatura")) {
 
-        }
-        if (al.get(1).equals("no_candidatura")) {
+                //Ainda falta fazer este
 
+
+            }
+            return sb.toString();
         }
-    }
         if(al.contains("proposta")){
             if(al.get(1).equals("autoproposta")){
-
+                for(int i = 0; i < phase.getPropostas().size(); i++){
+                    if(phase.getPropostas().get(i) instanceof Autoproposto aux){
+                        sb.append(aux.toString());
+                    }
+                }
+                return sb.toString();
             }
             if(al.get(1).equals("docente")){
-
+                for(int i = 0; i < phase.getPropostas().size(); i++){
+                    if(phase.getPropostas().get(i) instanceof Projeto aux){
+                        sb.append(aux.toString());
+                    }
+                }
+                return sb.toString();
             }
             if(al.get(1).equals("candidatura")){
-
+                for(int i = 0; i < phase.getPropostas().size(); i++){
+                    if(phase.getPropostas().get(i) instanceof Autoproposto aux){
+                        sb.append(aux.toString());
+                    }
+                    if(phase.getPropostas().get(i) instanceof Projeto aux){
+                        if(aux.getN_alunoAt() != 0){
+                            sb.append(aux.toString());
+                        }
+                    }
+                    if(phase.getPropostas().get(i) instanceof Estagio aux){
+                        if(aux.getN_alunoAt() != 0){
+                            sb.append(aux.toString());
+                        }
+                    }
+                }
+                return sb.toString();
             }
             if(al.get(1).equals("no_candidatura")){
+
+
+                //Ainda falta fazer este
+
 
             }
         }
