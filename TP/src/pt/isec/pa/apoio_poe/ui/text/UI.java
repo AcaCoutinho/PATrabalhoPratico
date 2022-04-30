@@ -124,11 +124,12 @@ public class UI {
     }
 
     public void phase3UI() {
-        int option = PAInput.chooseOption("Fase 3 - Atribuição de Propostas:","1 - Student",
-                                            "2 - Docente", "Fechar Fase", "Fase Anterior", "Proxima Fase");
+        int option = PAInput.chooseOption("Fase 3 - Atribuição de Propostas:","Automática (associação)",
+                                            "Automática (sem atribuições)", "Manual", "Remover", "Lista de alunos",
+                                            "Lista de propostas", "Fechar Fase", "Fase Anterior", "Proxima Fase");
         switch (option) {
-            case 1 -> fsm.insert("", "");
-            //case 2 -> fsm.consult("");
+            case 1 -> fsm.assignment(0);
+            case 2 -> fsm.assignment(1);
             case 3 -> fsm.closeState();
             case 4 -> fsm.previousPhase();
             case 5 -> fsm.nextPhase();
