@@ -61,7 +61,7 @@ public class Phase {
 
     public Docente procuraDocente(String email){
         for(var i : docentes){
-            if(i.getEmail() == email){
+            if(i.getEmail().equals(email)){
                 return i;
             }
         }
@@ -70,7 +70,7 @@ public class Phase {
 
     public boolean removeDocente(String email){
         for(var i : docentes){
-            if(i.getEmail() == email){
+            if(i.getEmail().equals(email)){
                 docentes.remove(i);
                 return true;
             }
@@ -95,7 +95,7 @@ public class Phase {
 
     public Proposta procuraProposta(String ca){
         for(var i : propostas){
-            if(i.getCa() == ca){
+            if(i.getCa().equals(ca)){
                 return i;
             }
         }
@@ -104,7 +104,7 @@ public class Phase {
 
     public boolean removeProposta(String ca){
         for(var i : propostas){
-            if(i.getCa() == ca){
+            if(i.getCa().equals(ca)){
                 propostas.remove(i);
                 return true;
             }

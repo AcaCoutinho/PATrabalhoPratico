@@ -5,7 +5,7 @@ public class Docente {
     private String nome;
     private boolean tipo; //0 -> proponente ; 1 -> orientador
 
-    public Docente(String email, String nome){
+    public Docente(String nome, String email){
         this.email = email;
         this.nome = nome;
     }

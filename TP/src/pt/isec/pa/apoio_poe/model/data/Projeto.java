@@ -5,14 +5,14 @@ public class Projeto extends Proposta{
     private Docente proponente;
     private long n_alunoAt;
 
-    public Projeto(String ca,String titulo, String rd, Docente proponente){
+    public Projeto(String ca, String rd, String titulo, Docente proponente){
         super(ca, titulo);
         this.rd = rd;
         this.proponente = proponente;
         n_alunoAt = 0;
     }
 
-    public Projeto(String ca, String titulo, String rd, Docente proponente, long n_alunoAt){
+    public Projeto(String ca, String rd, String titulo, Docente proponente, long n_alunoAt){
         super(ca, titulo);
         this.rd = rd;
         this.proponente = proponente;

@@ -14,12 +14,12 @@ public class Phase5State extends PhaseStateAdapter{
     @Override
     public String lista(ArrayList<String> al) {
         if(al.contains("student")){
-            if(){
+            /*if(){
 
             }
             if(){
 
-            }
+            }*/
         }
         if(al.contains("docente")){
 

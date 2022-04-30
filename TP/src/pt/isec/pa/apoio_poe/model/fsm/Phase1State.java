@@ -21,8 +21,8 @@ public class Phase1State extends PhaseStateAdapter{
 
     @Override
     public void insert(String tipo, String fileName) {
+        ArrayList<String> dados = new ArrayList<>();
         if(tipo.equals("student")){
-            ArrayList<String> dados = new ArrayList<>();
             try{
                 File f = new File(fileName);
                 FileReader fr = new FileReader(f);
@@ -40,12 +40,11 @@ public class Phase1State extends PhaseStateAdapter{
 
             int i = 0;
             while(i < dados.size()){
-                phase.adicionaAluno(new Aluno(Long.parseLong(dados.get(i++)), dados.get(i++), dados.get(i++), dados.get(i++), dados.get(i++), Double.parseDouble(dados.get(i++)), Boolean.parseBoolean(dados.get(i++))));
+                phase.adicionaAluno(new Aluno(Long.parseLong(dados.get(i++)), dados.get(i++), dados.get(i++), dados.get(i++), dados.get(i++), Double.parseDouble(dados.get(i++)), Boolean.parseBoolean(dados.get(i++).trim())));
             }
             phase.mostraAlunos();
         }
         if(tipo.equals("docente")){
-            ArrayList<String> dados = new ArrayList<>();
             try{
                 File f = new File(fileName);
                 FileReader fr = new FileReader(f);
@@ -63,12 +62,11 @@ public class Phase1State extends PhaseStateAdapter{
 
             int i = 0;
             while(i < dados.size()){
-                phase.adicionaDocente(new Docente(dados.get(i++), dados.get(i++)));
+                phase.adicionaDocente(new Docente(dados.get(i++), dados.get(i++).trim()));
             }
             phase.mostraDocentes();
         }
         if(tipo.equals("proposta")){
-            ArrayList<String> dados = new ArrayList<>();
             try{
                 File f = new File(fileName);
                 FileReader fr = new FileReader(f);
@@ -88,22 +86,26 @@ public class Phase1State extends PhaseStateAdapter{
             while(i < dados.size()){
                 if(dados.get(i).equals("T1")){
                     i++;
-                    if(dados.get(i+4).equals("T1") || dados.get(i+4).equals("T2")  || dados.get(i+4).equals("T3") ){
-                        phase.adicionaProposta(new Estagio(dados.get(i++), dados.get(i++), dados.get(i++), dados.get(i)));
+                    if(i >= dados.size()-4 || dados.get(i+4).equals("T1") || dados.get(i+4).equals("T2")  || dados.get(i+4).equals("T3")){
+                        phase.adicionaProposta(new Estagio(dados.get(i++), dados.get(i++), dados.get(i++), dados.get(i++).trim()));
                     }else{
-                        phase.adicionaProposta(new Estagio(dados.get(i++), dados.get(i++), dados.get(i++), dados.get(i++), Long.parseLong(dados.get(i))));
+                        phase.adicionaProposta(new Estagio(dados.get(i++), dados.get(i++), dados.get(i++), dados.get(i++), Long.parseLong(dados.get(i++).trim())));
                     }
                 }else if(dados.get(i).equals("T2")){
                     i++;
-                    if(dados.get(i+4).equals("T1") || dados.get(i+4).equals("T2") || dados.get(i+4).equals("T3")){
-                        phase.adicionaProposta(new Projeto(dados.get(i++), dados.get(i++), dados.get(i++), phase.procuraDocente(dados.get(i))));
+                    if(i >= dados.size()-4 || dados.get(i+4).equals("T1") || dados.get(i+4).equals("T2") || dados.get(i+4).equals("T3")){
+                        System.out.println(phase.procuraDocente(dados.get(i+3)));
+                        phase.adicionaProposta(new Projeto(dados.get(i++), dados.get(i++), dados.get(i++), phase.procuraDocente(dados.get(i++).trim())));
                     }else{
-                        phase.adicionaProposta(new Projeto(dados.get(i++), dados.get(i++), dados.get(i++), phase.procuraDocente(dados.get(i++)), Long.parseLong(dados.get(i))));
+                        System.out.println(dados.get(i+4));
+                        System.out.println(phase.procuraDocente(dados.get(i+3)));
+                        phase.adicionaProposta(new Projeto(dados.get(i++), dados.get(i++), dados.get(i++), phase.procuraDocente(dados.get(i++)), Long.parseLong(dados.get(i++).trim())));
                     }
                 }else{
                     i++;
-                    phase.adicionaProposta(new Autoproposto(dados.get(i++), dados.get(i++), Long.parseLong(dados.get(i))));
+                    phase.adicionaProposta(new Autoproposto(dados.get(i++), dados.get(i++), Long.parseLong(dados.get(i++).trim())));
                 }
+                System.out.println("\nCheguei ao fim\n");
             }
             phase.mostraPropostas();
         }

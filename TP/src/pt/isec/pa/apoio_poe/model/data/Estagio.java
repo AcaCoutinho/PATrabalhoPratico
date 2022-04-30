@@ -5,14 +5,14 @@ public class Estagio extends Proposta{
     private String entityId;
     private long n_alunoAt;
 
-    public Estagio(String ca, String titulo, String ad, String entityId){
+    public Estagio(String ca, String ad, String titulo, String entityId){
         super(ca, titulo);
         this.ad = ad;
         this.entityId = entityId;
         n_alunoAt = 0;
     }
 
-    public Estagio(String ca, String titulo, String ad, String entityId, long n_alunoAt){
+    public Estagio(String ca, String ad, String titulo, String entityId, long n_alunoAt){
         super(ca, titulo);
         this.ad = ad;
         this.entityId = entityId;
