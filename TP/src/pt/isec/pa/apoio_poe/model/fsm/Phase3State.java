@@ -1,14 +1,34 @@
 package pt.isec.pa.apoio_poe.model.fsm;
 
+import pt.isec.pa.apoio_poe.model.data.Aluno;
 import pt.isec.pa.apoio_poe.model.data.Phase;
+import pt.isec.pa.apoio_poe.model.data.Proposta;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Phase3State extends PhaseStateAdapter{
     private boolean isClosed;
     protected Phase3State(Phase phase, PhaseContext context) {
         super(phase, context);
         isClosed = false;
+    }
+
+    @Override
+    public void assignment(int tipo){
+        if(tipo == 0){
+            HashMap<String, Long> propostas = phase.getPropAndAlunos();
+            System.out.println(propostas);
+            for(var i : propostas.keySet()){
+                if(propostas.get(i) != 0){
+                    phase.procuraAluno(propostas.get(i)).setPropAtribuida(phase.procuraProposta(i));
+                }
+            }
+            phase.mostraAlunos();
+        }else{
+            HashMap<String, Long> propostas = phase.getPropAndAlunos();
+
+        }
     }
 
     @Override

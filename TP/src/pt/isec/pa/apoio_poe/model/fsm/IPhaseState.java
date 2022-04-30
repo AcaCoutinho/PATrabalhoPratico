@@ -8,6 +8,7 @@ public interface IPhaseState {
     String consult(ArrayList<String> a);
     void edit();
     void remove();
+    void assignment(int tipo);
 
     String lista(ArrayList<String> al);
 

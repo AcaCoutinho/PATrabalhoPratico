@@ -38,6 +38,8 @@ public class PhaseContext {
         state.remove();
     }
 
+    public void assignment(int tipo){ state.assignment(tipo); }
+
     public String lista(ArrayList<String> al) {
         return state.lista(al);
     }
