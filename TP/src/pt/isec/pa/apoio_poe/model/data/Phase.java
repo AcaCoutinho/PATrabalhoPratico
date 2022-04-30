@@ -160,6 +160,11 @@ public class Phase {
         return tmp;
     }
 
+    public ArrayList<Candidatura> getCandidaturas(){
+        ArrayList<Candidatura> tmp = new ArrayList<>(candidaturas);
+        return tmp;
+    }
+
     public HashMap<String, Long> getPropAndAlunos(){
         HashMap<String, Long> tmp = new HashMap<>();
         for(var i : propostas){

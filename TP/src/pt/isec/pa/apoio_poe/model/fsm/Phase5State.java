@@ -1,6 +1,6 @@
 package pt.isec.pa.apoio_poe.model.fsm;
 
-import pt.isec.pa.apoio_poe.model.data.Phase;
+import pt.isec.pa.apoio_poe.model.data.*;
 
 import java.util.ArrayList;
 
@@ -13,27 +13,50 @@ public class Phase5State extends PhaseStateAdapter{
 
     @Override
     public String lista(ArrayList<String> al) {
+        StringBuilder sb = new StringBuilder();
+        Aluno aux1;
         if(al.contains("student")){
-            /*if(){
-
+            if(al.get(1).equals("atribuidas")){
+                for(int i = 0; i < phase.getPropostas().size(); i++){
+                    if(phase.getPropostas().get(i) instanceof Autoproposto aux){
+                        aux1 = phase.procuraAluno(aux.getN_alunoAt());
+                        sb.append(aux1.toString());
+                    }
+                    if(phase.getPropostas().get(i) instanceof Estagio aux){
+                        if(aux.getN_alunoAt() != 0){
+                            aux1 = phase.procuraAluno(aux.getN_alunoAt());
+                            sb.append(aux1.toString());
+                        }
+                    }
+                    if(phase.getPropostas().get(i) instanceof Projeto aux){
+                        if(aux.getN_alunoAt() != 0){
+                            aux1 = phase.procuraAluno(aux.getN_alunoAt());
+                            sb.append(aux1.toString());
+                        }
+                    }
+                }
+                return sb.toString();
             }
-            if(){
-
-            }*/
+            if(al.get(1).equals("candidatura")){
+                for(int i = 0; i < phase.getCandidaturas().size(); i++){
+                    aux1 = phase.procuraAluno(phase.getCandidaturas().get(i).getN_aluno());
+                    sb.append(aux1.toString());
+                }
+                return sb.toString();
+            }
         }
         if(al.contains("docente")){
 
         }
         if(al.contains("proposta")){
+            if(al.get(1).equals("disponiveis")){
 
+            }
+            if(al.get(1).equals("atribuidas")){
+
+            }
         }
         return null;
-    }
-
-    @Override
-    public void closePhase() {
-        isClosed = true;
-        nextPhase();
     }
 
     @Override

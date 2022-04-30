@@ -1,6 +1,7 @@
 package pt.isec.pa.apoio_poe.model.fsm;
 
 import pt.isec.pa.apoio_poe.model.data.Phase;
+import pt.isec.pa.apoio_poe.model.data.Projeto;
 
 import java.util.ArrayList;
 
@@ -13,6 +14,7 @@ public class Phase4State extends PhaseStateAdapter{
 
     @Override
     public String lista(ArrayList<String> al) {
+        StringBuilder sb = new StringBuilder();
         if(al.contains("student")) {
             if(al.get(1).equals("associado")){
 

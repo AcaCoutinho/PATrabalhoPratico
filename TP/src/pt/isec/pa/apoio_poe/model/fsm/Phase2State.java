@@ -39,31 +39,18 @@ public class Phase2State extends PhaseStateAdapter{
             if (al.get(1).equals("autoproposta")) {
                 for(int i = 0; i < phase.getPropostas().size(); i++){
                     if(phase.getPropostas().get(i) instanceof Autoproposto aux){
-                        aux1 = phase.procuraAluno(aux.getN_alunoPro());
+                        aux1 = phase.procuraAluno(aux.getN_alunoAt());
                         sb.append(aux1.toString());
                     }
                 }
                 return sb.toString();
             }
             if (al.get(1).equals("candidatura")) {
-                for(int i = 0; i < phase.getPropostas().size(); i++){
-                    if(phase.getPropostas().get(i) instanceof Autoproposto aux){
-                        aux1 = phase.procuraAluno(aux.getN_alunoPro());
-                        sb.append(aux1.toString());
-                    }
-                    if(phase.getPropostas().get(i) instanceof Projeto aux){
-                        if(aux.getN_alunoAt() != 0){
-                            aux1 = phase.procuraAluno(aux.getN_alunoAt());
-                            sb.append(aux1.toString());
-                        }
-                    }
-                    if(phase.getPropostas().get(i) instanceof Estagio aux){
-                        if(aux.getN_alunoAt() != 0){
-                            aux1 = phase.procuraAluno(aux.getN_alunoAt());
-                            sb.append(aux1.toString());
-                        }
-                    }
+                for(int i = 0; i < phase.getCandidaturas().size(); i++){
+                    aux1 = phase.procuraAluno(phase.getCandidaturas().get(i).getN_aluno());
+                    sb.append(aux1.toString());
                 }
+
                 return sb.toString();
             }
             if (al.get(1).equals("no_candidatura")) {
