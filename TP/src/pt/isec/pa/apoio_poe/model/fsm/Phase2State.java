@@ -126,26 +126,23 @@ public class Phase2State extends PhaseStateAdapter{
                 return sb.toString();
             }
             if(al.get(1).equals("candidatura")){
-                ArrayList<String> ids = new ArrayList<>();
-                for(int i = 0; i < phase.getCandidaturas().size(); i++){
-                    ids.addAll(phase.getCandidaturas().get(i).getIdPropostas());
-                }
+                ArrayList<String> idsCandidatura = new ArrayList<>();
+                ArrayList<String> idsPropostas = new ArrayList<>();
 
                 for(int i = 0; i < phase.getPropostas().size(); i++){
-                    for(int j = 0; j < ids.size(); j++){
-                        if(phase.getPropostas().get(i) instanceof Estagio aux){
-                            if(aux.getCa().equals(ids.get(j))){
-                                sb.append(aux.toString());
-                            }
-                        }
-                        if(phase.getPropostas().get(i) instanceof Projeto aux) {
-                            if(aux.getCa().equals(ids.get(j))){
-                                sb.append(aux.toString());
-                            }
-                        }
-                    }
+                    idsPropostas.add(phase.getPropostas().get(i).getCa());
+                }
+
+                for(int i = 0; i < phase.getCandidaturas().size(); i++){
+                    idsCandidatura.addAll(phase.getCandidaturas().get(i).getIdPropostas());
+                }
+
+                idsPropostas.removeAll(idsCandidatura);
+                for(int i = 0; i < idsPropostas.size(); i++){
+                    sb.append(phase.procuraProposta(idsPropostas.get(i)));
                 }
                 return sb.toString();
+
             }
             if(al.get(1).equals("no_candidatura")){
                 ArrayList<String> idsCandidatura = new ArrayList<>();

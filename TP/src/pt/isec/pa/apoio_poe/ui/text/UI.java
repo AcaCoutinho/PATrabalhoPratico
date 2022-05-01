@@ -120,8 +120,8 @@ public class UI {
             case 3 -> {
                 ArrayList<String> al = new ArrayList<>();
                 al.add("student");
-                int option1 = PAInput.chooseOption("Lista de Propostas:", "Autoproposta", "Proposta de Docentes",
-                        "Propostas Disponiveis", "Propostas Atribuidas");
+                int option1 = PAInput.chooseOption("Lista de Alunos:", "Autoproposta", "Candidatura Registada",
+                                                    "Sem Candidatura Registada");
                 switch(option1){
                     case 1 -> {
                         al.add("autoproposta");
@@ -141,7 +141,7 @@ public class UI {
                 ArrayList<String> al = new ArrayList<>();
                 al.add("proposta");
                 int option1 = PAInput.chooseOption("Lista de Propostas:", "Autoproposta", "Proposta de Docentes",
-                        "Propostas Disponiveis", "Propostas Atribuidas");
+                                                    "Propostas com Candidaturas", "Propostas sem Candidaturas");
                 switch(option1){
                     case 1 -> {
                         al.add("autoproposta");
@@ -236,8 +236,8 @@ public class UI {
             case 2 -> {
                 ArrayList<String> al = new ArrayList<>();
                 al.add("student");
-                int option1 = PAInput.chooseOption("Lista de Propostas:", "Autoproposta", "Proposta de Docentes",
-                        "Propostas Disponiveis", "Propostas Atribuidas");
+                int option1 = PAInput.chooseOption("Lista de Alunos:", "Proposta Atribuida com Orientador",
+                                                    "Proposta Atribuida sem Orientador");
                 switch(option1){
                     case 1 -> {
                         al.add("associado");
@@ -250,13 +250,9 @@ public class UI {
                 }
             }
             case 3 -> {
-                int option1 = PAInput.chooseOption("Lista de Propostas:", "Autoproposta", "Proposta de Docentes",
-                        "Propostas Disponiveis", "Propostas Atribuidas");
-                switch(option1){
-                    case 1 -> {
-
-                    }
-                }
+                ArrayList<String> al = new ArrayList<>();
+                al.add("docente");
+                System.out.println(fsm.lista(al));
             }
             case 4 -> fsm.closeState();
             case 5 -> fsm.previousPhase();
@@ -285,13 +281,9 @@ public class UI {
                 }
             }
             case 2 -> {
-                int option1 = PAInput.chooseOption("Lista de Propostas:", "Autoproposta", "Proposta de Docentes",
-                        "Propostas Disponiveis", "Propostas Atribuidas");
-                switch(option1){
-                    case 1 -> {
-
-                    }
-                }
+                ArrayList<String> al = new ArrayList<>();
+                al.add("docente");
+                System.out.println(fsm.lista(al));
             }
             case 3 -> {
                 ArrayList<String> al = new ArrayList<>();

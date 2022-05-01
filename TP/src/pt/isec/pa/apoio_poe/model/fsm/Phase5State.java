@@ -46,9 +46,11 @@ public class Phase5State extends PhaseStateAdapter{
             }
         }
         if(al.contains("docente")){
-
-            //Falta Fazer
-
+            sb.append("Em média, um docente orienta " + phase.getMediaOrientadores() + " projetos.\n");
+            for(int i = 0; i < phase.getDocentes().size(); i++){
+                sb.append(phase.getDocentes().get(i).toString());
+            }
+            return sb.toString();
         }
         if(al.contains("proposta")){
             if(al.get(1).equals("disponiveis")){

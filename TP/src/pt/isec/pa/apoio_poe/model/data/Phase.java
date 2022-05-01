@@ -200,7 +200,7 @@ public class Phase {
         System.out.println(sb.toString());
     }
 
-    public int getMediaOrientadores(){
+    public float getMediaOrientadores(){
         int count = 0;
         for(int i = 0; i < docentes.size(); i++){
             if(docentes.get(i).getOrientador()){
