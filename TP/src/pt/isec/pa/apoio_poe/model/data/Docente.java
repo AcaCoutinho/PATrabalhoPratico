@@ -3,7 +3,7 @@ package pt.isec.pa.apoio_poe.model.data;
 public class Docente {
     private String email;
     private String nome;
-    private boolean tipo; //0 -> proponente ; 1 -> orientador
+    private boolean orientador;
 
     public Docente(String nome, String email){
         this.email = email;
@@ -22,6 +22,13 @@ public class Docente {
     }
     void setNome(String nome){
         this.nome = nome;
+    }
+
+    public boolean getOrientador(){
+        return orientador;
+    }
+    void setOrientador(boolean orientador){
+        this.orientador = orientador;
     }
 
     @Override

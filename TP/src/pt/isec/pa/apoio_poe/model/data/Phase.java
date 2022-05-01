@@ -172,4 +172,14 @@ public class Phase {
         }
         return tmp;
     }
+
+    public int getMediaOrientadores(){
+        int count = 0;
+        for(int i = 0; i < docentes.size(); i++){
+            if(docentes.get(i).getOrientador()){
+                count++;
+            }
+        }
+        return (count / docentes.size());
+    }
 }

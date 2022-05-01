@@ -11,6 +11,11 @@ public class Candidatura {
         this.n_aluno = n_aluno;
     }
 
+    public ArrayList<String> getIdPropostas(){
+        ArrayList<String> tmp = new ArrayList<>(idPropostas);
+        return tmp;
+    }
+
     public void adicionaId(ArrayList<String> idPropostas) {
         this.idPropostas.addAll(idPropostas);
     }
