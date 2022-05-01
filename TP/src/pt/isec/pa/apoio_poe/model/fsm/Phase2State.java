@@ -18,7 +18,30 @@ public class Phase2State extends PhaseStateAdapter{
 
     @Override
     public void insert(String tipo, String fileName) {
+        ArrayList<String> dados = new ArrayList<>();
+        long n_aluno;
+        Candidatura aux;
 
+        try{
+            File f = new File(fileName);
+            FileReader fr = new FileReader(f);
+            BufferedReader br = new BufferedReader(fr);
+            Scanner sc = new Scanner(br);
+
+            while(sc.hasNext()){
+                dados.add(sc.next());
+            }
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        n_aluno = Long.parseLong(dados.get(0));
+        dados.remove(0);
+        aux = new Candidatura(n_aluno);
+        aux.adicionaId(dados);
+
+        phase.adicionaCandidatura(aux);
     }
 
     @Override
@@ -54,13 +77,11 @@ public class Phase2State extends PhaseStateAdapter{
                 return sb.toString();
             }
             if (al.get(1).equals("no_candidatura")) {
+                ArrayList<Long> n_alunos = new ArrayList<>();
+                for(int i = 0; i < phase.getCandidaturas().size(); i++){
 
-
-                //Ainda falta fazer este
-
-
+                }
             }
-            return sb.toString();
         }
         if(al.contains("proposta")){
             if(al.get(1).equals("autoproposta")){
@@ -98,11 +119,18 @@ public class Phase2State extends PhaseStateAdapter{
                 return sb.toString();
             }
             if(al.get(1).equals("no_candidatura")){
+                ArrayList<String> ids = new ArrayList<>();
+                for(int i = 0; i < phase.getCandidaturas().size(); i++){
+                    ids.addAll(phase.getCandidaturas().get(i).getIdPropostas());
+                }
+                for(int i = 0; i < phase.getPropostas().size(); i++){
+                    for(int j = 0; j < ids.size(); j++){
+                        if(phase.procuraProposta(ids.get(j)).equals(phase.getPropostas().get(i))){
 
-
-                //Ainda falta fazer este
-
-
+                        }
+                    }
+                }
+                return sb.toString();
             }
         }
         return null;
