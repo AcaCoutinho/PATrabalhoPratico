@@ -11,7 +11,7 @@ public abstract class Proposta {
         this.n_alunoAt = n_alunoAt;
     }
 
-    String getCa(){
+    public String getCa(){
         return ca;
     }
 
@@ -22,6 +22,6 @@ public abstract class Proposta {
         this.titulo = titulo;
     }
 
-    long getN_alunoAt() { return n_alunoAt; }
+    public long getN_alunoAt() { return n_alunoAt; }
     void setN_alunoAt(long n_alunoAt) { this.n_alunoAt = n_alunoAt; }
 }

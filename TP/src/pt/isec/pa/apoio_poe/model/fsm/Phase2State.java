@@ -73,14 +73,24 @@ public class Phase2State extends PhaseStateAdapter{
                     aux1 = phase.procuraAluno(phase.getCandidaturas().get(i).getN_aluno());
                     sb.append(aux1.toString());
                 }
-
                 return sb.toString();
             }
             if (al.get(1).equals("no_candidatura")) {
+                ArrayList<Long> n_alunosCandidaturas = new ArrayList<>();
                 ArrayList<Long> n_alunos = new ArrayList<>();
                 for(int i = 0; i < phase.getCandidaturas().size(); i++){
-
+                    n_alunosCandidaturas.add(phase.getCandidaturas().get(i).getN_aluno());
                 }
+
+                for(int i = 0; i < phase.getAlunos().size(); i++){
+                    n_alunos.add(phase.getAlunos().get(i).getN_aluno());
+                }
+
+                n_alunos.removeAll(n_alunosCandidaturas);
+                for(int i = 0; i < n_alunos.size(); i++){
+                    sb.append(phase.procuraAluno(n_alunos.get(i)));
+                }
+                return sb.toString();
             }
         }
         if(al.contains("proposta")){
@@ -101,34 +111,41 @@ public class Phase2State extends PhaseStateAdapter{
                 return sb.toString();
             }
             if(al.get(1).equals("candidatura")){
+                ArrayList<String> ids = new ArrayList<>();
+                for(int i = 0; i < phase.getCandidaturas().size(); i++){
+                    ids.addAll(phase.getCandidaturas().get(i).getIdPropostas());
+                }
+
                 for(int i = 0; i < phase.getPropostas().size(); i++){
-                    if(phase.getPropostas().get(i) instanceof Autoproposto aux){
-                        sb.append(aux.toString());
-                    }
-                    if(phase.getPropostas().get(i) instanceof Projeto aux){
-                        if(aux.getN_alunoAt() != 0){
-                            sb.append(aux.toString());
+                    for(int j = 0; j < ids.size(); j++){
+                        if(phase.getPropostas().get(i) instanceof Estagio aux){
+                            if(aux.getCa().equals(ids.get(j))){
+                                sb.append(aux.toString());
+                            }
                         }
-                    }
-                    if(phase.getPropostas().get(i) instanceof Estagio aux){
-                        if(aux.getN_alunoAt() != 0){
-                            sb.append(aux.toString());
+                        if(phase.getPropostas().get(i) instanceof Projeto aux) {
+                            if(aux.getCa().equals(ids.get(j))){
+                                sb.append(aux.toString());
+                            }
                         }
                     }
                 }
                 return sb.toString();
             }
             if(al.get(1).equals("no_candidatura")){
-                ArrayList<String> ids = new ArrayList<>();
+                ArrayList<String> idsCandidatura = new ArrayList<>();
+                ArrayList<String> idsPropostas = new ArrayList<>();
                 for(int i = 0; i < phase.getCandidaturas().size(); i++){
-                    ids.addAll(phase.getCandidaturas().get(i).getIdPropostas());
+                    idsCandidatura.addAll(phase.getCandidaturas().get(i).getIdPropostas());
                 }
-                for(int i = 0; i < phase.getPropostas().size(); i++){
-                    for(int j = 0; j < ids.size(); j++){
-                        if(phase.procuraProposta(ids.get(j)).equals(phase.getPropostas().get(i))){
 
-                        }
-                    }
+                for(int i = 0; i < phase.getPropostas().size(); i++){
+                    idsPropostas.add(phase.getPropostas().get(i).getCa());
+                }
+
+                idsPropostas.removeAll(idsCandidatura);
+                for(int i = 0; i < idsPropostas.size(); i++){
+                    sb.append(phase.procuraProposta(idsPropostas.get(i)));
                 }
                 return sb.toString();
             }
