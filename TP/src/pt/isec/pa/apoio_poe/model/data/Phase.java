@@ -1,6 +1,5 @@
 package pt.isec.pa.apoio_poe.model.data;
 
-import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,12 +8,14 @@ public class Phase {
     private ArrayList<Docente> docentes;
     private ArrayList<Proposta> propostas;
     private ArrayList<Candidatura> candidaturas;
+    private HashMap<Aluno, Candidatura> alunoCandidatura;
 
     public Phase() {
         alunos = new ArrayList<>();
         docentes = new ArrayList<>();
         propostas = new ArrayList<>();
         candidaturas = new ArrayList<>();
+        alunoCandidatura = new HashMap<>();
     }
 
     public boolean adicionaAluno(Aluno aluno){
@@ -145,6 +146,12 @@ public class Phase {
         return false;
     }
 
+    public void mostraCandidaturas(){
+        for(var i : candidaturas){
+            System.out.println(i.toString());
+        }
+    }
+
     public ArrayList<Aluno> getAlunos(){
         ArrayList<Aluno> tmp = new ArrayList<>(alunos);
         return tmp;
@@ -171,6 +178,26 @@ public class Phase {
             tmp.put(i.getCa(), i.getN_alunoAt());
         }
         return tmp;
+    }
+
+    public void associaAlunoCandidatura(){
+        for(var i : alunos){
+            for(var j : candidaturas){
+                if(i.getN_aluno() == j.getN_aluno()){
+                    alunoCandidatura.put(i, j);
+                }
+            }
+        }
+    }
+
+    public void mostraAlunosCandidaturas(){
+        StringBuilder sb = new StringBuilder();
+        for (var i : alunoCandidatura.keySet()) {
+            sb.append("\n" + i.toString());
+            sb.append("\n" + alunoCandidatura.get(i).toString());
+            sb.append("\n");
+        }
+        System.out.println(sb.toString());
     }
 
     public int getMediaOrientadores(){

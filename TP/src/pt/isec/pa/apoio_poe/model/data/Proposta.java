@@ -15,13 +15,13 @@ public abstract class Proposta {
         return ca;
     }
 
-    String getTitulo(){
+    public String getTitulo(){
         return titulo;
     }
-    void setTitulo(String titulo){
+    public void setTitulo(String titulo){
         this.titulo = titulo;
     }
 
     public long getN_alunoAt() { return n_alunoAt; }
-    void setN_alunoAt(long n_alunoAt) { this.n_alunoAt = n_alunoAt; }
+    public void setN_alunoAt(long n_alunoAt) { this.n_alunoAt = n_alunoAt; }
 }

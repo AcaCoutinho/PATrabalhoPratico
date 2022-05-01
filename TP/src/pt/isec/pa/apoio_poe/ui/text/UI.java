@@ -103,8 +103,8 @@ public class UI {
     }
 
     public void phase2UI() {
-        int option = PAInput.chooseOption("Fase 2 - Opções de Candidatura:","Insert",
-                                            "", "Fechar Fase", "Fase Anterior", "Proxima Fase");
+        int option = PAInput.chooseOption("Fase 2 - Opções de Candidatura:","Inserir",
+                                            "Consultar", "Lista de Alunos", "Lista de Propostas", "Fechar Fase", "Fase Anterior", "Proxima Fase");
         switch (option) {
             case 1 -> {
                 String fileName = PAInput.readString("Nome do ficheiro CSV com dados de candidatura: ", true);
@@ -117,9 +117,53 @@ public class UI {
                 al.add(n_alunoS);
                 fsm.consult(al);
             }
-            case 3 -> fsm.closeState();
-            case 4 -> fsm.previousPhase();
-            case 5 -> fsm.nextPhase();
+            case 3 -> {
+                ArrayList<String> al = new ArrayList<>();
+                al.add("student");
+                int option1 = PAInput.chooseOption("Lista de Propostas:", "Autoproposta", "Proposta de Docentes",
+                        "Propostas Disponiveis", "Propostas Atribuidas");
+                switch(option1){
+                    case 1 -> {
+                        al.add("autoproposta");
+                        fsm.lista(al);
+                    }
+                    case 2 -> {
+                        al.add("candidatura");
+                        fsm.lista(al);
+                    }
+                    case 3 -> {
+                        al.add("no_candidatura");
+                        fsm.lista(al);
+                    }
+                }
+            }
+            case 4 -> {
+                ArrayList<String> al = new ArrayList<>();
+                al.add("proposta");
+                int option1 = PAInput.chooseOption("Lista de Propostas:", "Autoproposta", "Proposta de Docentes",
+                        "Propostas Disponiveis", "Propostas Atribuidas");
+                switch(option1){
+                    case 1 -> {
+                        al.add("autoproposta");
+                        fsm.lista(al);
+                    }
+                    case 2 -> {
+                        al.add("docente");
+                        fsm.lista(al);
+                    }
+                    case 3 -> {
+                        al.add("candidatura");
+                        fsm.lista(al);
+                    }
+                    case 4 -> {
+                        al.add("no_candidatura");
+                        fsm.lista(al);
+                    }
+                }
+            }
+            case 5 -> fsm.closeState();
+            case 6 -> fsm.previousPhase();
+            case 7 -> fsm.nextPhase();
         }
     }
 
@@ -130,19 +174,90 @@ public class UI {
         switch (option) {
             case 1 -> fsm.assignment(0);
             case 2 -> fsm.assignment(1);
-            case 3 -> fsm.closeState();
-            case 4 -> fsm.previousPhase();
-            case 5 -> fsm.nextPhase();
+            case 5 -> {
+                ArrayList<String> al = new ArrayList<>();
+                al.add("student");
+                int option1 = PAInput.chooseOption("Lista de Alunos:", "Têm autoproposta associada", "Candidatura registada",
+                                                    "Proposta Atribuida", "Não têm proposta atribuida");
+                switch (option1){
+                    case 1 -> {
+                        al.add("autoproposta");
+                        fsm.lista(al);
+                    }
+                    case 2 -> {
+                        al.add("candidatura");
+                        fsm.lista(al);
+                    }
+                    case 3 -> {
+                        al.add("atribuida");
+                        fsm.lista(al);
+                    }
+                    case 4 -> {
+                        al.add("no");
+                        fsm.lista(al);
+                    }
+                }
+            }
+            case 6 -> {
+                ArrayList<String> al = new ArrayList<>();
+                al.add("proposta");
+                int option1 = PAInput.chooseOption("Lista de Propostas:", "Autoproposta", "Proposta de Docentes",
+                                                    "Propostas Disponiveis", "Propostas Atribuidas");
+                switch(option1){
+                    case 1 -> {
+                        al.add("autoproposta");
+                        fsm.lista(al);
+                    }
+                    case 2 -> {
+                        al.add("docente");
+                        fsm.lista(al);
+                    }
+                    case 3 -> {
+                        al.add("disponiveis");
+                        fsm.lista(al);
+                    }
+                    case 4 -> {
+                        al.add("atribuidas");
+                        fsm.lista(al);
+                    }
+                }
+            }
+            case 7 -> fsm.closeState();
+            case 8 -> fsm.previousPhase();
+            case 9 -> fsm.nextPhase();
         }
     }
 
     public void phase4UI() {
-        int option = PAInput.chooseOption("Fase 4 - Atribuição de Orientadores:","1 - Student",
-                                            "2 - Docente", "3 - Proposta", "Fechar Fase", "Fase Anterior", "Proxima Fase");
+        int option = PAInput.chooseOption("Fase 4 - Atribuição de Orientadores:","Automática (associação)",
+                                            "Lista de Alunos", "Lista de Docentes", "Fechar Fase", "Fase Anterior", "Proxima Fase");
         switch (option) {
-            //case 1 -> ;
-            //case 2 -> ;
-            //case 3 -> ;
+            case 1 -> fsm.assignment(0);
+            case 2 -> {
+                ArrayList<String> al = new ArrayList<>();
+                al.add("student");
+                int option1 = PAInput.chooseOption("Lista de Propostas:", "Autoproposta", "Proposta de Docentes",
+                        "Propostas Disponiveis", "Propostas Atribuidas");
+                switch(option1){
+                    case 1 -> {
+                        al.add("associado");
+                        fsm.lista(al);
+                    }
+                    case 2 -> {
+                        al.add("no_associado");
+                        fsm.lista(al);
+                    }
+                }
+            }
+            case 3 -> {
+                int option1 = PAInput.chooseOption("Lista de Propostas:", "Autoproposta", "Proposta de Docentes",
+                        "Propostas Disponiveis", "Propostas Atribuidas");
+                switch(option1){
+                    case 1 -> {
+
+                    }
+                }
+            }
             case 4 -> fsm.closeState();
             case 5 -> fsm.previousPhase();
             case 6 -> fsm.nextPhase();
@@ -150,10 +265,51 @@ public class UI {
     }
 
     public void phase5UI() {
-        int option = PAInput.chooseOption("Fase 5 - Consulta:","Student",
-                                            "Docente", "Sair da Aplicação");
+        int option = PAInput.chooseOption("Fase 5 - Consulta:","Alunos",
+                                            "Docentes", "Propostas", "Sair da Aplicação");
         switch (option) {
-            case 3 -> finish = true;
+            case 1 -> {
+                ArrayList<String> al = new ArrayList<>();
+                al.add("student");
+                int option1 = PAInput.chooseOption("Lista de Propostas:", "Autoproposta", "Proposta de Docentes",
+                        "Propostas Disponiveis", "Propostas Atribuidas");
+                switch(option1){
+                    case 1 -> {
+                        al.add("atribuidas");
+                        fsm.lista(al);
+                    }
+                    case 2 -> {
+                        al.add("candidatura");
+                        fsm.lista(al);
+                    }
+                }
+            }
+            case 2 -> {
+                int option1 = PAInput.chooseOption("Lista de Propostas:", "Autoproposta", "Proposta de Docentes",
+                        "Propostas Disponiveis", "Propostas Atribuidas");
+                switch(option1){
+                    case 1 -> {
+
+                    }
+                }
+            }
+            case 3 -> {
+                ArrayList<String> al = new ArrayList<>();
+                al.add("proposta");
+                int option1 = PAInput.chooseOption("Lista de Propostas:", "Autoproposta", "Proposta de Docentes",
+                        "Propostas Disponiveis", "Propostas Atribuidas");
+                switch(option1){
+                    case 1 -> {
+                        al.add("disponiveis");
+                        fsm.lista(al);
+                    }
+                    case 2 -> {
+                        al.add("atribuidas");
+                        fsm.lista(al);
+                    }
+                }
+            }
+            case 4 -> finish = true;
         }
     }
 }

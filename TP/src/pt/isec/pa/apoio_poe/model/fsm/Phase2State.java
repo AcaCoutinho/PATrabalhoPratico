@@ -20,6 +20,7 @@ public class Phase2State extends PhaseStateAdapter{
     public void insert(String tipo, String fileName) {
         ArrayList<String> dados = new ArrayList<>();
         long n_aluno;
+        ArrayList<String> idPropostas = new ArrayList<>();
         Candidatura aux;
 
         try{
@@ -27,6 +28,7 @@ public class Phase2State extends PhaseStateAdapter{
             FileReader fr = new FileReader(f);
             BufferedReader br = new BufferedReader(fr);
             Scanner sc = new Scanner(br);
+            sc.useDelimiter(",|\\n");
 
             while(sc.hasNext()){
                 dados.add(sc.next());
@@ -36,12 +38,26 @@ public class Phase2State extends PhaseStateAdapter{
             e.printStackTrace();
         }
 
-        n_aluno = Long.parseLong(dados.get(0));
-        dados.remove(0);
-        aux = new Candidatura(n_aluno);
-        aux.adicionaId(dados);
+        int i = 0;
+        while(i < dados.size()) {
+            n_aluno = Long.parseLong(dados.get(i++));
+            while(dados.get(i).contains("P")){
+                idPropostas.add(dados.get(i).trim());
+                if(i+1 == dados.size()){
+                    i++;
+                    break;
+                }else{
+                    i++;
+                }
+            }
+            aux = new Candidatura(n_aluno);
+            aux.adicionaId(idPropostas);
+            phase.adicionaCandidatura(aux);
+            idPropostas.clear();
+        }
 
-        phase.adicionaCandidatura(aux);
+        phase.associaAlunoCandidatura();
+        phase.mostraAlunosCandidaturas();
     }
 
     @Override

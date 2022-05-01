@@ -1,6 +1,6 @@
 package pt.isec.pa.apoio_poe.model.data;
 
-public class Aluno {
+public class Aluno{
     private long n_aluno;
     private String nome;
     private String email;
@@ -65,23 +65,7 @@ public class Aluno {
     public Proposta getPropAtribuida(){ return propAtribuida; }
     public void setPropAtribuida(Proposta propAtribuida){ this.propAtribuida = propAtribuida; }
 
-    public boolean turnOnAccess(){
-        if(!access){
-            access = true;
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    public boolean turnOfAccess(){
-        if(access){
-            access = false;
-            return true;
-        }else{
-            return false;
-        }
-    }
+    public boolean getAccess(){ return access; }
 
     @Override
     public String toString(){
@@ -92,9 +76,9 @@ public class Aluno {
             sb.append("\nPROPOSTA-----" + propAtribuida.toString() + "\n----------\n");
         }
         if(access){
-            sb.append("Possui acesso a estágio");
+            sb.append(" Possui acesso a estágio");
         }else{
-            sb.append("Não possui acesso a estágio");
+            sb.append(" Não possui acesso a estágio");
         }
         return sb.toString();
     }

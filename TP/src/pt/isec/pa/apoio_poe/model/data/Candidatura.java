@@ -26,6 +26,14 @@ public class Candidatura {
 
     @Override
     public String toString() {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        sb.append("\nNumero de aluno: ");
+        sb.append(n_aluno);
+        sb.append("\nLista de propostas: ");
+        for(var i : idPropostas){
+            sb.append(i);
+            sb.append("\t");
+        }
+        return sb.toString();
     }
 }
