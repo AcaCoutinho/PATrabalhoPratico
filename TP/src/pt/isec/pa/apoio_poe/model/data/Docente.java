@@ -4,6 +4,7 @@ public class Docente {
     private String email;
     private String nome;
     private boolean orientador;
+    private Projeto projeto;
 
     public Docente(String nome, String email){
         this.email = email;
@@ -27,14 +28,20 @@ public class Docente {
     public boolean getOrientador(){
         return orientador;
     }
-    void setOrientador(boolean orientador){
+    public void setOrientador(boolean orientador){
         this.orientador = orientador;
     }
+
+    public Proposta getProjeto(){ return projeto; }
+    public void setProjeto(Projeto projeto){ this.projeto = projeto; }
 
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("\nNome: " + nome + "\tEmail: " + email);
+        if(orientador){
+            sb.append(projeto.getCa());
+        }
         return sb.toString();
     }
 }

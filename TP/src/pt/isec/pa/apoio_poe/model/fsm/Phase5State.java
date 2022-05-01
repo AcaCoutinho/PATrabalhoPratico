@@ -47,44 +47,13 @@ public class Phase5State extends PhaseStateAdapter{
         }
         if(al.contains("docente")){
 
-            //Falta Fazer
-
         }
         if(al.contains("proposta")){
             if(al.get(1).equals("disponiveis")){
-                for(int i = 0; i < phase.getPropostas().size(); i++){
-                    if(phase.getPropostas().get(i) instanceof Estagio aux){
-                        if(aux.getN_alunoAt() == 0){
-                            sb.append(aux.toString());
-                        }
-                    }
-                    if(phase.getPropostas().get(i) instanceof Projeto aux){
-                        if(aux.getN_alunoAt() == 0){
-                            sb.append(aux.toString());
-                        }
-                    }
-                }
-                return sb.toString();
+
             }
             if(al.get(1).equals("atribuidas")){
-                for(int i = 0; i < phase.getPropostas().size(); i++){
-                    if(phase.getPropostas().get(i) instanceof Autoproposto aux){
-                        if(aux.getN_alunoAt() != 0){
-                            sb.append(aux.toString());
-                        }
-                    }
-                    if(phase.getPropostas().get(i) instanceof Estagio aux){
-                        if(aux.getN_alunoAt() != 0){
-                            sb.append(aux.toString());
-                        }
-                    }
-                    if(phase.getPropostas().get(i) instanceof Projeto aux){
-                        if(aux.getN_alunoAt() != 0){
-                            sb.append(aux.toString());
-                        }
-                    }
-                }
-                return sb.toString();
+
             }
         }
         return null;

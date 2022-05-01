@@ -103,8 +103,8 @@ public class UI {
     }
 
     public void phase2UI() {
-        int option = PAInput.chooseOption("Fase 2 - Opções de Candidatura:","Insert",
-                                            "", "Fechar Fase", "Fase Anterior", "Proxima Fase");
+        int option = PAInput.chooseOption("Fase 2 - Opções de Candidatura:","Inserir",
+                                            "Consultar", "Fechar Fase", "Fase Anterior", "Proxima Fase");
         switch (option) {
             case 1 -> {
                 String fileName = PAInput.readString("Nome do ficheiro CSV com dados de candidatura: ", true);
@@ -137,10 +137,10 @@ public class UI {
     }
 
     public void phase4UI() {
-        int option = PAInput.chooseOption("Fase 4 - Atribuição de Orientadores:","1 - Student",
-                                            "2 - Docente", "3 - Proposta", "Fechar Fase", "Fase Anterior", "Proxima Fase");
+        int option = PAInput.chooseOption("Fase 4 - Atribuição de Orientadores:","Automática (associação)",
+                                            "Docente", "Proposta", "Fechar Fase", "Fase Anterior", "Proxima Fase");
         switch (option) {
-            //case 1 -> ;
+            case 1 -> fsm.assignment(0);
             //case 2 -> ;
             //case 3 -> ;
             case 4 -> fsm.closeState();
