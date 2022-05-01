@@ -125,15 +125,15 @@ public class UI {
                 switch(option1){
                     case 1 -> {
                         al.add("autoproposta");
-                        fsm.lista(al);
+                        System.out.println(fsm.lista(al));
                     }
                     case 2 -> {
                         al.add("candidatura");
-                        fsm.lista(al);
+                        System.out.println(fsm.lista(al));
                     }
                     case 3 -> {
                         al.add("no_candidatura");
-                        fsm.lista(al);
+                        System.out.println(fsm.lista(al));
                     }
                 }
             }
@@ -145,19 +145,19 @@ public class UI {
                 switch(option1){
                     case 1 -> {
                         al.add("autoproposta");
-                        fsm.lista(al);
+                        System.out.println(fsm.lista(al));
                     }
                     case 2 -> {
                         al.add("docente");
-                        fsm.lista(al);
+                        System.out.println(fsm.lista(al));
                     }
                     case 3 -> {
                         al.add("candidatura");
-                        fsm.lista(al);
+                        System.out.println(fsm.lista(al));
                     }
                     case 4 -> {
                         al.add("no_candidatura");
-                        fsm.lista(al);
+                        System.out.println(fsm.lista(al));
                     }
                 }
             }
@@ -182,19 +182,19 @@ public class UI {
                 switch (option1){
                     case 1 -> {
                         al.add("autoproposta");
-                        fsm.lista(al);
+                        System.out.println(fsm.lista(al));
                     }
                     case 2 -> {
                         al.add("candidatura");
-                        fsm.lista(al);
+                        System.out.println(fsm.lista(al));
                     }
                     case 3 -> {
                         al.add("atribuida");
-                        fsm.lista(al);
+                        System.out.println(fsm.lista(al));
                     }
                     case 4 -> {
                         al.add("no");
-                        fsm.lista(al);
+                        System.out.println(fsm.lista(al));
                     }
                 }
             }
@@ -206,19 +206,19 @@ public class UI {
                 switch(option1){
                     case 1 -> {
                         al.add("autoproposta");
-                        fsm.lista(al);
+                        System.out.println(fsm.lista(al));
                     }
                     case 2 -> {
                         al.add("docente");
-                        fsm.lista(al);
+                        System.out.println(fsm.lista(al));
                     }
                     case 3 -> {
                         al.add("disponiveis");
-                        fsm.lista(al);
+                        System.out.println(fsm.lista(al));
                     }
                     case 4 -> {
                         al.add("atribuidas");
-                        fsm.lista(al);
+                        System.out.println(fsm.lista(al));
                     }
                 }
             }
@@ -241,11 +241,11 @@ public class UI {
                 switch(option1){
                     case 1 -> {
                         al.add("associado");
-                        fsm.lista(al);
+                        System.out.println(fsm.lista(al));
                     }
                     case 2 -> {
                         al.add("no_associado");
-                        fsm.lista(al);
+                        System.out.println(fsm.lista(al));
                     }
                 }
             }

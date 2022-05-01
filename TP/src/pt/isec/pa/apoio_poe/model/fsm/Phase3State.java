@@ -24,7 +24,6 @@ public class Phase3State extends PhaseStateAdapter{
                     phase.procuraAluno(propostas.get(i)).setPropAtribuida(phase.procuraProposta(i));
                 }
             }
-            phase.mostraAlunos();
         }else{
             ArrayList<Aluno> alunosSem = phase.getAlunos();
             ArrayList<Proposta> propostasSem = phase.getPropostas();
@@ -62,8 +61,6 @@ public class Phase3State extends PhaseStateAdapter{
                 propostasSem.remove(i.getPropAtribuida());
             }
             alunosSem.clear();
-            phase.mostraAlunos();
-            phase.mostraPropostas();
         }
     }
 

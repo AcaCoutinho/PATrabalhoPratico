@@ -3,14 +3,12 @@ package pt.isec.pa.apoio_poe.model.fsm;
 import pt.isec.pa.apoio_poe.model.data.*;
 import pt.isec.pa.apoio_poe.utils.PAInput;
 
-import javax.print.Doc;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
 
 public class Phase1State extends PhaseStateAdapter{
     private boolean isClosed;
@@ -42,7 +40,7 @@ public class Phase1State extends PhaseStateAdapter{
             while(i < dados.size()){
                 phase.adicionaAluno(new Aluno(Long.parseLong(dados.get(i++)), dados.get(i++), dados.get(i++), dados.get(i++), dados.get(i++), Double.parseDouble(dados.get(i++)), Boolean.parseBoolean(dados.get(i++).trim())));
             }
-            phase.mostraAlunos();
+            //phase.mostraAlunos();
         }
         if(tipo.equals("docente")){
             try{
@@ -64,7 +62,7 @@ public class Phase1State extends PhaseStateAdapter{
             while(i < dados.size()){
                 phase.adicionaDocente(new Docente(dados.get(i++), dados.get(i++).trim()));
             }
-            phase.mostraDocentes();
+            //phase.mostraDocentes();
         }
         if(tipo.equals("proposta")){
             try{
@@ -107,7 +105,7 @@ public class Phase1State extends PhaseStateAdapter{
                 }
                 System.out.println("\nCheguei ao fim\n");
             }
-            phase.mostraPropostas();
+            //phase.mostraPropostas();
         }
     }
 

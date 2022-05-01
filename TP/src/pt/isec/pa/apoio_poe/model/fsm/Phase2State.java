@@ -57,7 +57,6 @@ public class Phase2State extends PhaseStateAdapter{
         }
 
         phase.associaAlunoCandidatura();
-        phase.mostraAlunosCandidaturas();
     }
 
     @Override

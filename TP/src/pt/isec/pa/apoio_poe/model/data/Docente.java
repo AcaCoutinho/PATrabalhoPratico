@@ -9,6 +9,7 @@ public class Docente {
     public Docente(String nome, String email){
         this.email = email;
         this.nome = nome;
+        orientador = false;
     }
 
     public String getEmail(){
@@ -38,9 +39,11 @@ public class Docente {
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("\nNome: " + nome + "\tEmail: " + email);
+        sb.append("\nNome: ").append(nome).append("\tEmail: ").append(email + "\n");
         if(orientador){
+            sb.append("Código do projeto associado: ");
             sb.append(projeto.getCa());
+            sb.append("\n");
         }
         return sb.toString();
     }
