@@ -8,6 +8,7 @@ import pt.isec.pa.apoio_poe.model.fsm.PhaseState;
 import pt.isec.pa.apoio_poe.model.fsm.PhaseContext;
 import pt.isec.pa.apoio_poe.utils.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class UI {
@@ -19,7 +20,7 @@ public class UI {
         finish = false;
     }
 
-    public void start() {
+    public void start() throws IOException {
         while (!finish){
             switch (fsm.getState()){
                case PHASE_1 -> phase1UI();
@@ -167,10 +168,10 @@ public class UI {
         }
     }
 
-    public void phase3UI() {
+    public void phase3UI() throws IOException {
         int option = PAInput.chooseOption("Fase 3 - Atribuição de Propostas:","Automática (associação)",
                                             "Automática (sem atribuições)", "Manual", "Remover", "Lista de alunos",
-                                            "Lista de propostas", "Fechar Fase", "Fase Anterior", "Proxima Fase");
+                                            "Lista de propostas", "Exportar", "Fechar Fase", "Fase Anterior", "Proxima Fase");
         switch (option) {
             case 1 -> fsm.assignment(0);
             case 2 -> fsm.assignment(1);
@@ -222,15 +223,19 @@ public class UI {
                     }
                 }
             }
-            case 7 -> fsm.closeState();
-            case 8 -> fsm.previousPhase();
-            case 9 -> fsm.nextPhase();
+            case 7 -> {
+                String fileName = PAInput.readString("Nome do ficheiro CSV com dados de docentes: ", true);
+                fsm.export(fileName);
+            }
+            case 8 -> fsm.closeState();
+            case 9 -> fsm.previousPhase();
+            case 10 -> fsm.nextPhase();
         }
     }
 
-    public void phase4UI() {
+    public void phase4UI() throws IOException {
         int option = PAInput.chooseOption("Fase 4 - Atribuição de Orientadores:","Automática (associação)",
-                                            "Lista de Alunos", "Lista de Docentes", "Fechar Fase", "Fase Anterior", "Proxima Fase");
+                                            "Lista de Alunos", "Lista de Docentes", "Exportar", "Fechar Fase", "Fase Anterior", "Proxima Fase");
         switch (option) {
             case 1 -> fsm.assignment(0);
             case 2 -> {
@@ -254,15 +259,19 @@ public class UI {
                 al.add("docente");
                 System.out.println(fsm.lista(al));
             }
-            case 4 -> fsm.closeState();
-            case 5 -> fsm.previousPhase();
-            case 6 -> fsm.nextPhase();
+            case 4 -> {
+                String fileName = PAInput.readString("Nome do ficheiro CSV com dados de docentes: ", true);
+                fsm.export(fileName);
+            }
+            case 5 -> fsm.closeState();
+            case 6 -> fsm.previousPhase();
+            case 7 -> fsm.nextPhase();
         }
     }
 
-    public void phase5UI() {
+    public void phase5UI() throws IOException {
         int option = PAInput.chooseOption("Fase 5 - Consulta:","Alunos",
-                                            "Docentes", "Propostas", "Sair da Aplicação");
+                                            "Docentes", "Propostas", "Exportar", "Sair da Aplicação");
         switch (option) {
             case 1 -> {
                 ArrayList<String> al = new ArrayList<>();
@@ -301,7 +310,11 @@ public class UI {
                     }
                 }
             }
-            case 4 -> finish = true;
+            case 4 -> {
+                String fileName = PAInput.readString("Nome do ficheiro CSV com dados de docentes: ", true);
+                fsm.export(fileName);
+            }
+            case 5 -> finish = true;
         }
     }
 }

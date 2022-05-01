@@ -2,6 +2,7 @@ package pt.isec.pa.apoio_poe.model.fsm;
 
 import pt.isec.pa.apoio_poe.model.data.*;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -176,6 +177,30 @@ public class Phase3State extends PhaseStateAdapter{
             }
         }
         return null;
+    }
+
+    @Override
+    public void export(String fileName) throws IOException {
+        try{
+            FileWriter fw = new FileWriter(fileName);
+            BufferedWriter br = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(br);
+
+            ArrayList<Aluno> alunos = phase.getAlunos();
+
+            for(int i = 0; i < alunos.size(); i++){
+                pw.append(alunos.get(i).getNome() + "," + alunos.get(i).getN_aluno() + "," + alunos.get(i).getEmail()+","
+                        + alunos.get(i).getSiglaC()+ "," + alunos.get(i).getSiglaR() + "," + alunos.get(i).getGrade());
+                if(alunos.get(i).getPropAtribuida() != null){
+                    pw.append("," + alunos.get(i).getPropAtribuida().getCa());
+                }
+                pw.append("\n");
+            }
+            pw.close();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     @Override

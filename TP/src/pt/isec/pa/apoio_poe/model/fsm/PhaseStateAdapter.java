@@ -2,6 +2,7 @@ package pt.isec.pa.apoio_poe.model.fsm;
 
 import pt.isec.pa.apoio_poe.model.data.Phase;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 abstract class PhaseStateAdapter implements IPhaseState{
@@ -41,6 +42,11 @@ abstract class PhaseStateAdapter implements IPhaseState{
 
     @Override
     public void assignment(int tipo){
+
+    }
+
+    @Override
+    public void export(String fileName) throws IOException {
 
     }
 

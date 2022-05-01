@@ -2,6 +2,7 @@ package pt.isec.pa.apoio_poe.model.fsm;
 
 import pt.isec.pa.apoio_poe.model.data.Phase;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class PhaseContext {
@@ -38,6 +39,10 @@ public class PhaseContext {
     }
 
     public void assignment(int tipo){ state.assignment(tipo); }
+
+    public void export(String fileName) throws IOException {
+        state.export(fileName);
+    }
 
     public String lista(ArrayList<String> al) {
         return state.lista(al);

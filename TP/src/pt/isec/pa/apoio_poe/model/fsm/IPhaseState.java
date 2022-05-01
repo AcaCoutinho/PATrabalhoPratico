@@ -1,5 +1,6 @@
 package pt.isec.pa.apoio_poe.model.fsm;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public interface IPhaseState {
@@ -9,6 +10,7 @@ public interface IPhaseState {
     void edit();
     void remove();
     void assignment(int tipo);
+    void export(String fileName) throws IOException;
 
     String lista(ArrayList<String> al);
 
