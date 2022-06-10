@@ -5,12 +5,12 @@ import pt.isec.pa.apoio_poe.model.data.Phase;
 import java.io.IOException;
 import java.util.ArrayList;
 
-abstract class PhaseStateAdapter implements IPhaseState{
+public abstract class PhaseStateAdapter implements IPhaseState{
     protected Phase phase;
     protected PhaseContext context;
     protected boolean status;
 
-    PhaseStateAdapter(Phase phase, PhaseContext context) {
+    protected PhaseStateAdapter(Phase phase, PhaseContext context) {
         this.phase = phase;
         this.context = context;
     }
