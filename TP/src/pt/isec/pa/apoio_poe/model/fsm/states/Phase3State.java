@@ -79,6 +79,7 @@ public class Phase3State extends PhaseStateAdapter {
 
     @Override
     public void closePhase() {
+        phase.setIsClosed(3, true);
         nextPhase();
     }
 
@@ -89,6 +90,8 @@ public class Phase3State extends PhaseStateAdapter {
 
     @Override
     public boolean previousPhase() {
+        if(phase.getisClosed(2))
+            return false;
         return(changePhaseState(PhaseState.PHASE_2));
     }
 

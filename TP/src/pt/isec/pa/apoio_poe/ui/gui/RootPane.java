@@ -1,6 +1,7 @@
 package pt.isec.pa.apoio_poe.ui.gui;
 
-import javafx.scene.layout.BorderPane;
+
+import javafx.scene.layout.*;
 import pt.isec.pa.apoio_poe.model.PhaseManager;
 
 public class RootPane extends BorderPane {
@@ -15,7 +16,12 @@ public class RootPane extends BorderPane {
     }
 
     private void createView(){
+        StackPane stackPane = new StackPane(
+                new Phase1UI(phaseManager),
+                new Phase2UI(phaseManager)
+        );
 
+        this.setCenter(stackPane);
     }
 
     private void registerHandlers() {

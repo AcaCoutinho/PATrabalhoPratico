@@ -12,12 +12,39 @@ public class Phase {
     private ArrayList<Candidatura> candidaturas;
     private HashMap<Aluno, Candidatura> alunoCandidatura;
 
+    boolean isClosed1, isClosed2, isClosed3, isClosed4;
+
     public Phase() {
         alunos = new ArrayList<>();
         docentes = new ArrayList<>();
         propostas = new ArrayList<>();
         candidaturas = new ArrayList<>();
         alunoCandidatura = new HashMap<>();
+
+        isClosed1 = false;
+        isClosed2 = false;
+        isClosed3 = false;
+        isClosed4 = false;
+    }
+
+    public boolean getisClosed (int phase){
+        if(phase == 1)
+            return isClosed1;
+        else if(phase == 2)
+            return isClosed2;
+        else if(phase == 3)
+            return isClosed3;
+        else
+            return isClosed4;
+    }
+
+    public void setIsClosed(int phase, boolean isClosed) {
+        switch (phase){
+            case 1 -> isClosed1 = isClosed;
+            case 2 -> isClosed2 = isClosed;
+            case 3 -> isClosed3 = isClosed;
+            case 4 -> isClosed4 = isClosed;
+        }
     }
 
     public boolean adicionaAluno(Aluno aluno){

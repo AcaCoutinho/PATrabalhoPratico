@@ -21,6 +21,16 @@ public abstract class PhaseStateAdapter implements IPhaseState{
     }
 
     @Override
+    public boolean getIsClosed(int phase) {
+        return false;
+    }
+
+    @Override
+    public void setIsClosed(int phase, boolean isClosed){
+
+    }
+
+    @Override
     public void insertAluno(Aluno aluno) {
 
     }

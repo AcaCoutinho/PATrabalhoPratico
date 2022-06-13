@@ -90,6 +90,7 @@ public class Phase1State extends PhaseStateAdapter {
 
     @Override
     public void closePhase() {
+        phase.setIsClosed(1, true);
         nextPhase();
     }
 

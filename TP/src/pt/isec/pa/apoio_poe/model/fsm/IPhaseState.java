@@ -6,6 +6,9 @@ import pt.isec.pa.apoio_poe.model.data.Docente;
 import pt.isec.pa.apoio_poe.model.data.Proposta;
 
 public interface IPhaseState {
+    boolean getIsClosed(int phase);
+    void setIsClosed(int phase, boolean isClosed);
+
     void insertAluno(Aluno aluno);
     void insertAlunoFile(String fileName);
     void insertDocente(Docente docente);

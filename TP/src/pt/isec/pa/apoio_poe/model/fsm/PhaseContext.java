@@ -20,6 +20,13 @@ public class PhaseContext {
         state = newState;
     }
 
+    public boolean getIsClosed(int phase) {
+        return state.getIsClosed(phase);
+    }
+    public void setIsClosed(int phase, boolean isClosed){
+        state.setIsClosed(phase, isClosed);
+    }
+
     public void insertAluno(Aluno aluno) {
         state.insertAluno(aluno);
     }
@@ -29,7 +36,6 @@ public class PhaseContext {
     public void insertDocente(Docente docente) {
         state.insertDocente(docente);
     }
-
     public void insertDocenteFile(String fileName) {
         state.insertDocenteFile(fileName);
     }
