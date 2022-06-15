@@ -50,16 +50,20 @@ public class UI {
         switch (option){
             case 1 -> {
                 String fileName = PAInput.readString("Nome do ficheiro CSV com dados de propostas: ", true);
-                fsm.insert("proposta", fileName);
+                fsm.insertPropostaFile(fileName);
             }
             case 2 -> {
-                ArrayList<String> al = new ArrayList<>();
-                al.add("proposta");
-                al.add(PAInput.readString("ID da proposta a consultar: ", true));
-                System.out.println(fsm.consult(al));
+                String al = PAInput.readString("ID da proposta a consultar: ", true);
+                System.out.println(fsm.consultProposta(al));
             }
-            case 3 -> fsm.edit();
-            case 4 -> fsm.remove();
+            case 3 -> {
+                String al = PAInput.readString("ID da proposta a editar: ", true);
+                fsm.editProposta(al);
+            }
+            case 4 -> {
+                String al = PAInput.readString("ID da proposta a remover: ", true);
+                fsm.removeProposta(al);
+            }
         }
     }
 
@@ -69,16 +73,20 @@ public class UI {
         switch (option){
             case 1 -> {
                 String fileName = PAInput.readString("Nome do ficheiro CSV com dados de docentes: ", true);
-                fsm.insert("docente", fileName);
+                fsm.insertDocenteFile(fileName);
             }
             case 2 -> {
-                ArrayList<String> al = new ArrayList<>();
-                al.add("docente");
-                al.add(PAInput.readString("Email do docente a consultar: ", true));
-                System.out.println(fsm.consult(al));
+                String al = PAInput.readString("Email do docente a consultar: ", true);
+                System.out.println(fsm.consultDocente(al));
             }
-            case 3 -> fsm.edit();
-            case 4 -> fsm.remove();
+            case 3 -> {
+                String al = PAInput.readString("Email do docente a editar: ", true);
+                fsm.editDocente(al);
+            }
+            case 4 -> {
+                String al = PAInput.readString("Email do docente a remover: ", true);
+                fsm.removeDocente(al);
+            }
         }
     }
 
@@ -88,18 +96,20 @@ public class UI {
         switch (option){
             case 1 -> {
                 String fileName = PAInput.readString("Nome do ficheiro CSV com dados de alunos: ", true);
-                fsm.insert("student", fileName);
+                fsm.insertAlunoFile(fileName);
             }
             case 2 -> {
                 long n_aluno = (long) PAInput.readNumber("Número de aluno a consultar: ");
-                String n_alunoS = String.valueOf(n_aluno);
-                ArrayList<String> al = new ArrayList<>();
-                al.add("student");
-                al.add(n_alunoS);
-                System.out.println(fsm.consult(al));
+                System.out.println(fsm.consultAluno(n_aluno));
             }
-            case 3 -> fsm.edit();
-            case 4 -> fsm.remove();
+            case 3 -> {
+                long n_aluno = (long) PAInput.readNumber("Número de aluno a editar: ");
+                fsm.editAluno(n_aluno);
+            }
+            case 4 -> {
+                long n_aluno = (long) PAInput.readNumber("Número de aluno a remover: ");
+                fsm.removeAluno(n_aluno);
+            }
         }
     }
 
@@ -109,57 +119,29 @@ public class UI {
         switch (option) {
             case 1 -> {
                 String fileName = PAInput.readString("Nome do ficheiro CSV com dados de candidatura: ", true);
-                fsm.insert("candidatura", fileName);
+                fsm.insertCandidaturaFile(fileName);
             }
             case 2 -> {
                 long n_aluno = (long) PAInput.readNumber("Numero do aluno da candidatura:");
-                String n_alunoS = String.valueOf(n_aluno);
-                ArrayList<String> al = new ArrayList<>();
-                al.add(n_alunoS);
-                fsm.consult(al);
+                fsm.consultCandidatura(n_aluno);
             }
             case 3 -> {
-                ArrayList<String> al = new ArrayList<>();
-                al.add("student");
                 int option1 = PAInput.chooseOption("Lista de Alunos:", "Autoproposta", "Candidatura Registada",
                                                     "Sem Candidatura Registada");
                 switch(option1){
-                    case 1 -> {
-                        al.add("autoproposta");
-                        System.out.println(fsm.lista(al));
-                    }
-                    case 2 -> {
-                        al.add("candidatura");
-                        System.out.println(fsm.lista(al));
-                    }
-                    case 3 -> {
-                        al.add("no_candidatura");
-                        System.out.println(fsm.lista(al));
-                    }
+                    case 1 -> System.out.println(fsm.listaAluno("autoproposta"));
+                    case 2 -> System.out.println(fsm.listaAluno("candidatura"));
+                    case 3 -> System.out.println(fsm.listaAluno("no_candidatura"));
                 }
             }
             case 4 -> {
-                ArrayList<String> al = new ArrayList<>();
-                al.add("proposta");
                 int option1 = PAInput.chooseOption("Lista de Propostas:", "Autoproposta", "Proposta de Docentes",
                                                     "Propostas com Candidaturas", "Propostas sem Candidaturas");
                 switch(option1){
-                    case 1 -> {
-                        al.add("autoproposta");
-                        System.out.println(fsm.lista(al));
-                    }
-                    case 2 -> {
-                        al.add("docente");
-                        System.out.println(fsm.lista(al));
-                    }
-                    case 3 -> {
-                        al.add("candidatura");
-                        System.out.println(fsm.lista(al));
-                    }
-                    case 4 -> {
-                        al.add("no_candidatura");
-                        System.out.println(fsm.lista(al));
-                    }
+                    case 1 -> System.out.println(fsm.listaProposta("autoproposta"));
+                    case 2 -> System.out.println(fsm.listaProposta("docente"));
+                    case 3 -> System.out.println(fsm.listaProposta("candidatura"));
+                    case 4 -> System.out.println(fsm.listaProposta("no_candidatura"));
                 }
             }
             case 5 -> fsm.closeState();
@@ -168,7 +150,7 @@ public class UI {
         }
     }
 
-    public void phase3UI() throws IOException {
+    public void phase3UI() {
         int option = PAInput.chooseOption("Fase 3 - Atribuição de Propostas:","Automática (associação)",
                                             "Automática (sem atribuições)", "Manual", "Remover", "Lista de alunos",
                                             "Lista de propostas", "Exportar", "Fechar Fase", "Fase Anterior", "Proxima Fase");
@@ -176,51 +158,23 @@ public class UI {
             case 1 -> fsm.assignment(0);
             case 2 -> fsm.assignment(1);
             case 5 -> {
-                ArrayList<String> al = new ArrayList<>();
-                al.add("student");
                 int option1 = PAInput.chooseOption("Lista de Alunos:", "Têm autoproposta associada", "Candidatura registada",
                                                     "Proposta Atribuida", "Não têm proposta atribuida");
                 switch (option1){
-                    case 1 -> {
-                        al.add("autoproposta");
-                        System.out.println(fsm.lista(al));
-                    }
-                    case 2 -> {
-                        al.add("candidatura");
-                        System.out.println(fsm.lista(al));
-                    }
-                    case 3 -> {
-                        al.add("atribuida");
-                        System.out.println(fsm.lista(al));
-                    }
-                    case 4 -> {
-                        al.add("no");
-                        System.out.println(fsm.lista(al));
-                    }
+                    case 1 -> System.out.println(fsm.listaAluno("autoproposta"));
+                    case 2 -> System.out.println(fsm.listaAluno("candidatura"));
+                    case 3 -> System.out.println(fsm.listaAluno("atribuida"));
+                    case 4 -> System.out.println(fsm.listaAluno("no"));
                 }
             }
             case 6 -> {
-                ArrayList<String> al = new ArrayList<>();
-                al.add("proposta");
                 int option1 = PAInput.chooseOption("Lista de Propostas:", "Autoproposta", "Proposta de Docentes",
                                                     "Propostas Disponiveis", "Propostas Atribuidas");
                 switch(option1){
-                    case 1 -> {
-                        al.add("autoproposta");
-                        System.out.println(fsm.lista(al));
-                    }
-                    case 2 -> {
-                        al.add("docente");
-                        System.out.println(fsm.lista(al));
-                    }
-                    case 3 -> {
-                        al.add("disponiveis");
-                        System.out.println(fsm.lista(al));
-                    }
-                    case 4 -> {
-                        al.add("atribuidas");
-                        System.out.println(fsm.lista(al));
-                    }
+                    case 1 -> System.out.println(fsm.listaProposta("autoproposta"));
+                    case 2 -> System.out.println(fsm.listaProposta("docente"));
+                    case 3 -> System.out.println(fsm.listaProposta("disponiveis"));
+                    case 4 -> System.out.println(fsm.listaProposta("atribuidas"));
                 }
             }
             case 7 -> {
@@ -233,32 +187,20 @@ public class UI {
         }
     }
 
-    public void phase4UI() throws IOException {
+    public void phase4UI() {
         int option = PAInput.chooseOption("Fase 4 - Atribuição de Orientadores:","Automática (associação)",
                                             "Lista de Alunos", "Lista de Docentes", "Exportar", "Fechar Fase", "Fase Anterior", "Proxima Fase");
         switch (option) {
             case 1 -> fsm.assignment(0);
             case 2 -> {
-                ArrayList<String> al = new ArrayList<>();
-                al.add("student");
                 int option1 = PAInput.chooseOption("Lista de Alunos:", "Proposta Atribuida com Orientador",
                                                     "Proposta Atribuida sem Orientador");
                 switch(option1){
-                    case 1 -> {
-                        al.add("associado");
-                        System.out.println(fsm.lista(al));
-                    }
-                    case 2 -> {
-                        al.add("no_associado");
-                        System.out.println(fsm.lista(al));
-                    }
+                    case 1 -> System.out.println(fsm.listaAluno("associado"));
+                    case 2 -> System.out.println(fsm.listaAluno("no_associado"));
                 }
             }
-            case 3 -> {
-                ArrayList<String> al = new ArrayList<>();
-                al.add("docente");
-                System.out.println(fsm.lista(al));
-            }
+            case 3 -> System.out.println(fsm.listaDocente(""));
             case 4 -> {
                 String fileName = PAInput.readString("Nome do ficheiro CSV com dados de docentes: ", true);
                 fsm.export(fileName);
@@ -269,45 +211,25 @@ public class UI {
         }
     }
 
-    public void phase5UI() throws IOException {
+    public void phase5UI() {
         int option = PAInput.chooseOption("Fase 5 - Consulta:","Alunos",
                                             "Docentes", "Propostas", "Exportar", "Sair da Aplicação");
         switch (option) {
             case 1 -> {
-                ArrayList<String> al = new ArrayList<>();
-                al.add("student");
                 int option1 = PAInput.chooseOption("Lista de Propostas:", "Autoproposta", "Proposta de Docentes",
                         "Propostas Disponiveis", "Propostas Atribuidas");
                 switch(option1){
-                    case 1 -> {
-                        al.add("atribuidas");
-                        fsm.lista(al);
-                    }
-                    case 2 -> {
-                        al.add("candidatura");
-                        fsm.lista(al);
-                    }
+                    case 1 -> System.out.println(fsm.listaAluno("atribuidas"));
+                    case 2 -> System.out.println(fsm.listaAluno("candidatura"));
                 }
             }
-            case 2 -> {
-                ArrayList<String> al = new ArrayList<>();
-                al.add("docente");
-                System.out.println(fsm.lista(al));
-            }
+            case 2 -> System.out.println(fsm.listaDocente(""));
             case 3 -> {
-                ArrayList<String> al = new ArrayList<>();
-                al.add("proposta");
                 int option1 = PAInput.chooseOption("Lista de Propostas:", "Autoproposta", "Proposta de Docentes",
                         "Propostas Disponiveis", "Propostas Atribuidas");
                 switch(option1){
-                    case 1 -> {
-                        al.add("disponiveis");
-                        fsm.lista(al);
-                    }
-                    case 2 -> {
-                        al.add("atribuidas");
-                        fsm.lista(al);
-                    }
+                    case 1 -> System.out.println(fsm.listaProposta("disponiveis"));
+                    case 2 -> System.out.println(fsm.listaProposta("atribuidas"));
                 }
             }
             case 4 -> {
