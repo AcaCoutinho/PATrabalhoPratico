@@ -5,6 +5,8 @@ import pt.isec.pa.apoio_poe.model.fsm.PhaseContext;
 import pt.isec.pa.apoio_poe.model.fsm.PhaseState;
 import pt.isec.pa.apoio_poe.model.fsm.PhaseStateAdapter;
 
+import java.util.ArrayList;
+
 public class Phase2State extends PhaseStateAdapter {
     public Phase2State(Phase phase, PhaseContext context) {
         super(phase, context);
@@ -26,10 +28,8 @@ public class Phase2State extends PhaseStateAdapter {
     }
 
     @Override
-    public void editCandidatura(long nAluno){
-        if(phase.procuraCandidatura(nAluno)){
-            phase.editCandidatura();
-        }
+    public void editCandidatura(long nAluno, String tipo, ArrayList<String> dados){
+        phase.editCandidatura(nAluno, tipo, dados);
     }
 
     @Override

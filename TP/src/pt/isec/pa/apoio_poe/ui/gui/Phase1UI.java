@@ -6,9 +6,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import pt.isec.pa.apoio_poe.model.PhaseManager;
+import pt.isec.pa.apoio_poe.model.data.Aluno;
+import pt.isec.pa.apoio_poe.model.data.Docente;
 import pt.isec.pa.apoio_poe.model.fsm.PhaseState;
 
 import java.util.ArrayList;
@@ -19,7 +23,7 @@ public class Phase1UI extends BorderPane {
     int tipo = 0;
     int actualOp = 0;
 
-    TilePane tilePaneOp, tilePaneAl;
+    TilePane tilePaneOp, tilePaneAl, tilePaneDoc, tilePaneProp;
 
     Background unselectedBackground = new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY));
     Background selectedBackground = new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY));
@@ -27,16 +31,21 @@ public class Phase1UI extends BorderPane {
     Button btnAlunos, btnPropostas, btnDocentes;
     ArrayList<Button> operacoes = new ArrayList<>();
     Button btnInsere, btnConsulta, btnEdita, btnElimina;
+    Button btnAvancar, btnVoltar;
 
-    Button btnAvancar;
+    VBox useFile;
+    ToggleButton tgbFile;
+    TextField tfFile;
 
     ArrayList<TextField> alunoGUI = new ArrayList<>();
+    ArrayList<TextField> docenteGUI = new ArrayList<>();
 
-    TextField tfNome, tfSiglaC, tfSiglaR, tfGrade, tfN_aluno, tfEmail, tfCa, tfTitulo, tfRd, tfAd, tfEntityId;
-
+    TextField tfNomeAl, tfNomeDoc, tfSiglaC, tfSiglaR, tfGrade, tfN_aluno, tfEmailAl, tfEmailDoc, tfCa, tfTitulo, tfRd, tfAd, tfEntityId;
     ToggleButton tgbAccess;
 
-    Label displayTipo;
+    TextField tfConsult;
+
+    Label displayDados;
 
     public Phase1UI(PhaseManager phaseManager) {
         this.phaseManager = phaseManager;
@@ -47,10 +56,29 @@ public class Phase1UI extends BorderPane {
     }
 
     private void createView(){
+        tfFile = new TextField();
+        tfFile.setPromptText("Nome de ficheiro");
+
+        tgbFile = new ToggleButton("Usar ficheiro");
+        tgbFile.setMinWidth(100);
+        tgbFile.setVisible(false);
+        tgbFile.setBackground(unselectedBackground);
+
+        displayDados = new Label();
+        displayDados.setFont(new Font(30));
+
+        tfConsult = new TextField();
+        tfConsult.setMinWidth(200);
+
+        btnVoltar = new Button("Voltar");
+        btnVoltar.setMinWidth(100);
+        btnVoltar.setBackground(unselectedBackground);
+        btnVoltar.setDisable(true);
+
         btnAvancar = new Button("Avançar");
         btnAvancar.setMinWidth(100);
         btnAvancar.setBackground(unselectedBackground);
-        btnAvancar.setVisible(false);
+        btnAvancar.setDisable(true);
 
         btnProx = new Button("Proxima Fase");
         btnProx.setMinWidth(100);
@@ -80,8 +108,11 @@ public class Phase1UI extends BorderPane {
 
         btnElimina = new Button("Elimina");
 
-        tfNome = new TextField();
-        tfNome.setPromptText("Nome");
+        tfNomeAl = new TextField();
+        tfNomeAl.setPromptText("Nome");
+
+        tfNomeDoc = new TextField();
+        tfNomeDoc.setPromptText("Nome");
 
         tfSiglaC = new TextField();
         tfSiglaC.setPromptText("Sigla de Curso");
@@ -95,8 +126,11 @@ public class Phase1UI extends BorderPane {
         tfN_aluno = new TextField();
         tfN_aluno.setPromptText("Número de aluno");
 
-        tfEmail = new TextField();
-        tfEmail.setPromptText("Email");
+        tfEmailAl = new TextField();
+        tfEmailAl.setPromptText("Email");
+
+        tfEmailDoc = new TextField();
+        tfEmailDoc.setPromptText("Email");
 
         tfCa = new TextField();
         tfCa.setPromptText("Código smth");
@@ -121,12 +155,15 @@ public class Phase1UI extends BorderPane {
         operacoes.add(btnEdita);
         operacoes.add(btnElimina);
 
-        alunoGUI.add(tfNome);
-        alunoGUI.add(tfEmail);
+        alunoGUI.add(tfNomeAl);
+        alunoGUI.add(tfEmailAl);
         alunoGUI.add(tfN_aluno);
         alunoGUI.add(tfSiglaC);
         alunoGUI.add(tfSiglaR);
         alunoGUI.add(tfGrade);
+
+        docenteGUI.add(tfNomeDoc);
+        docenteGUI.add(tfEmailDoc);
 
         for(var i : operacoes){
             i.setMinWidth(200);
@@ -148,9 +185,14 @@ public class Phase1UI extends BorderPane {
         tilePaneAl.setPrefColumns(2);
         tilePaneAl.setHgap(20);
         tilePaneAl.setVgap(20);
-        tilePaneAl.setPadding(new Insets(10, 50, 10, 50));
+        tilePaneAl.setPadding(new Insets(10, 50, 10, 10));
         tilePaneAl.setAlignment(Pos.CENTER);
 
+        tilePaneDoc = new TilePane();
+        tilePaneDoc.getChildren().addAll(docenteGUI.get(0), docenteGUI.get(1));
+        tilePaneDoc.setHgap(50);
+        tilePaneDoc.setPadding(new Insets(10, 50, 10, 30));
+        tilePaneDoc.setAlignment(Pos.CENTER);
 
         HBox hBox1 = new HBox();
         hBox1.getChildren().addAll(btnAlunos, btnDocentes, btnPropostas);
@@ -165,14 +207,66 @@ public class Phase1UI extends BorderPane {
         displayTipo.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.DOTTED, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         displayTipo.setPadding(new Insets(10));*/
 
-        HBox hBox2 = new HBox();
-        hBox2.getChildren().addAll(btnProx, btnAvancar, btnClose);
-        hBox2.setPadding(new Insets(10));
-        hBox2.setSpacing(190);
-        this.setBottom(hBox2);
+        HBox foot = new HBox();
+        foot.getChildren().addAll(btnProx, btnAvancar, btnVoltar, btnClose);
+        foot.setPadding(new Insets(10));
+        foot.setAlignment(Pos.CENTER);
+        foot.setSpacing(90);
+        this.setBottom(foot);
+
+        useFile = new VBox();
+        useFile.getChildren().add(tgbFile);
+        useFile.setAlignment(Pos.CENTER);
+        useFile.setPadding(new Insets(10));
     }
 
     private void registerHandlers() {
+        tgbFile.setOnMouseClicked(mouseEvent -> {
+            if(tgbFile.isSelected()){
+                tgbFile.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+                this.setCenter(tfFile);
+            }else{
+                tgbFile.setBackground(unselectedBackground);
+                if(tipo == 1){
+                    this.setCenter(tilePaneAl);
+                }else if(tipo == 2){
+                    this.setCenter(tilePaneDoc);
+                }else{
+                    this.setCenter(tilePaneProp);
+                }
+            }
+        });
+
+        tfConsult.setOnKeyPressed(keyEvent -> {
+            if(keyEvent.getCode() == KeyCode.ENTER && tfConsult.getText() != null){
+                this.setCenter(displayDados);
+                if(tipo == 1){
+                    displayDados.setText(phaseManager.consultAluno(Long.parseLong(tfConsult.getText())));
+                }else if(tipo == 2){
+                    displayDados.setText(phaseManager.consultDocente(tfConsult.getText()));
+                }else{
+                    displayDados.setText(phaseManager.consultProposta(tfConsult.getText()));
+                }
+            }
+        });
+
+        btnVoltar.setOnAction(actionEvent -> {
+            switchMainButton(tipo);
+            actualOp = 0;
+            btnAvancar.setDisable(true);
+            btnVoltar.setDisable(true);
+            update();
+        });
+
+        btnAvancar.setOnAction(actionEvent -> {
+            handleDados();
+            switchMainButton(tipo);
+            actualOp = 0;
+            btnAvancar.setDisable(true);
+            btnVoltar.setDisable(true);
+            update();
+        });
+
         tgbAccess.setOnMouseClicked(mouseEvent -> {
             if(tgbAccess.isSelected()){
                 tgbAccess.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -227,11 +321,8 @@ public class Phase1UI extends BorderPane {
     }
 
     void mainButtons(int tipo){
-        for(var i : alunoGUI){
-            i.setVisible(false);
-        }
-        btnAvancar.setVisible(false);
-        tgbAccess.setVisible(false);
+        this.setLeft(null);
+        tgbFile.setVisible(false);
         switch(tipo){
             case 0 ->{
                 for(var i : operacoes){
@@ -252,6 +343,7 @@ public class Phase1UI extends BorderPane {
                 btnAlunos.setBackground(selectedBackground);
             }
             case 2 ->{
+                this.setCenter(tilePaneOp);
                 for(var i : operacoes){
                     i.setVisible(true);
                     ArrayList<String> res = new ArrayList<>(Arrays.stream(i.getText().split(" ")).toList());
@@ -264,6 +356,7 @@ public class Phase1UI extends BorderPane {
                 btnDocentes.setBackground(selectedBackground);
             }
             case 3 ->{
+                this.setCenter(tilePaneOp);
                 for(var i : operacoes){
                     i.setVisible(true);
                     ArrayList<String> res = new ArrayList<>(Arrays.stream(i.getText().split(" ")).toList());
@@ -279,41 +372,49 @@ public class Phase1UI extends BorderPane {
     }
     
     void operationButtons(int actualOp){
+        btnAvancar.setDisable(false);
+        btnVoltar.setDisable(false);
         switch(actualOp){
             case 0 -> {
-
+                btnAvancar.setDisable(true);
+                btnVoltar.setDisable(true);
             }
 
             case 1 -> {
-                for(var i : operacoes){
-                    i.setVisible(false);
-                }
-                btnAvancar.setVisible(true);
+                this.setLeft(useFile);
+                tgbFile.setVisible(true);
                 if(tipo == 1){
+                    switchMainButton(1);
                     this.setCenter(tilePaneAl);
                     for(var i : alunoGUI){
                         i.setVisible(true);
                     }
                     tgbAccess.setVisible(true);
+                }else if(tipo == 2){
+                    switchMainButton(2);
+                    this.setCenter(tilePaneDoc);
+                    for(var i : docenteGUI){
+                        i.setVisible(true);
+                    }
+                }else{
+                    switchMainButton(3);
+                    this.setCenter(tilePaneProp);
                 }
             }
 
             case 2 -> {
-                for(var i : operacoes){
-                    i.setVisible(false);
+                if(tipo == 1){
+                    switchMainButton(1);
+                    this.setCenter(tfConsult);
                 }
             }
 
             case 3 -> {
-                for(var i : operacoes){
-                    i.setVisible(false);
-                }
+
             }
 
             case 4 -> {
-                for(var i : operacoes){
-                    i.setVisible(false);
-                }
+
             }
         }
     }
@@ -326,9 +427,97 @@ public class Phase1UI extends BorderPane {
         this.setVisible(true);
 
         mainButtons(tipo);
-
         operationButtons(actualOp);
+    }
 
-        //displayTipo.setText("Current tipo: " + tipo);
+    public void handleDados(){
+        if(tipo == 1){
+            switch(actualOp){
+                case 1 ->{
+                    phaseManager.insertAluno(new Aluno(Long.parseLong(tfN_aluno.getText()), tfNomeAl.getText(), tfEmailAl.getText(),
+                            tfSiglaC.getText(), tfSiglaR.getText(), Double.parseDouble(tfGrade.getText()), tgbAccess.isSelected()));
+                }
+
+                case 2 ->{
+                    phaseManager.consultAluno(Long.parseLong(tfN_aluno.getText()));
+                }
+
+                case 3 ->{
+
+                }
+
+                case 4 ->{
+
+                }
+            }
+        }else if(tipo == 2){
+            switch(actualOp){
+                case 1 ->{
+                    phaseManager.insertDocente(new Docente(tfNomeDoc.getText(), tfEmailDoc.getText()));
+                }
+
+                case 2 ->{
+
+                }
+
+                case 3 ->{
+
+                }
+
+                case 4 ->{
+
+                }
+            }
+        }else{
+            /*switch(actualOp){
+                case 1 ->{
+                    phaseManager.insertProposta();
+                }
+
+                case 2 ->{
+
+                }
+
+                case 3 ->{
+
+                }
+
+                case 4 ->{
+
+                }
+            }*/
+        }
+    }
+
+    public void switchMainButton(int tipo){
+        switch(tipo){
+            case 1 ->{
+                if(btnDocentes.isDisabled() && btnPropostas.isDisabled()){
+                    btnDocentes.setDisable(false);
+                    btnPropostas.setDisable(false);
+                }else{
+                    btnDocentes.setDisable(true);
+                    btnPropostas.setDisable(true);
+                }
+            }
+            case 2 ->{
+                if(btnAlunos.isDisabled() && btnPropostas.isDisabled()){
+                    btnAlunos.setDisable(false);
+                    btnPropostas.setDisable(false);
+                }else{
+                    btnAlunos.setDisable(true);
+                    btnPropostas.setDisable(true);
+                }
+            }
+            case 3 ->{
+                if(btnDocentes.isDisabled() && btnAlunos.isDisabled()){
+                    btnDocentes.setDisable(false);
+                    btnAlunos.setDisable(false);
+                }else{
+                    btnDocentes.setDisable(true);
+                    btnAlunos.setDisable(true);
+                }
+            }
+        }
     }
 }

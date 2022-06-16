@@ -17,7 +17,7 @@ public class Phase1State extends PhaseStateAdapter{
         isClosed = false;
     }
 
-    @Override
+    /*@Override
     public void insert(String tipo, String fileName) {
         ArrayList<String> dados = new ArrayList<>();
         if(tipo.equals("student")){
@@ -79,7 +79,6 @@ public class Phase1State extends PhaseStateAdapter{
             } catch (IOException e){
                 e.printStackTrace();
             }
-            System.out.println(dados.size());
             int i = 0;
             while(i < dados.size()){
                 if(dados.get(i).equals("T1")){
@@ -92,18 +91,14 @@ public class Phase1State extends PhaseStateAdapter{
                 }else if(dados.get(i).equals("T2")){
                     i++;
                     if(i >= dados.size()-4 || dados.get(i+4).equals("T1") || dados.get(i+4).equals("T2") || dados.get(i+4).equals("T3")){
-                        System.out.println(phase.procuraDocente(dados.get(i+3)));
                         phase.adicionaProposta(new Projeto(dados.get(i++), dados.get(i++), dados.get(i++), phase.procuraDocente(dados.get(i++).trim())));
                     }else{
-                        System.out.println(dados.get(i+4));
-                        System.out.println(phase.procuraDocente(dados.get(i+3)));
                         phase.adicionaProposta(new Projeto(dados.get(i++), dados.get(i++), dados.get(i++), phase.procuraDocente(dados.get(i++)), Long.parseLong(dados.get(i++).trim())));
                     }
                 }else{
                     i++;
                     phase.adicionaProposta(new Autoproposto(dados.get(i++), dados.get(i++), Long.parseLong(dados.get(i++).trim())));
                 }
-                System.out.println("\nCheguei ao fim\n");
             }
             //phase.mostraPropostas();
         }
@@ -163,5 +158,5 @@ public class Phase1State extends PhaseStateAdapter{
 
     public boolean isClosed() {
         return isClosed;
-    }
+    }*/
 }

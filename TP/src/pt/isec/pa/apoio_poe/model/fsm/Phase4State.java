@@ -2,10 +2,6 @@ package pt.isec.pa.apoio_poe.model.fsm;
 
 import pt.isec.pa.apoio_poe.model.data.*;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -16,7 +12,7 @@ public class Phase4State extends PhaseStateAdapter{
         isClosed = false;
     }
 
-    @Override
+    /*@Override
     public void assignment(int tipo){
         if(tipo == 0){
             ArrayList<Proposta> propostas = phase.getPropostas();
@@ -25,15 +21,14 @@ public class Phase4State extends PhaseStateAdapter{
                 if(i instanceof Projeto aux){
                     for(var j : docentes){
                         if(j == aux.getProponente()){
-                            System.out.println("\nDebug1\n");
+                            phase.procuraDocente(j.getEmail()).setOrientador(true);
                             phase.procuraDocente(j.getEmail()).setOrientador(true);
                             phase.procuraDocente(j.getEmail()).setProjeto(aux);
-                            System.out.println("\nDebug2\n");
                         }
                     }
                 }
             }
-            phase.mostraDocentes();
+            //phase.mostraDocentes();
         }
     }
 
@@ -86,29 +81,6 @@ public class Phase4State extends PhaseStateAdapter{
         return null;
     }
 
-    public void export(String fileName) throws IOException {
-        try{
-            FileWriter fw = new FileWriter(fileName);
-            BufferedWriter br = new BufferedWriter(fw);
-            PrintWriter pw = new PrintWriter(br);
-
-            ArrayList<Aluno> alunos = phase.getAlunos();
-
-            for(int i = 0; i < alunos.size(); i++){
-                pw.append(alunos.get(i).getNome() + "," + alunos.get(i).getN_aluno() + "," + alunos.get(i).getEmail()+","
-                        + alunos.get(i).getSiglaC()+ "," + alunos.get(i).getSiglaR() + "," + alunos.get(i).getGrade());
-                if(alunos.get(i).getPropAtribuida() != null){
-                    pw.append("," + alunos.get(i).getPropAtribuida().getCa());
-                }
-                pw.append("\n");
-            }
-            pw.close();
-
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void closePhase() {
         isClosed = true;
@@ -128,5 +100,5 @@ public class Phase4State extends PhaseStateAdapter{
     @Override
     public PhaseState getPhaseState() {
         return PhaseState.PHASE_4;
-    }
+    }*/
 }

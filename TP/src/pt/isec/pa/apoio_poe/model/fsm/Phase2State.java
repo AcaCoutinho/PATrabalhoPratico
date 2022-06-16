@@ -16,7 +16,7 @@ public class Phase2State extends PhaseStateAdapter{
         isClosed = false;
     }
 
-    @Override
+    /*@Override
     public void insert(String tipo, String fileName) {
         ArrayList<String> dados = new ArrayList<>();
         long n_aluno;
@@ -184,5 +184,5 @@ public class Phase2State extends PhaseStateAdapter{
     @Override
     public PhaseState getPhaseState() {
         return PhaseState.PHASE_2;
-    }
+    }*/
 }

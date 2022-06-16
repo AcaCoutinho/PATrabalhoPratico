@@ -58,11 +58,11 @@ public class UI {
             }
             case 3 -> {
                 String al = PAInput.readString("ID da proposta a editar: ", true);
-                fsm.editProposta(al);
+                //fsm.editProposta(al);
             }
             case 4 -> {
                 String al = PAInput.readString("ID da proposta a remover: ", true);
-                fsm.removeProposta(al);
+                //fsm.removeProposta(al);
             }
         }
     }
@@ -81,11 +81,11 @@ public class UI {
             }
             case 3 -> {
                 String al = PAInput.readString("Email do docente a editar: ", true);
-                fsm.editDocente(al);
+                //fsm.editDocente(al);
             }
             case 4 -> {
                 String al = PAInput.readString("Email do docente a remover: ", true);
-                fsm.removeDocente(al);
+                //fsm.removeDocente(al);
             }
         }
     }
@@ -104,11 +104,11 @@ public class UI {
             }
             case 3 -> {
                 long n_aluno = (long) PAInput.readNumber("Número de aluno a editar: ");
-                fsm.editAluno(n_aluno);
+                //fsm.editAluno(n_aluno);
             }
             case 4 -> {
                 long n_aluno = (long) PAInput.readNumber("Número de aluno a remover: ");
-                fsm.removeAluno(n_aluno);
+                //fsm.removeAluno(n_aluno);
             }
         }
     }

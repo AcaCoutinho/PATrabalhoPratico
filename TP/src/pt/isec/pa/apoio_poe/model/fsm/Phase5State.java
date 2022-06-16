@@ -2,10 +2,6 @@ package pt.isec.pa.apoio_poe.model.fsm;
 
 import pt.isec.pa.apoio_poe.model.data.*;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Phase5State extends PhaseStateAdapter{
@@ -15,7 +11,7 @@ public class Phase5State extends PhaseStateAdapter{
         isClosed = false;
     }
 
-    @Override
+    /*@Override
     public String lista(ArrayList<String> al) {
         StringBuilder sb = new StringBuilder();
         Aluno aux1;
@@ -96,29 +92,6 @@ public class Phase5State extends PhaseStateAdapter{
         return null;
     }
 
-    public void export(String fileName) throws IOException {
-        try{
-            FileWriter fw = new FileWriter(fileName);
-            BufferedWriter br = new BufferedWriter(fw);
-            PrintWriter pw = new PrintWriter(br);
-
-            ArrayList<Aluno> alunos = phase.getAlunos();
-
-            for(int i = 0; i < alunos.size(); i++){
-                pw.append(alunos.get(i).getNome() + "," + alunos.get(i).getN_aluno() + "," + alunos.get(i).getEmail()+","
-                        + alunos.get(i).getSiglaC()+ "," + alunos.get(i).getSiglaR() + "," + alunos.get(i).getGrade());
-                if(alunos.get(i).getPropAtribuida() != null){
-                    pw.append("," + alunos.get(i).getPropAtribuida().getCa());
-                }
-                pw.append("\n");
-            }
-            pw.close();
-
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public boolean previousPhase() {
         return false;
@@ -131,5 +104,5 @@ public class Phase5State extends PhaseStateAdapter{
     @Override
     public PhaseState getPhaseState() {
         return PhaseState.PHASE_5;
-    }
+    }*/
 }

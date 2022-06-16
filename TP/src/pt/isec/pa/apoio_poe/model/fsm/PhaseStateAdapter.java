@@ -81,19 +81,19 @@ public abstract class PhaseStateAdapter implements IPhaseState{
     }
 
     @Override
-    public void editAluno(long nAluno){
+    public void editAluno(long nAluno, String tipo, String dados){
 
     }
     @Override
-    public void editDocente(String a){
+    public void editDocente(String email, String tipo, String dados){
 
     }
     @Override
-    public void editProposta(String a){
+    public void editProposta(String ca, String tipo, String dados){
 
     }
     @Override
-    public void editCandidatura(long nAluno){
+    public void editCandidatura(long nAluno, String tipo, ArrayList<String> dados){
 
     }
 
