@@ -2,6 +2,7 @@ package pt.isec.pa.apoio_poe.model.fsm;
 
 import pt.isec.pa.apoio_poe.model.data.*;
 import pt.isec.pa.apoio_poe.model.fsm.states.Phase1State;
+import java.util.ArrayList;
 
 public class PhaseContext {
     private Phase phase;
@@ -65,17 +66,17 @@ public class PhaseContext {
         return state.consultCandidatura(nAluno);
     }
 
-    public void editAluno(long nAluno) {
-        state.editAluno(nAluno);
+    public void editAluno(long nAluno, String tipo, String dados) {
+        state.editAluno(nAluno, tipo, dados);
     }
-    public void editDocente(String a) {
-        state.editDocente(a);
+    public void editDocente(String email, String tipo, String dados) {
+        state.editDocente(email, tipo, dados);
     }
-    public void editProposta(String a) {
-        state.editProposta(a);
+    public void editProposta(String ca, String tipo, String dados) {
+        state.editProposta(ca, tipo, dados);
     }
-    public void editCandidatura(long nAluno) {
-        state.editCandidatura(nAluno);
+    public void editCandidatura(long nAluno, String tipo, ArrayList<String> dados) {
+        state.editCandidatura(nAluno, tipo, dados);
     }
 
     public void removeAluno(long nAluno) {

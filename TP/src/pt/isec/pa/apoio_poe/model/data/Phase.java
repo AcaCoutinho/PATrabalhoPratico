@@ -96,6 +96,19 @@ public class Phase {
         return false;
     }
 
+    public void editaAluno(long nAluno, String tipo, String dados) {
+        if(!procuraAluno(nAluno))
+            return;
+
+        switch (tipo){
+            case "nome" -> getAluno(nAluno).setNome(dados);
+            case "siglaC" -> getAluno(nAluno).setSiglaC(dados);
+            case "siglaR" -> getAluno(nAluno).setSiglaR(dados);
+            case "grade" -> getAluno(nAluno).setGrade(Long.parseLong(dados));
+            case "email" -> getAluno(nAluno).setEmail(dados);
+        }
+    }
+
     public boolean removeAluno(long n_aluno){
         for(var i : alunos){
             if(i.getN_aluno() == n_aluno){
@@ -138,6 +151,14 @@ public class Phase {
         }
     }
 
+    public boolean procuraDocente(String email){
+        for(var i : docentes){
+            if(i.getEmail() == email)
+                return true;
+        }
+        return false;
+    }
+
     public Docente getDocente(String email) {
         for (var i : docentes) {
             if (i.getEmail().equals(email)) {
@@ -157,8 +178,15 @@ public class Phase {
         return false;
     }
 
-    public void editDocente() {
+    public void editDocente(String email, String tipo, String dados) {
+        if(!procuraDocente(email)){
+            return;
+        }
 
+        switch (tipo){
+            case "nome" -> getDocente(email).setNome(dados);
+            case "Orientador" -> getDocente(email).setOrientador(Boolean.parseBoolean(dados));
+        }
     }
 
     public void adicionaProposta(Proposta proposta){
@@ -221,12 +249,35 @@ public class Phase {
             if(i.getCa().equals(ca))
                 return true;
         }
-
         return false;
     }
 
-    public void editProposta() {
+    public void editProposta(String ca, String tipo, String dados) {
+        if(!procuraProposta(ca)){
+            return;
+        }
 
+        if(getProposta(ca) instanceof Estagio aux) {
+            switch (tipo) {
+                case "titulo" -> aux.setTitulo(dados);
+                case "nAluno" -> aux.setN_alunoAt(Long.parseLong(dados));
+                case "ad" -> aux.setAd(dados);
+                case "entityID" -> aux.setEntityId(dados);
+            }
+        }
+        if(getProposta(ca) instanceof Projeto aux) {
+            switch (tipo) {
+                case "titulo" -> aux.setTitulo(dados);
+                case "nAluno" -> aux.setN_alunoAt(Long.parseLong(dados));
+                case "rd" -> aux.setRd(dados);
+            }
+        }
+        if(getProposta(ca) instanceof Autoproposto aux) {
+            switch (tipo) {
+                case "titulo" -> aux.setTitulo(dados);
+                case "nAluno" -> aux.setN_alunoAt(Long.parseLong(dados));
+            }
+        }
     }
 
     public boolean removeProposta(String ca){
@@ -249,7 +300,44 @@ public class Phase {
     }
 
     public void adicionaCandidaturaFile(String fileName) {
+        ArrayList<String> dados = new ArrayList<>();
+        long n_aluno;
+        ArrayList<String> idPropostas = new ArrayList<>();
+        Candidatura aux;
 
+        try{
+            File f = new File(fileName);
+            FileReader fr = new FileReader(f);
+            BufferedReader br = new BufferedReader(fr);
+            Scanner sc = new Scanner(br);
+            sc.useDelimiter(",|\\n");
+
+            while(sc.hasNext()){
+                dados.add(sc.next());
+            }
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        int i = 0;
+        while(i < dados.size()) {
+            n_aluno = Long.parseLong(dados.get(i++));
+            while(dados.get(i).contains("P")){
+                idPropostas.add(dados.get(i).trim());
+                if(i+1 == dados.size()){
+                    i++;
+                    break;
+                }else{
+                    i++;
+                }
+            }
+            aux = new Candidatura(n_aluno);
+            aux.adicionaId(idPropostas);
+            adicionaCandidatura(aux);
+            idPropostas.clear();
+        }
+        associaAlunoCandidatura();
     }
 
     public Candidatura getCandidatura(long n_aluno) {
@@ -267,8 +355,21 @@ public class Phase {
         return false;
     }
 
-    public void editCandidatura() {
+    public void editCandidatura(Long nAluno, String tipo, ArrayList<String> dados) {
+        if(!procuraCandidatura(nAluno))
+            return;
 
+        switch (tipo){
+            case "idPropostaAdiciona" -> {
+                if(getCandidatura(nAluno).getIdPropostas().contains(dados))
+                    return;
+                getCandidatura(nAluno).adicionaId(dados);
+            }
+            case "idPropostaRemove" -> {
+                if(getCandidatura(nAluno).getIdPropostas().contains(dados))
+                    getCandidatura(nAluno).getIdPropostas().removeAll(dados);
+            }
+        }
     }
 
     public boolean removeCandidatura(long n_aluno) {

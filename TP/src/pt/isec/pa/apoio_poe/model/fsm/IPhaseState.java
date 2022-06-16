@@ -5,6 +5,8 @@ import pt.isec.pa.apoio_poe.model.data.Candidatura;
 import pt.isec.pa.apoio_poe.model.data.Docente;
 import pt.isec.pa.apoio_poe.model.data.Proposta;
 
+import java.util.ArrayList;
+
 public interface IPhaseState {
     boolean getIsClosed(int phase);
     void setIsClosed(int phase, boolean isClosed);
@@ -23,10 +25,10 @@ public interface IPhaseState {
     String consultProposta(String a);
     String consultCandidatura(long nAluno);
 
-    void editAluno(long nAluno);
-    void editDocente(String a);
-    void editProposta(String a);
-    void editCandidatura(long nAluno);
+    void editAluno(long nAluno, String tipo, String dados);
+    void editDocente(String email, String tipo, String dados);
+    void editProposta(String ca, String tipo, String dados);
+    void editCandidatura(long nAluno, String tipo, ArrayList<String> dados);
 
     void removeAluno(long nAluno);
     void removeDocente(String a);
