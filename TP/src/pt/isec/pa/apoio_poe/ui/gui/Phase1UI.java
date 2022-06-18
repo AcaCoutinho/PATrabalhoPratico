@@ -34,6 +34,7 @@ public class Phase1UI extends BorderPane {
     Button btnInsere, btnConsulta, btnEdita, btnElimina;
     Button btnAvancar, btnVoltar;
 
+    VBox vBoxEdit;
     VBox useFile;
     ToggleButton tgbFile;
     TextField tfFile;
@@ -46,6 +47,10 @@ public class Phase1UI extends BorderPane {
 
     TextField tfConsult;
 
+    TextField tfIdentify, tfTipoEdit, tfDadoEdit;
+
+    TextField tfElimina;
+
     Label displayDados;
 
     public Phase1UI(PhaseManager phaseManager) {
@@ -57,6 +62,16 @@ public class Phase1UI extends BorderPane {
     }
 
     private void createView(){
+        tfElimina = new TextField();
+
+        tfIdentify = new TextField();
+
+        tfTipoEdit = new TextField();
+        tfTipoEdit.setPromptText("Campo a editar");
+
+        tfDadoEdit = new TextField();
+        tfDadoEdit.setPromptText("Novos dados para o campo");
+
         tfFile = new TextField();
         tfFile.setPromptText("Nome de ficheiro");
 
@@ -209,6 +224,11 @@ public class Phase1UI extends BorderPane {
         foot.setSpacing(90);
         this.setBottom(foot);
 
+        vBoxEdit = new VBox();
+        vBoxEdit.getChildren().addAll(tfIdentify, tfTipoEdit, tfDadoEdit);
+        vBoxEdit.setAlignment(Pos.CENTER);
+        vBoxEdit.setPadding(new Insets(10));
+
         useFile = new VBox();
         useFile.getChildren().add(tgbFile);
         useFile.setAlignment(Pos.CENTER);
@@ -247,6 +267,7 @@ public class Phase1UI extends BorderPane {
         });
 
         btnVoltar.setOnAction(actionEvent -> {
+            clear();
             switchMainButton(tipo);
             actualOp = 0;
             btnAvancar.setDisable(true);
@@ -258,7 +279,7 @@ public class Phase1UI extends BorderPane {
 
             switch(actualOp){
                 case 1 ->{
-                    handleDados();
+                    handleInsert();
                 }
 
                 case 2 ->{
@@ -269,14 +290,14 @@ public class Phase1UI extends BorderPane {
                 }
 
                 case 3 ->{
-
+                    handleEdit();
                 }
 
                 case 4 ->{
-
+                    handleDelete();
                 }
             }
-            clearTf();
+            clear();
             switchMainButton(tipo);
             actualOp = 0;
             btnAvancar.setDisable(true);
@@ -337,18 +358,37 @@ public class Phase1UI extends BorderPane {
         });
     }
 
-    private void handleConsulta() {
-        this.setCenter(displayDados);
+    private void handleDelete() {
+        this.setCenter(tfElimina);
         if(tipo == 1){
-            displayDados.setText(phaseManager.consultAluno(Long.parseLong(tfConsult.getText())));
+            phaseManager.removeAluno(Long.parseLong(tfElimina.getText()));
         }else if(tipo == 2){
-            displayDados.setText(phaseManager.consultDocente(tfConsult.getText()));
-        }else{
-            displayDados.setText(phaseManager.consultProposta(tfConsult.getText()));
+            phaseManager.removeDocente(tfElimina.getText());
         }
     }
 
-    private void clearTf() {
+    private void handleConsulta() {
+        this.setCenter(displayDados);
+        if(tipo == 1){
+            if(phaseManager.consultAluno(Long.parseLong(tfConsult.getText())) == null){
+                displayDados.setText("Aluno não encontrado");
+            }else{
+                displayDados.setText(phaseManager.consultAluno(Long.parseLong(tfConsult.getText())));
+            }
+        }else if(tipo == 2){
+            displayDados.setText(phaseManager.consultDocente(tfConsult.getText()));
+            if(displayDados.getText() == ""){
+                displayDados.setText("Docente não encontrado");
+            }
+        }else{
+            displayDados.setText(phaseManager.consultProposta(tfConsult.getText()));
+            if(displayDados.getText() == ""){
+                displayDados.setText("Proposta não encontrada");
+            }
+        }
+    }
+
+    private void clear() {
         for(var i : alunoGUI){
             i.setText("");
         }
@@ -357,6 +397,10 @@ public class Phase1UI extends BorderPane {
         }
         tfFile.setText("");
         tfConsult.setText("");
+        tfIdentify.setText("");
+        tfDadoEdit.setText("");
+        tfTipoEdit.setText("");
+        displayDados.setText("");
     }
 
     void mainButtons(int tipo){
@@ -442,21 +486,34 @@ public class Phase1UI extends BorderPane {
             }
 
             case 2 -> {
+                this.setCenter(tfConsult);
                 if(tipo == 1){
                     switchMainButton(1);
-                    this.setCenter(tfConsult);
                 }else if(tipo == 2){
                     switchMainButton(2);
-                    this.setCenter(tfConsult);
                 }
             }
 
             case 3 -> {
-
+                this.setCenter(vBoxEdit);
+                if(tipo == 1){
+                    tfIdentify.setPromptText("Numero de aluno");
+                    switchMainButton(1);
+                }else if(tipo == 2){
+                    tfIdentify.setPromptText("Email de docente");
+                    switchMainButton(2);
+                }
             }
 
             case 4 -> {
-
+                this.setCenter(tfElimina);
+                if(tipo == 1){
+                    tfElimina.setPromptText("Numero de aluno a eliminar");
+                    switchMainButton(1);
+                }else if(tipo == 2){
+                    tfElimina.setPromptText("Email de docente a eliminar");
+                    switchMainButton(2);
+                }
             }
         }
     }
@@ -475,72 +532,22 @@ public class Phase1UI extends BorderPane {
         }
     }
 
-    public void handleDados(){
-        if(tipo == 1){
-            switch(actualOp){
-                case 1 ->{
-                    if(!tgbFile.isSelected()){
-                        phaseManager.insertAluno(new Aluno(Long.parseLong(tfN_aluno.getText()), tfNomeAl.getText(), tfEmailAl.getText(),
-                                tfSiglaC.getText(), tfSiglaR.getText(), Double.parseDouble(tfGrade.getText()), tgbAccess.isSelected()));
-                    }else{
-                        phaseManager.insertAlunoFile(tfFile.getText());
-                        tgbFile.setSelected(false);
-                    }
-                }
-
-                case 2 ->{
-                    phaseManager.consultAluno(Long.parseLong(tfN_aluno.getText()));
-                }
-
-                case 3 ->{
-
-                }
-
-                case 4 ->{
-
-                }
+    public void handleInsert(){
+        if(tipo == 1) {
+            if (!tgbFile.isSelected()) {
+                phaseManager.insertAluno(new Aluno(Long.parseLong(tfN_aluno.getText()), tfNomeAl.getText(), tfEmailAl.getText(),
+                        tfSiglaC.getText(), tfSiglaR.getText(), Double.parseDouble(tfGrade.getText()), tgbAccess.isSelected()));
+            }else{
+                phaseManager.insertAlunoFile(tfFile.getText());
+                tgbFile.setSelected(false);
             }
         }else if(tipo == 2){
-            switch(actualOp){
-                case 1 ->{
-                    if(!tgbFile.isSelected()){
-                        phaseManager.insertDocente(new Docente(tfNomeDoc.getText(), tfEmailDoc.getText()));
-                    }else{
-                        phaseManager.insertDocenteFile(tfFile.getText());
-                        tgbFile.setSelected(false);
-                    }
-                }
-
-                case 2 ->{
-                    phaseManager.consultDocente(tfEmailDoc.getText());
-                }
-
-                case 3 ->{
-
-                }
-
-                case 4 ->{
-
-                }
+            if(!tgbFile.isSelected()){
+                phaseManager.insertDocente(new Docente(tfNomeDoc.getText(), tfEmailDoc.getText()));
+            }else{
+                phaseManager.insertDocenteFile(tfFile.getText());
+                tgbFile.setSelected(false);
             }
-        }else{
-            /*switch(actualOp){
-                case 1 ->{
-                    phaseManager.insertProposta();
-                }
-
-                case 2 ->{
-
-                }
-
-                case 3 ->{
-
-                }
-
-                case 4 ->{
-
-                }
-            }*/
         }
     }
 
@@ -573,6 +580,16 @@ public class Phase1UI extends BorderPane {
                     btnAlunos.setDisable(true);
                 }
             }
+        }
+    }
+
+    private void handleEdit(){
+        if(tipo == 1){
+            phaseManager.editAluno(Long.parseLong(tfIdentify.getText()), tfTipoEdit.getText(), tfDadoEdit.getText());
+        }else if(tipo == 2){
+            phaseManager.editDocente(tfIdentify.getText(), tfTipoEdit.getText(), tfDadoEdit.getText());
+        }else{
+
         }
     }
 }
