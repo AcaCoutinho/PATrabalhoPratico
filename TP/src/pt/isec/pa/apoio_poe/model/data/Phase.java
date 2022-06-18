@@ -52,6 +52,8 @@ public class Phase {
             return false;
         }else{
             alunos.add(aluno);
+            System.out.println("Adicionei aluno");
+            System.out.println(aluno.toString());
             return true;
         }
     }

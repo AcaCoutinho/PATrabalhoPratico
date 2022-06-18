@@ -58,13 +58,15 @@ public class Phase1State extends PhaseStateAdapter {
     @Override
     public void editAluno(long nAluno, String tipo, String dados){
         if(phase.procuraAluno(nAluno)){
-            //phase.editAluno();
+            phase.editaAluno(nAluno, tipo, dados);
         }
     }
 
     @Override
     public void editDocente(String email, String tipo, String dados) {
-
+        if(phase.procuraDocente(email)){
+            phase.editDocente(email, tipo, dados);
+        }
     }
 
     @Override

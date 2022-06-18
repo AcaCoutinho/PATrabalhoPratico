@@ -16,9 +16,13 @@ public class RootPane extends BorderPane {
     }
 
     private void createView(){
+        phaseManager.addPropertyChangeListener(evt -> { update(); });
         StackPane stackPane = new StackPane(
                 new Phase1UI(phaseManager),
-                new Phase2UI(phaseManager)
+                new Phase2UI(phaseManager),
+                new Phase3UI(phaseManager),
+                new Phase4UI(phaseManager),
+                new Phase5UI(phaseManager)
         );
 
         this.setCenter(stackPane);
