@@ -218,27 +218,28 @@ public class Phase3UI extends BorderPane {
                         displayLista.setText(phaseManager.listaAluno("candidatura"));
                     }
                     if(tgbAlAtribuida.isSelected()){
-                        displayLista.setText(phaseManager.listaAluno(""));
+                        displayLista.setText(phaseManager.listaAluno("atribuida"));
                     }
                     if(tgbAlSAtribuidas.isSelected()){
-                        displayLista.setText(phaseManager.listaAluno(""));
+                        displayLista.setText(phaseManager.listaAluno("no_atribuida"));
                     }
                 }
                 if(tgbListaProp.isSelected()){
                     if(tgbPropAutoproposta.isSelected()){
-                        displayLista.setText(phaseManager.listaProposta(""));
+                        displayLista.setText(phaseManager.listaProposta("autoproposta"));
                     }
                     if(tgbPropDocente.isSelected()){
-                        displayLista.setText(phaseManager.listaProposta(""));
+                        displayLista.setText(phaseManager.listaProposta("docente"));
                     }
                     if(tgbPropDisponiveis.isSelected()){
-                        displayLista.setText(phaseManager.listaProposta(""));
+                        displayLista.setText(phaseManager.listaProposta("disponiveis"));
                     }
                     if(tgbPropAtribuidas.isSelected()){
-                        displayLista.setText(phaseManager.listaProposta(""));
+                        displayLista.setText(phaseManager.listaProposta("atribuida"));
                     }
                 }
             }
+            update();
         });
 
         tfFile.setOnKeyPressed(keyEvent -> {
