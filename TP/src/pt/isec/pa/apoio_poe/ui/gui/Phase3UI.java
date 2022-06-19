@@ -29,7 +29,7 @@ public class Phase3UI extends BorderPane {
 
     ToggleButton tgbExport, tgbLista;
     ToggleButton tgbListaAl, tgbListaProp;
-    ToggleButton tgbAlAutoproposta, tgbAlCandidatura, tgbPropAtribuida, tgbSPropAtribuidas;
+    ToggleButton tgbAlAutoproposta, tgbAlCandidatura, tgbAlAtribuida, tgbAlSAtribuidas;
     ToggleButton tgbPropAutoproposta, tgbPropDocente, tgbPropDisponiveis, tgbPropAtribuidas;
 
     TextField tfFile;
@@ -129,10 +129,10 @@ public class Phase3UI extends BorderPane {
         tgbAlAutoproposta.setBackground(unselectedBackground);
         tgbAlCandidatura = new ToggleButton("Candidatura");
         tgbAlCandidatura.setBackground(unselectedBackground);
-        tgbPropAtribuida = new ToggleButton("Proposta Atribuida");
-        tgbPropAtribuida.setBackground(unselectedBackground);
-        tgbSPropAtribuidas = new ToggleButton("Sem Proposta Atribuida");
-        tgbSPropAtribuidas.setBackground(unselectedBackground);
+        tgbAlAtribuida = new ToggleButton("Proposta Atribuida");
+        tgbAlAtribuida.setBackground(unselectedBackground);
+        tgbAlSAtribuidas = new ToggleButton("Sem Proposta Atribuida");
+        tgbAlSAtribuidas.setBackground(unselectedBackground);
 
         tgbPropAutoproposta = new ToggleButton("Autoproposto");
         tgbPropAutoproposta.setBackground(unselectedBackground);
@@ -144,7 +144,7 @@ public class Phase3UI extends BorderPane {
         tgbPropAtribuidas.setBackground(unselectedBackground);
 
         vbox1 = new VBox();
-        vbox1.getChildren().addAll(tgbAlAutoproposta, tgbAlCandidatura, tgbPropAtribuida, tgbSPropAtribuidas);
+        vbox1.getChildren().addAll(tgbAlAutoproposta, tgbAlCandidatura, tgbAlAtribuida, tgbAlSAtribuidas);
         vbox1.setAlignment(Pos.CENTER);
         vbox1.setSpacing(50);
         vbox1.setPadding(new Insets(10));
@@ -209,7 +209,36 @@ public class Phase3UI extends BorderPane {
         });
 
         btnAvancar.setOnAction(actionEvent -> {
-
+            if(tgbLista.isSelected()){
+                if(tgbListaAl.isSelected()){
+                    if(tgbAlAutoproposta.isSelected()){
+                        displayLista.setText(phaseManager.listaAluno("autoproposta"));
+                    }
+                    if(tgbAlCandidatura.isSelected()){
+                        displayLista.setText(phaseManager.listaAluno("candidatura"));
+                    }
+                    if(tgbAlAtribuida.isSelected()){
+                        displayLista.setText(phaseManager.listaAluno(""));
+                    }
+                    if(tgbAlSAtribuidas.isSelected()){
+                        displayLista.setText(phaseManager.listaAluno(""));
+                    }
+                }
+                if(tgbListaProp.isSelected()){
+                    if(tgbPropAutoproposta.isSelected()){
+                        displayLista.setText(phaseManager.listaProposta(""));
+                    }
+                    if(tgbPropDocente.isSelected()){
+                        displayLista.setText(phaseManager.listaProposta(""));
+                    }
+                    if(tgbPropDisponiveis.isSelected()){
+                        displayLista.setText(phaseManager.listaProposta(""));
+                    }
+                    if(tgbPropAtribuidas.isSelected()){
+                        displayLista.setText(phaseManager.listaProposta(""));
+                    }
+                }
+            }
         });
 
         tfFile.setOnKeyPressed(keyEvent -> {
@@ -262,6 +291,119 @@ public class Phase3UI extends BorderPane {
             update();
         });
 
+        tgbAlAtribuida.setOnAction(actionEvent -> {
+            if(tgbAlAtribuida.isSelected()){
+                tgbAlAtribuida.setBackground(selectedBackground);
+            } else {
+                tgbAlAtribuida.setBackground(unselectedBackground);
+            }
+
+            tgbAlCandidatura.setSelected(false);
+            tgbAlCandidatura.setBackground(unselectedBackground);
+            tgbAlAutoproposta.setSelected(false);
+            tgbAlAutoproposta.setBackground(unselectedBackground);
+            tgbAlSAtribuidas.setSelected(false);
+            tgbAlSAtribuidas.setBackground(unselectedBackground);
+        });
+        tgbAlAutoproposta.setOnAction(actionEvent -> {
+            if(tgbAlAutoproposta.isSelected()){
+                tgbAlAutoproposta.setBackground(selectedBackground);
+            } else {
+                tgbAlAutoproposta.setBackground(unselectedBackground);
+            }
+
+            tgbAlCandidatura.setSelected(false);
+            tgbAlCandidatura.setBackground(unselectedBackground);
+            tgbAlAtribuida.setSelected(false);
+            tgbAlAtribuida.setBackground(unselectedBackground);
+            tgbAlSAtribuidas.setSelected(false);
+            tgbAlSAtribuidas.setBackground(unselectedBackground);
+        });
+        tgbAlCandidatura.setOnAction(actionEvent -> {
+            if(tgbAlCandidatura.isSelected()){
+                tgbAlCandidatura.setBackground(selectedBackground);
+            } else {
+                tgbAlCandidatura.setBackground(unselectedBackground);
+            }
+
+            tgbAlAtribuida.setSelected(false);
+            tgbAlAtribuida.setBackground(unselectedBackground);
+            tgbAlAutoproposta.setSelected(false);
+            tgbAlAutoproposta.setBackground(unselectedBackground);
+            tgbAlSAtribuidas.setSelected(false);
+            tgbAlSAtribuidas.setBackground(unselectedBackground);
+        });
+        tgbAlSAtribuidas.setOnAction(actionEvent -> {
+            if(tgbAlSAtribuidas.isSelected()){
+                tgbAlSAtribuidas.setBackground(selectedBackground);
+            } else {
+                tgbAlSAtribuidas.setBackground(unselectedBackground);
+            }
+
+            tgbAlCandidatura.setSelected(false);
+            tgbAlCandidatura.setBackground(unselectedBackground);
+            tgbAlAutoproposta.setSelected(false);
+            tgbAlAutoproposta.setBackground(unselectedBackground);
+            tgbAlAtribuida.setSelected(false);
+            tgbAlAtribuida.setBackground(unselectedBackground);
+        });
+
+        tgbPropDocente.setOnAction(actionEvent -> {
+            if(tgbPropDocente.isSelected()){
+                tgbPropDocente.setBackground(selectedBackground);
+            } else {
+                tgbPropDocente.setBackground(unselectedBackground);
+            }
+
+            tgbPropAutoproposta.setSelected(false);
+            tgbPropAutoproposta.setBackground(unselectedBackground);
+            tgbPropAtribuidas.setSelected(false);
+            tgbPropAtribuidas.setBackground(unselectedBackground);
+            tgbPropDisponiveis.setSelected(false);
+            tgbPropDisponiveis.setBackground(unselectedBackground);
+        });
+        tgbPropAutoproposta.setOnAction(actionEvent -> {
+            if(tgbPropAutoproposta.isSelected()){
+                tgbPropAutoproposta.setBackground(selectedBackground);
+            } else {
+                tgbPropAutoproposta.setBackground(unselectedBackground);
+            }
+
+            tgbPropDocente.setSelected(false);
+            tgbPropDocente.setBackground(unselectedBackground);
+            tgbPropAtribuidas.setSelected(false);
+            tgbPropAtribuidas.setBackground(unselectedBackground);
+            tgbPropDisponiveis.setSelected(false);
+            tgbPropDisponiveis.setBackground(unselectedBackground);
+        });
+        tgbPropDisponiveis.setOnAction(actionEvent -> {
+            if(tgbPropDisponiveis.isSelected()){
+                tgbPropDisponiveis.setBackground(selectedBackground);
+            } else {
+                tgbPropDisponiveis.setBackground(unselectedBackground);
+            }
+
+            tgbPropAutoproposta.setSelected(false);
+            tgbPropAutoproposta.setBackground(unselectedBackground);
+            tgbPropAtribuidas.setSelected(false);
+            tgbPropAtribuidas.setBackground(unselectedBackground);
+            tgbPropDocente.setSelected(false);
+            tgbPropDocente.setBackground(unselectedBackground);
+        });
+        tgbPropAtribuidas.setOnAction(actionEvent -> {
+            if(tgbPropAtribuidas.isSelected()){
+                tgbPropAtribuidas.setBackground(selectedBackground);
+            } else {
+                tgbPropAtribuidas.setBackground(unselectedBackground);
+            }
+
+            tgbPropAutoproposta.setSelected(false);
+            tgbPropAutoproposta.setBackground(unselectedBackground);
+            tgbPropDocente.setSelected(false);
+            tgbPropDocente.setBackground(unselectedBackground);
+            tgbPropDisponiveis.setSelected(false);
+            tgbPropDisponiveis.setBackground(unselectedBackground);
+        });
     }
 
     public void update() {
