@@ -3,6 +3,7 @@ package pt.isec.pa.apoio_poe.ui.gui;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyCode;
@@ -16,11 +17,18 @@ public class Phase4UI extends BorderPane {
 
     Background unselectedBackground = new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY));
     Background selectedBackground = new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY));
+
+    BorderPane borderPaneLista;
+
     Button btnProx, btnClose, btnAnterior;
     Button btnAvancar, btnVoltar;
-    Button btnAtribuicaoAutomatica, btnLista;
-    ToggleButton tgbExport;
+    Button btnAtribuicaoAutomatica;
+    ToggleButton tgbExport, tgbLista;
     TextField tfFile;
+    ToggleButton tgbListaAl, tgbListaDoc;
+    ToggleButton tgbPropAtribuidasOrientador, tgbPropAtribuidasSOrientador;
+
+    Label displayLista;
 
     public Phase4UI(PhaseManager phaseManager) {
         this.phaseManager = phaseManager;
@@ -64,16 +72,16 @@ public class Phase4UI extends BorderPane {
         btnAtribuicaoAutomatica.setMinWidth(75);
         btnAtribuicaoAutomatica.setBackground(unselectedBackground);
 
-        btnLista = new Button("Lista");
-        btnLista.setMinWidth(75);
-        btnLista.setBackground(unselectedBackground);
+        tgbLista = new ToggleButton("Lista");
+        tgbLista.setMinWidth(75);
+        tgbLista.setBackground(unselectedBackground);
 
         tgbExport = new ToggleButton("Exportar");
         tgbExport.setMinWidth(50);
         tgbExport.setBackground(unselectedBackground);
 
         HBox hboxCima = new HBox();
-        hboxCima.getChildren().addAll(btnAtribuicaoAutomatica, btnLista, tgbExport);
+        hboxCima.getChildren().addAll(btnAtribuicaoAutomatica, tgbLista, tgbExport);
         hboxCima.setPadding(new Insets(10));
         hboxCima.setAlignment(Pos.CENTER);
         hboxCima.setSpacing(90);
@@ -82,6 +90,37 @@ public class Phase4UI extends BorderPane {
         tfFile = new TextField();
         tfFile.setPromptText("Nome do ficheiro:");
         tfFile.setMaxWidth(300);
+
+        tgbListaAl = new ToggleButton("Aluno");
+        tgbListaAl.setMinWidth(50);
+        tgbListaAl.setBackground(unselectedBackground);
+        tgbListaDoc = new ToggleButton("Docente");
+        tgbListaDoc.setMinWidth(50);
+        tgbListaDoc.setBackground(unselectedBackground);
+
+        tgbPropAtribuidasOrientador = new ToggleButton("Atribuido com Orientador");
+        tgbPropAtribuidasOrientador.setMinWidth(80);
+        tgbPropAtribuidasOrientador.setBackground(unselectedBackground);
+        tgbPropAtribuidasSOrientador = new ToggleButton("Atribuido sem Orientador");
+        tgbPropAtribuidasSOrientador.setMinWidth(80);
+        tgbPropAtribuidasSOrientador.setBackground(unselectedBackground);
+
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(tgbListaAl, tgbListaDoc);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setSpacing(50);
+        vBox.setPadding(new Insets(10));
+
+        VBox vBox1 = new VBox();
+        vBox1.getChildren().addAll(tgbPropAtribuidasOrientador, tgbPropAtribuidasSOrientador);
+        vBox1.setAlignment(Pos.CENTER);
+        vBox1.setSpacing(50);
+        vBox.setPadding(new Insets(10));
+
+        borderPaneLista = new BorderPane();
+        borderPaneLista.setLeft(vBox);
+        borderPaneLista.setRight(vBox1);
+        borderPaneLista.setCenter(displayLista);
     }
 
     public void registerHandlers() {
@@ -118,6 +157,79 @@ public class Phase4UI extends BorderPane {
                 tfFile.clear();
                 update();
             }
+        });
+
+        tgbLista.setOnAction(actionEvent -> {
+            if(tgbExport.isSelected()){
+                tgbExport.setSelected(false);
+                tgbExport.setBackground(unselectedBackground);
+            }
+            if(tgbLista.isSelected()){
+                tgbLista.setBackground(selectedBackground);
+                btnAvancar.setDisable(false);
+                this.setCenter(borderPaneLista);
+            } else {
+                tgbLista.setBackground(unselectedBackground);
+                this.setCenter(null);
+            }
+        });
+
+        tgbListaAl.setOnAction(actionEvent -> {
+            if(tgbListaAl.isSelected()){
+                tgbListaAl.setBackground(selectedBackground);
+            } else {
+                tgbListaAl.setBackground(unselectedBackground);
+            }
+            tgbListaDoc.setSelected(false);
+            tgbListaDoc.setBackground(unselectedBackground);
+            update();
+        });
+
+        tgbListaDoc.setOnAction(actionEvent -> {
+            if(tgbListaDoc.isSelected()){
+                tgbListaDoc.setBackground(selectedBackground);
+            } else {
+                tgbListaDoc.setBackground(unselectedBackground);
+            }
+            tgbListaAl.setSelected(false);
+            tgbListaAl.setBackground(unselectedBackground);
+            update();
+        });
+
+        tgbPropAtribuidasOrientador.setOnAction(actionEvent -> {
+            if(tgbPropAtribuidasOrientador.isSelected()){
+                tgbPropAtribuidasOrientador.setBackground(selectedBackground);
+            } else {
+                tgbPropAtribuidasOrientador.setBackground(unselectedBackground);
+            }
+            tgbPropAtribuidasSOrientador.setSelected(false);
+            tgbPropAtribuidasSOrientador.setBackground(unselectedBackground);
+        });
+        tgbPropAtribuidasSOrientador.setOnAction(actionEvent -> {
+            if(tgbPropAtribuidasSOrientador.isSelected()){
+                tgbPropAtribuidasSOrientador.setBackground(selectedBackground);
+            } else {
+                tgbPropAtribuidasSOrientador.setBackground(unselectedBackground);
+            }
+            tgbPropAtribuidasOrientador.setSelected(false);
+            tgbPropAtribuidasOrientador.setBackground(unselectedBackground);
+        });
+
+        btnAvancar.setOnAction(actionEvent -> {
+            if(tgbLista.isSelected()){
+                if(tgbListaAl.isSelected()){
+                    if(tgbPropAtribuidasOrientador.isSelected()){
+                        displayLista.setText(phaseManager.listaAluno("atribuida"));
+                    }
+                    if(tgbPropAtribuidasSOrientador.isSelected()){
+                        displayLista.setText(phaseManager.listaAluno("no_atribuida"));
+                    }
+                }
+                if(tgbListaDoc.isSelected()){
+                    displayLista.setText(phaseManager.listaDocente(""));
+                }
+            }
+            update();
         });
     }
 
