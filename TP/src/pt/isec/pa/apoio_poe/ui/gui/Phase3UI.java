@@ -3,6 +3,9 @@ package pt.isec.pa.apoio_poe.ui.gui;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import pt.isec.pa.apoio_poe.model.PhaseManager;
@@ -15,7 +18,9 @@ public class Phase3UI extends BorderPane {
     Background selectedBackground = new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY));
     Button btnProx, btnClose, btnAnterior;
     Button btnAvancar, btnVoltar;
-    Button btnLista, btnAtribuicaoAutomatica, btnAtribuicaoManual, btnRemover, btnExportar;
+    Button btnLista, btnAtribuicaoAutomatica, btnAtribuicaoManual, btnRemover;
+    ToggleButton tgbExport;
+    TextField tfFile;
 
     public Phase3UI(PhaseManager phaseManager) {
         this.phaseManager = phaseManager;
@@ -71,16 +76,20 @@ public class Phase3UI extends BorderPane {
         btnRemover.setMinWidth(50);
         btnRemover.setBackground(unselectedBackground);
 
-        btnExportar = new Button("Exportar");
-        btnExportar.setMinWidth(50);
-        btnExportar.setBackground(unselectedBackground);
+        tgbExport = new ToggleButton("Exportar");
+        tgbExport.setMinWidth(50);
+        tgbExport.setBackground(unselectedBackground);
 
         HBox hboxCima = new HBox();
-        hboxCima.getChildren().addAll(btnAtribuicaoAutomatica, btnAtribuicaoManual, btnRemover, btnLista, btnExportar);
+        hboxCima.getChildren().addAll(btnAtribuicaoAutomatica, btnAtribuicaoManual, btnRemover, btnLista, tgbExport);
         hboxCima.setPadding(new Insets(10));
         hboxCima.setAlignment(Pos.CENTER);
         hboxCima.setSpacing(50);
         this.setTop(hboxCima);
+
+        tfFile = new TextField();
+        tfFile.setPromptText("Nome do ficheiro:");
+        tfFile.setMaxWidth(300);
     }
 
     public void registerHandlers() {
@@ -99,6 +108,24 @@ public class Phase3UI extends BorderPane {
                 btnAnterior.setDisable(true);
             }
             update();
+        });
+
+        tgbExport.setOnAction(actionEvent -> {
+            if(tgbExport.isSelected()){
+                tgbExport.setBackground(selectedBackground);
+                this.setCenter(tfFile);
+            } else {
+                tgbExport.setBackground(unselectedBackground);
+                this.setCenter(null);
+            }
+        });
+
+        tfFile.setOnKeyPressed(keyEvent -> {
+            if(keyEvent.getCode() == KeyCode.ENTER && tfFile.getText() != null && tfFile.isFocused()){
+                phaseManager.export(tfFile.getText());
+                tfFile.clear();
+                update();
+            }
         });
     }
 

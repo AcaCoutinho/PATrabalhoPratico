@@ -74,7 +74,7 @@ public class Phase1UI extends BorderPane {
 
         tfFile = new TextField();
         tfFile.setPromptText("Nome de ficheiro");
-        tfFile.setMaxWidth(400);
+        tfFile.setMaxWidth(200);
 
         tgbFile = new ToggleButton("Usar ficheiro");
         tgbFile.setMinWidth(100);
