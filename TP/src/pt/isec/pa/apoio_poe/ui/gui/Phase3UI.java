@@ -18,21 +18,22 @@ public class Phase3UI extends BorderPane {
     Background unselectedBackground = new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY));
     Background selectedBackground = new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY));
 
-    HBox selectAtAuto;
+    HBox selectAtAuto, atManual;
     BorderPane borderPaneLista;
     VBox vbox1, vbox2;
 
     Button btnProx, btnClose, btnAnterior;
     Button btnAvancar, btnVoltar;
-    Button btnAtribuicaoAutomatica, btnAtribuicaoManual, btnRemover;
+    Button btnAtribuicaoAutomatica;
     Button btnAutoAt1, btnAutoAt2;
 
+    ToggleButton tgbAtribuicaoManual, tgbRemover;
     ToggleButton tgbExport, tgbLista;
     ToggleButton tgbListaAl, tgbListaProp;
     ToggleButton tgbAlAutoproposta, tgbAlCandidatura, tgbAlAtribuida, tgbAlSAtribuidas;
     ToggleButton tgbPropAutoproposta, tgbPropDocente, tgbPropDisponiveis, tgbPropAtribuidas;
 
-    TextField tfFile;
+    TextField tfFile, tfN_aluno, tfCa, tfRemover;
     Label displayLista;
 
     public Phase3UI(PhaseManager phaseManager) {
@@ -44,9 +45,18 @@ public class Phase3UI extends BorderPane {
     }
 
     public void createView() {
+        tfRemover = new TextField();
+        tfRemover.setPromptText("Número de aluno");
+
         btnAutoAt1 = new Button("Comparação");
 
         btnAutoAt2 = new Button("Atribuição");
+
+        tfN_aluno = new TextField();
+        tfN_aluno.setPromptText("Número de aluno");
+
+        tfCa = new TextField();
+        tfCa.setPromptText("Código de proposta");
 
         btnVoltar = new Button("Voltar");
         btnVoltar.setMinWidth(60);
@@ -89,20 +99,26 @@ public class Phase3UI extends BorderPane {
         tgbLista.setMinWidth(50);
         tgbLista.setBackground(unselectedBackground);
 
-        btnAtribuicaoManual = new Button("Atribuicao Manual");
-        btnAtribuicaoManual.setMinWidth(50);
-        btnAtribuicaoManual.setBackground(unselectedBackground);
+        tgbAtribuicaoManual = new ToggleButton("Atribuicao Manual");
+        tgbAtribuicaoManual.setMinWidth(50);
+        tgbAtribuicaoManual.setBackground(unselectedBackground);
 
-        btnRemover = new Button("Remover");
-        btnRemover.setMinWidth(50);
-        btnRemover.setBackground(unselectedBackground);
+        tgbRemover = new ToggleButton("Remover");
+        tgbRemover.setMinWidth(50);
+        tgbRemover.setBackground(unselectedBackground);
 
         tgbExport = new ToggleButton("Exportar");
         tgbExport.setMinWidth(50);
         tgbExport.setBackground(unselectedBackground);
 
+        atManual = new HBox();
+        atManual.getChildren().addAll(tfN_aluno, tfCa);
+        atManual.setPadding(new Insets(10));
+        atManual.setAlignment(Pos.CENTER);
+        atManual.setSpacing(50);
+
         HBox hboxCima = new HBox();
-        hboxCima.getChildren().addAll(btnAtribuicaoAutomatica, btnAtribuicaoManual, btnRemover, tgbLista, tgbExport);
+        hboxCima.getChildren().addAll(btnAtribuicaoAutomatica, tgbAtribuicaoManual, tgbRemover, tgbLista, tgbExport);
         hboxCima.setPadding(new Insets(10));
         hboxCima.setAlignment(Pos.CENTER);
         hboxCima.setSpacing(50);
@@ -158,6 +174,8 @@ public class Phase3UI extends BorderPane {
         borderPaneLista = new BorderPane();
         borderPaneLista.setLeft(vBox);
         borderPaneLista.setCenter(displayLista);
+
+        displayLista = new Label();
     }
 
     public void registerHandlers() {
@@ -173,9 +191,34 @@ public class Phase3UI extends BorderPane {
             phaseManager.assignment(1);
         });
 
+        tgbRemover.setOnAction(actionEvent -> {
+            if(tgbLista.isSelected()){
+                tgbLista.setDisable(true);
+            }
+            if(tgbAtribuicaoManual.isSelected()){
+                tgbAtribuicaoManual.setDisable(true);
+            }
+            if(tgbRemover.isSelected()) {
+                tgbRemover.setBackground(selectedBackground);
+                this.setCenter(tfRemover);
+            }else{
+                tgbRemover.setBackground(unselectedBackground);
+                this.setCenter(null);
+            }
+        });
+
+        tgbAtribuicaoManual.setOnAction(actionEvent -> {
+            if(tgbAtribuicaoManual.isSelected()) {
+                tgbAtribuicaoManual.setBackground(selectedBackground);
+                this.setCenter(atManual);
+            }else{
+                tgbAtribuicaoManual.setBackground(unselectedBackground);
+                this.setCenter(null);
+            }
+        });
+
         btnAtribuicaoAutomatica.setOnAction(actionEvent ->{
             if(!phaseManager.getIsClosed(2)){
-                System.out.println("Dentro assignment 0");
                 phaseManager.assignment(0);
                 return;
             }
@@ -209,6 +252,14 @@ public class Phase3UI extends BorderPane {
         });
 
         btnAvancar.setOnAction(actionEvent -> {
+            if(tgbAtribuicaoManual.isSelected()){
+               if(phaseManager.getPropAtribuida(Long.parseLong(tfN_aluno.getText())) == null){
+                   phaseManager.setPropAtribuida(Long.parseLong(tfN_aluno.getText()), phaseManager.getProposta(tfCa.getText()));
+               }
+            }
+            if(tgbRemover.isSelected()){
+                phaseManager.setPropAtribuida(Long.parseLong(tfRemover.getText()), null);
+            }
             if(tgbLista.isSelected()){
                 if(tgbListaAl.isSelected()){
                     if(tgbAlAutoproposta.isSelected()){
@@ -412,9 +463,8 @@ public class Phase3UI extends BorderPane {
             this.setVisible(false);
             return;
         }
-        System.out.println(phaseManager.getIsClosed(2));
         if(!phaseManager.getIsClosed(2)){
-            btnAtribuicaoManual.setDisable(true);
+            tgbAtribuicaoManual.setDisable(true);
             btnClose.setDisable(true);
         }
         this.setVisible(true);

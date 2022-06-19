@@ -125,4 +125,8 @@ public class PhaseContext {
     public Aluno getAluno(long nAluno){ return phase.getAluno(nAluno); }
     public Docente getDocente(String email){ return phase.getDocente(email); }
     public Proposta getProposta(String ca){ return phase.getProposta(ca); }
+    public Candidatura getCandidatura(long nAluno){ return phase.getCandidatura(nAluno); }
+    public boolean procuraCandidatura(long nAluno){ return phase.procuraCandidatura(nAluno); }
+    public Proposta getPropAtribuida(long nAluno){ return phase.getPropAtribuida(nAluno); }
+    public void setPropAtribuida(long nAluno, Proposta proposta){ phase.setPropAtribuida(nAluno, proposta);}
 }

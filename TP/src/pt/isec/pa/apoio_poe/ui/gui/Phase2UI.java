@@ -494,10 +494,10 @@ public class Phase2UI extends BorderPane {
                 }
                 if(tgbEdit.isSelected()){
                     String tipo = null;
-                    if(tfEditType.getText() == "Adiciona"){
+                    if(tfEditType.getText().equals("Adiciona")){
                         tipo = "idPropostaAdiciona";
                     }
-                    if(tfEditType.getText() == "Remove"){
+                    if(tfEditType.getText().equals("Remove")){
                         tipo = "idPropostaRemove";
                     }
                     ArrayList<String> newData = new ArrayList<>(Arrays.asList(tfEditData.getText().split("\\s+")));

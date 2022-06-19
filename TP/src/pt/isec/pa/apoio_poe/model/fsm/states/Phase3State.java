@@ -21,7 +21,7 @@ public class Phase3State extends PhaseStateAdapter {
                     phase.getAluno(propostas.get(i)).setPropAtribuida(phase.getProposta(i));
                 }
             }
-        } else {
+        }else if(tipo == 1) {
             ArrayList<Aluno> alunosSem = phase.getAlunos();
             ArrayList<Proposta> propostasSem = phase.getPropostas();
             ArrayList<Candidatura> candidaturas = phase.getCandidaturas();
@@ -59,6 +59,21 @@ public class Phase3State extends PhaseStateAdapter {
             }
             alunosSem.clear();
         }
+    }
+
+    @Override
+    public void setPropAtribuida(long nAluno, Proposta proposta){
+        phase.setPropAtribuida(nAluno, proposta);
+    }
+
+    @Override
+    public Proposta getPropAtribuida(long nAluno){
+        return phase.getPropAtribuida(nAluno);
+    }
+
+    @Override
+    public Candidatura getCandidatura(long nAluno){
+        return phase.getCandidatura(nAluno);
     }
 
     @Override

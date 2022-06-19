@@ -441,6 +441,24 @@ public class Phase {
         return (count / docentes.size());
     }
 
+    public Proposta getPropAtribuida(long nAluno){
+        for(var i : alunos){
+            if(i.getN_aluno() == nAluno){
+                return i.getPropAtribuida();
+            }
+        }
+        return null;
+    }
+
+    public void setPropAtribuida(long nAluno, Proposta proposta){
+        for(var i : alunos){
+            if(i.getN_aluno() == nAluno){
+                 i.setPropAtribuida(proposta);
+                 return;
+            }
+        }
+    }
+
     public void export(String fileName) {
         try{
             FileWriter fw = new FileWriter(fileName);

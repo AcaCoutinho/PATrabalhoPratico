@@ -128,4 +128,9 @@ public class PhaseManager {
     public Aluno getAluno(long nAluno){ return fsm.getAluno(nAluno); }
     public Docente getDocente(String email){ return fsm.getDocente(email); }
     public Proposta getProposta(String ca){ return fsm.getProposta(ca); }
+
+    public Candidatura getCandidatura(long nAluno){ return fsm.getCandidatura(nAluno); }
+    public boolean procuraCandidatura(long nAluno){ return fsm.procuraCandidatura(nAluno); }
+    public Proposta getPropAtribuida(long nAluno){ return fsm.getPropAtribuida(nAluno); }
+    public void setPropAtribuida(long nAluno, Proposta proposta){ fsm.setPropAtribuida(nAluno, proposta); }
 }

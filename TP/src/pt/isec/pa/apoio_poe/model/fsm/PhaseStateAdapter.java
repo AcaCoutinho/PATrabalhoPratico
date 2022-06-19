@@ -124,6 +124,18 @@ public abstract class PhaseStateAdapter implements IPhaseState{
 
     }
 
+    public void setPropAtribuida(long nAluno, Proposta proposta){
+        return;
+    }
+
+    public Proposta getPropAtribuida(long nAluno){
+        return null;
+    }
+
+    public Candidatura getCandidatura(long nAluno){
+        return null;
+    }
+
     @Override
     public String listaAluno(String tipoLista) {
         return null;
