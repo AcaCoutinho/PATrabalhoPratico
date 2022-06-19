@@ -53,13 +53,18 @@ public class Phase2State extends PhaseStateAdapter {
     }
 
     @Override
+    public boolean getIsClosed(int phase) {
+        return this.phase.getIsClosed(phase);
+    }
+
+    @Override
     public boolean nextPhase(){
         return(changePhaseState(PhaseState.PHASE_3));
     }
 
     @Override
     public boolean previousPhase() {
-        if(phase.getisClosed(1))
+        if(phase.getIsClosed(1))
             return false;
         return(changePhaseState(PhaseState.PHASE_1));
     }

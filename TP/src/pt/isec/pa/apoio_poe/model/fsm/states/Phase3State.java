@@ -16,7 +16,6 @@ public class Phase3State extends PhaseStateAdapter {
     public void assignment(int tipo){
         if(tipo == 0){
             HashMap<String, Long> propostas = phase.getPropAndAlunos();
-            System.out.println(propostas);
             for(var i : propostas.keySet()){
                 if(propostas.get(i) != 0){
                     phase.getAluno(propostas.get(i)).setPropAtribuida(phase.getProposta(i));
@@ -84,13 +83,18 @@ public class Phase3State extends PhaseStateAdapter {
     }
 
     @Override
+    public boolean getIsClosed(int phase) {
+       return this.phase.getIsClosed(phase);
+    }
+
+    @Override
     public boolean nextPhase(){
         return(changePhaseState(PhaseState.PHASE_4));
     }
 
     @Override
     public boolean previousPhase() {
-        if(phase.getisClosed(2))
+        if(phase.getIsClosed(2))
             return false;
         return(changePhaseState(PhaseState.PHASE_2));
     }

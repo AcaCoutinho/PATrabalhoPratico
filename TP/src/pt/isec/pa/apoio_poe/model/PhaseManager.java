@@ -34,6 +34,8 @@ public class PhaseManager {
         return ret;
     }
 
+    public boolean getIsClosed(int phase){ return fsm.getIsClosed(phase); }
+
     public void closePhase() {
         fsm.closeState();
         pcs.firePropertyChange(null, null, null);
@@ -122,4 +124,8 @@ public class PhaseManager {
     public String listaProposta(String tipoLista) {
         return fsm.listaProposta(tipoLista);
     }
+
+    public Aluno getAluno(long nAluno){ return fsm.getAluno(nAluno); }
+    public Docente getDocente(String email){ return fsm.getDocente(email); }
+    public Proposta getProposta(String ca){ return fsm.getProposta(ca); }
 }

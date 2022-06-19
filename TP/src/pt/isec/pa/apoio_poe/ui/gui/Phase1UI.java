@@ -691,3 +691,4 @@ public class Phase1UI extends BorderPane {
         displayDados.setText("");
     }
 }
+

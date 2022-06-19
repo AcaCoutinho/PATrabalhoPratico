@@ -18,12 +18,14 @@ public class Phase3UI extends BorderPane {
     Background unselectedBackground = new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY));
     Background selectedBackground = new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY));
 
+    HBox selectAtAuto;
     BorderPane borderPaneLista;
     VBox vbox1, vbox2;
 
     Button btnProx, btnClose, btnAnterior;
     Button btnAvancar, btnVoltar;
     Button btnAtribuicaoAutomatica, btnAtribuicaoManual, btnRemover;
+    Button btnAutoAt1, btnAutoAt2;
 
     ToggleButton tgbExport, tgbLista;
     ToggleButton tgbListaAl, tgbListaProp;
@@ -42,6 +44,10 @@ public class Phase3UI extends BorderPane {
     }
 
     public void createView() {
+        btnAutoAt1 = new Button("Comparação");
+
+        btnAutoAt2 = new Button("Atribuição");
+
         btnVoltar = new Button("Voltar");
         btnVoltar.setMinWidth(60);
         btnVoltar.setBackground(unselectedBackground);
@@ -70,6 +76,10 @@ public class Phase3UI extends BorderPane {
         foot.setAlignment(Pos.CENTER);
         foot.setSpacing(90);
         this.setBottom(foot);
+
+        selectAtAuto = new HBox();
+
+        selectAtAuto.getChildren().addAll(btnAutoAt1, btnAutoAt2);
 
         btnAtribuicaoAutomatica = new Button("Atribuicao Automatica");
         btnAtribuicaoAutomatica.setMinWidth(50);
@@ -145,8 +155,6 @@ public class Phase3UI extends BorderPane {
         vbox2.setSpacing(50);
         vbox2.setPadding(new Insets(10));
 
-        displayLista = new Label();
-
         borderPaneLista = new BorderPane();
         borderPaneLista.setLeft(vBox);
         borderPaneLista.setCenter(displayLista);
@@ -155,6 +163,23 @@ public class Phase3UI extends BorderPane {
     public void registerHandlers() {
         phaseManager.addPropertyChangeListener(evt -> {
             update();
+        });
+
+        btnAutoAt1.setOnAction(actionEvent -> {
+            phaseManager.assignment(0);
+        });
+
+        btnAutoAt2.setOnAction(actionEvent -> {
+            phaseManager.assignment(1);
+        });
+
+        btnAtribuicaoAutomatica.setOnAction(actionEvent ->{
+            if(!phaseManager.getIsClosed(2)){
+                System.out.println("Dentro assignment 0");
+                phaseManager.assignment(0);
+                return;
+            }
+            this.setCenter(selectAtAuto);
         });
 
         btnProx.setOnAction(actionEvent -> {
@@ -181,6 +206,10 @@ public class Phase3UI extends BorderPane {
                 this.setCenter(null);
             }
             update();
+        });
+
+        btnAvancar.setOnAction(actionEvent -> {
+
         });
 
         tfFile.setOnKeyPressed(keyEvent -> {
@@ -215,15 +244,6 @@ public class Phase3UI extends BorderPane {
                 tgbListaAl.setBackground(unselectedBackground);
                 borderPaneLista.setRight(null);
             }
-
-            tgbPropAutoproposta.setSelected(false);
-            tgbPropAutoproposta.setBackground(unselectedBackground);
-            tgbPropDocente.setSelected(false);
-            tgbPropDocente.setBackground(unselectedBackground);
-            tgbPropAtribuidas.setSelected(false);
-            tgbPropAtribuidas.setBackground(unselectedBackground);
-            tgbPropDisponiveis.setSelected(false);
-            tgbPropDisponiveis.setBackground(unselectedBackground);
             tgbListaProp.setSelected(false);
             tgbListaProp.setBackground(unselectedBackground);
             update();
@@ -237,166 +257,22 @@ public class Phase3UI extends BorderPane {
                 tgbListaProp.setBackground(unselectedBackground);
                 borderPaneLista.setRight(null);
             }
-
-            tgbAlAutoproposta.setSelected(false);
-            tgbAlAutoproposta.setBackground(unselectedBackground);
-            tgbAlCandidatura.setSelected(false);
-            tgbAlCandidatura.setBackground(unselectedBackground);
-            tgbPropAtribuida.setSelected(false);
-            tgbPropAtribuida.setBackground(unselectedBackground);
-            tgbSPropAtribuidas.setSelected(false);
-            tgbSPropAtribuidas.setBackground(unselectedBackground);
             tgbListaAl.setSelected(false);
             tgbListaAl.setBackground(unselectedBackground);
             update();
         });
 
-        tgbAlAutoproposta.setOnAction(actionEvent -> {
-            if(tgbAlAutoproposta.isSelected()) {
-                tgbAlAutoproposta.setBackground(selectedBackground);
-            } else {
-                tgbAlAutoproposta.setBackground(unselectedBackground);
-            }
-            tgbAlCandidatura.setSelected(false);
-            tgbAlCandidatura.setBackground(unselectedBackground);
-            tgbPropAtribuida.setSelected(false);
-            tgbPropAtribuida.setBackground(unselectedBackground);
-            tgbSPropAtribuidas.setSelected(false);
-            tgbSPropAtribuidas.setBackground(unselectedBackground);
-        });
-        tgbAlCandidatura.setOnAction(actionEvent -> {
-            if(tgbAlCandidatura.isSelected()) {
-                tgbAlCandidatura.setBackground(selectedBackground);
-            } else {
-                tgbAlCandidatura.setBackground(unselectedBackground);
-            }
-            tgbAlAutoproposta.setSelected(false);
-            tgbAlAutoproposta.setBackground(unselectedBackground);
-            tgbPropAtribuida.setSelected(false);
-            tgbPropAtribuida.setBackground(unselectedBackground);
-            tgbSPropAtribuidas.setSelected(false);
-            tgbSPropAtribuidas.setBackground(unselectedBackground);
-        });
-        tgbPropAtribuida.setOnAction(actionEvent -> {
-            if(tgbPropAtribuida.isSelected()) {
-                tgbPropAtribuida.setBackground(selectedBackground);
-            } else {
-                tgbPropAtribuida.setBackground(unselectedBackground);
-            }
-            tgbAlCandidatura.setSelected(false);
-            tgbAlCandidatura.setBackground(unselectedBackground);
-            tgbAlAutoproposta.setSelected(false);
-            tgbAlAutoproposta.setBackground(unselectedBackground);
-            tgbSPropAtribuidas.setSelected(false);
-            tgbSPropAtribuidas.setBackground(unselectedBackground);
-        });
-        tgbSPropAtribuidas.setOnAction(actionEvent -> {
-            if(tgbSPropAtribuidas.isSelected()) {
-                tgbSPropAtribuidas.setBackground(selectedBackground);
-            } else {
-                tgbSPropAtribuidas.setBackground(unselectedBackground);
-            }
-
-            tgbAlCandidatura.setSelected(false);
-            tgbAlCandidatura.setBackground(unselectedBackground);
-            tgbPropAtribuida.setSelected(false);
-            tgbPropAtribuida.setBackground(unselectedBackground);
-            tgbPropAtribuida.setSelected(false);
-            tgbPropAtribuida.setBackground(unselectedBackground);
-        });
-
-        tgbPropAutoproposta.setOnAction(actionEvent -> {
-            if(tgbPropAutoproposta.isSelected()) {
-                tgbPropAutoproposta.setBackground(selectedBackground);
-            } else {
-                tgbPropAutoproposta.setBackground(unselectedBackground);
-            }
-            tgbPropDocente.setSelected(false);
-            tgbPropDocente.setBackground(unselectedBackground);
-            tgbPropAtribuidas.setSelected(false);
-            tgbPropAtribuidas.setBackground(unselectedBackground);
-            tgbPropDisponiveis.setSelected(false);
-            tgbPropDisponiveis.setBackground(unselectedBackground);
-        });
-        tgbPropDocente.setOnAction(actionEvent -> {
-            if(tgbPropDocente.isSelected()) {
-                tgbPropDocente.setBackground(selectedBackground);
-            } else {
-                tgbPropDocente.setBackground(unselectedBackground);
-            }
-            tgbPropAutoproposta.setSelected(false);
-            tgbPropAutoproposta.setBackground(unselectedBackground);
-            tgbPropAtribuidas.setSelected(false);
-            tgbPropAtribuidas.setBackground(unselectedBackground);
-            tgbPropDisponiveis.setSelected(false);
-            tgbPropDisponiveis.setBackground(unselectedBackground);
-        });
-        tgbPropDisponiveis.setOnAction(actionEvent -> {
-            if(tgbPropDisponiveis.isSelected()) {
-                tgbPropDisponiveis.setBackground(selectedBackground);
-            } else {
-                tgbPropDisponiveis.setBackground(unselectedBackground);
-            }
-            tgbPropDocente.setSelected(false);
-            tgbPropDocente.setBackground(unselectedBackground);
-            tgbPropAtribuidas.setSelected(false);
-            tgbPropAtribuidas.setBackground(unselectedBackground);
-            tgbPropAutoproposta.setSelected(false);
-            tgbPropAutoproposta.setBackground(unselectedBackground);
-        });
-        tgbPropAtribuidas.setOnAction(actionEvent -> {
-            if(tgbPropAtribuidas.isSelected()) {
-                tgbPropAtribuidas.setBackground(selectedBackground);
-            } else {
-                tgbPropAtribuidas.setBackground(unselectedBackground);
-            }
-            tgbPropDocente.setSelected(false);
-            tgbPropDocente.setBackground(unselectedBackground);
-            tgbPropAutoproposta.setSelected(false);
-            tgbPropAutoproposta.setBackground(unselectedBackground);
-            tgbPropDisponiveis.setSelected(false);
-            tgbPropDisponiveis.setBackground(unselectedBackground);
-        });
-
-        btnAvancar.setOnAction(actionEvent -> {
-            if(tgbLista.isSelected()){
-                if(tgbListaAl.isSelected()){
-                    if(tgbAlCandidatura.isSelected()){
-                        displayLista.setText(phaseManager.listaAluno("candidatura"));
-                    }
-                    if(tgbAlAutoproposta.isSelected()){
-                        displayLista.setText(phaseManager.listaAluno("autoproposto"));
-                    }
-                    if(tgbPropAtribuida.isSelected()){
-                        displayLista.setText("awjdu");
-                    }
-                    if(tgbSPropAtribuidas.isSelected()){
-                        displayLista.setText("aoiwdawoijd");
-                    }
-                }
-                if(tgbListaProp.isSelected()){
-                    if(tgbPropAutoproposta.isSelected()){
-                        displayLista.setText("aoiwhd");
-                    }
-                    if(tgbPropDisponiveis.isSelected()){
-                        displayLista.setText("uadhwoijawodi");
-                    }
-                    if(tgbPropDocente.isSelected()){
-                        displayLista.setText("kjawiudnawdj");
-                    }
-                    if(tgbPropAtribuidas.isSelected()){
-                        displayLista.setText("oiajdmkanon");
-                    }
-                }
-            }
-            update();
-        });
     }
 
     public void update() {
         if(phaseManager.getPhaseState() != PhaseState.PHASE_3){
             this.setVisible(false);
             return;
+        }
+        System.out.println(phaseManager.getIsClosed(2));
+        if(!phaseManager.getIsClosed(2)){
+            btnAtribuicaoManual.setDisable(true);
+            btnClose.setDisable(true);
         }
         this.setVisible(true);
     }

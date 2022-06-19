@@ -27,7 +27,7 @@ public class Phase {
         isClosed4 = false;
     }
 
-    public boolean getisClosed (int phase){
+    public boolean getIsClosed (int phase){
         if(phase == 1)
             return isClosed1;
         else if(phase == 2)
