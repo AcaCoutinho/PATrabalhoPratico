@@ -3,17 +3,13 @@ package pt.isec.pa.apoio_poe.ui.gui;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import pt.isec.pa.apoio_poe.model.PhaseManager;
-import pt.isec.pa.apoio_poe.model.data.Aluno;
-import pt.isec.pa.apoio_poe.model.data.Docente;
+import pt.isec.pa.apoio_poe.model.data.*;
 import pt.isec.pa.apoio_poe.model.fsm.PhaseState;
 
 import java.util.ArrayList;
@@ -28,21 +24,25 @@ public class Phase1UI extends BorderPane {
 
     Background unselectedBackground = new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY));
     Background selectedBackground = new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY));
+
     Button btnProx, btnClose;
     Button btnAlunos, btnPropostas, btnDocentes;
-    ArrayList<Button> operacoes = new ArrayList<>();
     Button btnInsere, btnConsulta, btnEdita, btnElimina;
     Button btnAvancar, btnVoltar;
+    ToggleButton tgbProjeto, tgbEstagio, tgbAutoProposta;
 
+    VBox selectProp;
     VBox vBoxEdit;
     VBox useFile;
     ToggleButton tgbFile;
     TextField tfFile;
 
+    ArrayList<Button> operacoes = new ArrayList<>();
     ArrayList<TextField> alunoGUI = new ArrayList<>();
     ArrayList<TextField> docenteGUI = new ArrayList<>();
+    ArrayList<TextField> propostaGUI = new ArrayList<>();
 
-    TextField tfNomeAl, tfNomeDoc, tfSiglaC, tfSiglaR, tfGrade, tfN_aluno, tfEmailAl, tfEmailDoc, tfCa, tfTitulo, tfRd, tfAd, tfEntityId;
+    TextField tfNomeAl, tfNomeDoc, tfSiglaC, tfSiglaR, tfGrade, tfN_aluno, tfEmailAl, tfEmailDoc, tfCa, tfTitulo, tfRd, tfAd, tfEntityId, tfN_alunoAt, tfDocenteProp;
     ToggleButton tgbAccess;
 
     TextField tfConsult;
@@ -61,7 +61,21 @@ public class Phase1UI extends BorderPane {
         update();
     }
 
+    //Código identificação, área de destino, ramo de destino, titulo, entity, pode ou não ter n_aluno
+
     private void createView(){
+        tgbProjeto = new ToggleButton("Projeto");
+        tgbProjeto.setMinWidth(100);
+
+        tgbEstagio = new ToggleButton("Estagio");
+        tgbEstagio.setMinWidth(100);
+
+        tgbAutoProposta = new ToggleButton("Auto-proposta");
+        tgbAutoProposta.setMinWidth(100);
+
+        tfN_alunoAt = new TextField();
+        tfN_alunoAt.setPromptText("Número de aluno a atribuir");
+
         tfElimina = new TextField();
 
         tfIdentify = new TextField();
@@ -82,7 +96,7 @@ public class Phase1UI extends BorderPane {
         tgbFile.setBackground(unselectedBackground);
 
         displayDados = new Label();
-        displayDados.setFont(new Font(20));
+        displayDados.setFont(new Font(15));
 
         tfConsult = new TextField();
         tfConsult.setMinWidth(200);
@@ -125,6 +139,9 @@ public class Phase1UI extends BorderPane {
 
         btnElimina = new Button("Elimina");
 
+        tfDocenteProp = new TextField();
+        tfDocenteProp.setPromptText("Email de docente proponetne");
+
         tfNomeAl = new TextField();
         tfNomeAl.setPromptText("Nome");
 
@@ -150,19 +167,19 @@ public class Phase1UI extends BorderPane {
         tfEmailDoc.setPromptText("Email");
 
         tfCa = new TextField();
-        tfCa.setPromptText("Código smth");
+        tfCa.setPromptText("Código de identificação");
 
         tfTitulo = new TextField();
         tfTitulo.setPromptText("Titulo");
 
         tfRd = new TextField();
-        tfRd.setPromptText("Ramo smth");
+        tfRd.setPromptText("Ramo de destino");
 
         tfAd = new TextField();
-        tfAd.setPromptText("Ad");
+        tfAd.setPromptText("Área de destino");
 
         tfEntityId = new TextField();
-        tfEntityId.setPromptText("Id de identidade");
+        tfEntityId.setPromptText("Id de entidade");
 
         tgbAccess = new ToggleButton("Acesso de aluno a estágio");
         tgbAccess.setBackground(new Background(new BackgroundFill(Color.ORANGERED, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -181,6 +198,15 @@ public class Phase1UI extends BorderPane {
 
         docenteGUI.add(tfNomeDoc);
         docenteGUI.add(tfEmailDoc);
+
+        propostaGUI.add(tfCa);
+        propostaGUI.add(tfAd);
+        propostaGUI.add(tfRd);
+        propostaGUI.add(tfTitulo);
+        propostaGUI.add(tfEntityId);
+        propostaGUI.add(tfN_alunoAt);
+        propostaGUI.add(tfDocenteProp);
+
 
         for(var i : operacoes){
             i.setMinWidth(200);
@@ -211,6 +237,20 @@ public class Phase1UI extends BorderPane {
         tilePaneDoc.setPadding(new Insets(10, 50, 10, 30));
         tilePaneDoc.setAlignment(Pos.CENTER);
 
+        tilePaneProp = new TilePane();
+        tilePaneProp.setPrefRows(3);
+        tilePaneProp.setPrefColumns(2);
+        tilePaneProp.setHgap(20);
+        tilePaneProp.setVgap(20);
+        tilePaneProp.setPadding(new Insets(10, 50, 10, 30));
+        tilePaneProp.setAlignment(Pos.CENTER);
+
+        selectProp = new VBox();
+        selectProp.getChildren().addAll(tgbProjeto, tgbEstagio, tgbAutoProposta);
+        selectProp.setPadding(new Insets(10));
+        selectProp.setAlignment(Pos.CENTER);
+        selectProp.setSpacing(30);
+
         HBox hBox1 = new HBox();
         hBox1.getChildren().addAll(btnAlunos, btnDocentes, btnPropostas);
         hBox1.setPadding(new Insets(10));
@@ -237,6 +277,22 @@ public class Phase1UI extends BorderPane {
     }
 
     private void registerHandlers() {
+
+        tgbEstagio.setOnMouseClicked(mouseEvent -> {
+            tilePaneProp.getChildren().addAll(propostaGUI.get(0), propostaGUI.get(1), propostaGUI.get(3), propostaGUI.get(4), propostaGUI.get(5));
+            this.setCenter(tilePaneProp);
+        });
+
+        tgbProjeto.setOnMouseClicked(mouseEvent -> {
+            tilePaneProp.getChildren().addAll(propostaGUI.get(0), propostaGUI.get(2), propostaGUI.get(3), propostaGUI.get(6), propostaGUI.get(5));
+            this.setCenter(tilePaneProp);
+        });
+
+        tgbAutoProposta.setOnMouseClicked(mouseEvent -> {
+            tilePaneProp.getChildren().addAll(propostaGUI.get(0), propostaGUI.get(3), propostaGUI.get(5));
+            this.setCenter(tilePaneProp);
+        });
+
         phaseManager.addPropertyChangeListener(evt -> { update(); });
 
         tgbFile.setOnMouseClicked(mouseEvent -> {
@@ -250,7 +306,11 @@ public class Phase1UI extends BorderPane {
                 }else if(tipo == 2){
                     this.setCenter(tilePaneDoc);
                 }else{
-                    this.setCenter(tilePaneProp);
+                    if(tgbProjeto.isSelected() || tgbEstagio.isSelected() || tgbAutoProposta.isSelected()){
+                        this.setCenter(tilePaneProp);
+                    }else{
+                        this.setCenter(selectProp);
+                    }
                 }
             }
         });
@@ -360,52 +420,21 @@ public class Phase1UI extends BorderPane {
         });
     }
 
-    private void handleDelete() {
-        this.setCenter(tfElimina);
-        if(tipo == 1){
-            phaseManager.removeAluno(Long.parseLong(tfElimina.getText()));
-        }else if(tipo == 2){
-            phaseManager.removeDocente(tfElimina.getText());
+    private void update(){
+        if(phaseManager.getPhaseState() != PhaseState.PHASE_1){
+            this.setVisible(false);
+            return;
+        }
+        this.setVisible(true);
+
+        mainButtons(tipo);
+        operationButtons(actualOp);
+        if(!tgbFile.isSelected()){
+            tgbFile.setBackground(unselectedBackground);
         }
     }
 
-    private void handleConsulta() {
-        this.setCenter(displayDados);
-        if(tipo == 1){
-            if(phaseManager.consultAluno(Long.parseLong(tfConsult.getText())) == null){
-                displayDados.setText("Aluno não encontrado");
-            }else{
-                displayDados.setText(phaseManager.consultAluno(Long.parseLong(tfConsult.getText())));
-            }
-        }else if(tipo == 2){
-            displayDados.setText(phaseManager.consultDocente(tfConsult.getText()));
-            if(displayDados.getText() == ""){
-                displayDados.setText("Docente não encontrado");
-            }
-        }else{
-            displayDados.setText(phaseManager.consultProposta(tfConsult.getText()));
-            if(displayDados.getText() == ""){
-                displayDados.setText("Proposta não encontrada");
-            }
-        }
-    }
-
-    private void clear() {
-        for(var i : alunoGUI){
-            i.setText("");
-        }
-        for(var i : docenteGUI){
-            i.setText("");
-        }
-        tfFile.setText("");
-        tfConsult.setText("");
-        tfIdentify.setText("");
-        tfDadoEdit.setText("");
-        tfTipoEdit.setText("");
-        displayDados.setText("");
-    }
-
-    void mainButtons(int tipo){
+    private void mainButtons(int tipo){
         this.setLeft(null);
         tgbFile.setVisible(false);
         switch(tipo){
@@ -455,8 +484,8 @@ public class Phase1UI extends BorderPane {
             }
         }
     }
-    
-    void operationButtons(int actualOp){
+
+    private void operationButtons(int actualOp){
         btnAvancar.setDisable(false);
         btnVoltar.setDisable(false);
         switch(actualOp){
@@ -483,7 +512,7 @@ public class Phase1UI extends BorderPane {
                     }
                 }else{
                     switchMainButton(3);
-                    this.setCenter(tilePaneProp);
+                    this.setCenter(selectProp);
                 }
             }
 
@@ -493,6 +522,8 @@ public class Phase1UI extends BorderPane {
                     switchMainButton(1);
                 }else if(tipo == 2){
                     switchMainButton(2);
+                }else{
+                    switchMainButton(3);
                 }
             }
 
@@ -504,6 +535,9 @@ public class Phase1UI extends BorderPane {
                 }else if(tipo == 2){
                     tfIdentify.setPromptText("Email de docente");
                     switchMainButton(2);
+                }else{
+                    tfIdentify.setPromptText("Código de identificação");
+                    switchMainButton(3);
                 }
             }
 
@@ -515,26 +549,27 @@ public class Phase1UI extends BorderPane {
                 }else if(tipo == 2){
                     tfElimina.setPromptText("Email de docente a eliminar");
                     switchMainButton(2);
+                }else{
+                    tfElimina.setPromptText("Código de proposta a eliminrar");
+                    switchMainButton(3);
                 }
             }
         }
     }
 
-    private void update(){
-        if(phaseManager.getPhaseState() != PhaseState.PHASE_1){
-            this.setVisible(false);
-            return;
-        }
-        this.setVisible(true);
-
-        mainButtons(tipo);
-        operationButtons(actualOp);
-        if(!tgbFile.isSelected()){
-            tgbFile.setBackground(unselectedBackground);
+    private void switchMainButton(int tipo){
+        if(btnAlunos.isDisabled() || btnDocentes.isDisabled() || btnPropostas.isDisabled()){
+            btnAlunos.setDisable(false);
+            btnDocentes.setDisable(false);
+            btnPropostas.setDisable(false);
+        }else{
+            btnAlunos.setDisable(true);
+            btnDocentes.setDisable(true);
+            btnPropostas.setDisable(true);
         }
     }
 
-    public void handleInsert(){
+    private void handleInsert(){
         if(tipo == 1) {
             if (!tgbFile.isSelected()) {
                 phaseManager.insertAluno(new Aluno(Long.parseLong(tfN_aluno.getText()), tfNomeAl.getText(), tfEmailAl.getText(),
@@ -550,37 +585,65 @@ public class Phase1UI extends BorderPane {
                 phaseManager.insertDocenteFile(tfFile.getText());
                 tgbFile.setSelected(false);
             }
+        }else if(tipo == 3){
+            if(!tgbFile.isSelected()){
+                if(tgbProjeto.isSelected()){
+                    if(!tfN_alunoAt.getText().equals("") && phaseManager.getDocente(tfDocenteProp.getText()) != null){
+                        System.out.println("Entrei1");
+                        if(phaseManager.getAluno(Long.parseLong(tfN_alunoAt.getText())) != null){
+                            System.out.println("Entrei2");
+                            phaseManager.insertProposta(new Projeto(tfCa.getText(), tfRd.getText(), tfTitulo.getText(), phaseManager.getDocente(tfDocenteProp.getText()), Long.parseLong(tfN_alunoAt.getText())));
+                        }
+                    }else{
+                        phaseManager.insertProposta(new Projeto(tfCa.getText(), tfRd.getText(), tfTitulo.getText(), phaseManager.getDocente(tfDocenteProp.getText())));
+                    }
+                }
+                if(tgbEstagio.isSelected()){
+                    if(!tfN_alunoAt.getText().equals("")){
+                        System.out.println("Entrei1");
+                        if(phaseManager.getAluno(Long.parseLong(tfN_alunoAt.getText())) != null){
+                            System.out.println("Entrei2");
+                            phaseManager.insertProposta(new Estagio(tfCa.getText(), tfAd.getText(), tfTitulo.getText(), tfEntityId.getText(), Long.parseLong(tfN_alunoAt.getText())));
+                        }
+                    }else{
+                        phaseManager.insertProposta(new Estagio(tfCa.getText(), tfRd.getText(), tfTitulo.getText(), tfEntityId.getText()));
+                    }
+                }
+                if(tgbAutoProposta.isSelected()){
+                    if(!tfN_alunoAt.getText().equals("")){
+                        System.out.println("Entrei1");
+                        if(phaseManager.getAluno(Long.parseLong(tfN_alunoAt.getText())) != null){
+                            System.out.println("Entrei2");
+                            phaseManager.insertProposta(new Autoproposto(tfCa.getText(), tfTitulo.getText(), Long.parseLong(tfN_alunoAt.getText())));
+                        }
+                    }
+                }
+            }else{
+                phaseManager.insertPropostaFile(tfFile.getText());
+                tgbFile.setSelected(false);
+            }
         }
     }
 
-    public void switchMainButton(int tipo){
-        switch(tipo){
-            case 1 ->{
-                if(btnDocentes.isDisabled() && btnPropostas.isDisabled()){
-                    btnDocentes.setDisable(false);
-                    btnPropostas.setDisable(false);
-                }else{
-                    btnDocentes.setDisable(true);
-                    btnPropostas.setDisable(true);
-                }
+    private void handleConsulta() {
+        this.setCenter(displayDados);
+        if(tipo == 1){
+            if(phaseManager.getAluno(Long.parseLong(tfConsult.getText())) == null){
+                displayDados.setText("Aluno não encontrado");
+            }else{
+                displayDados.setText(phaseManager.consultAluno(Long.parseLong(tfConsult.getText())));
             }
-            case 2 ->{
-                if(btnAlunos.isDisabled() && btnPropostas.isDisabled()){
-                    btnAlunos.setDisable(false);
-                    btnPropostas.setDisable(false);
-                }else{
-                    btnAlunos.setDisable(true);
-                    btnPropostas.setDisable(true);
-                }
+        }else if(tipo == 2){
+            if(phaseManager.getDocente(tfConsult.getText()) == null){
+                displayDados.setText("Docente não encontrado");
+            }else{
+                displayDados.setText(phaseManager.consultDocente(tfConsult.getText()));
             }
-            case 3 ->{
-                if(btnDocentes.isDisabled() && btnAlunos.isDisabled()){
-                    btnDocentes.setDisable(false);
-                    btnAlunos.setDisable(false);
-                }else{
-                    btnDocentes.setDisable(true);
-                    btnAlunos.setDisable(true);
-                }
+        }else{
+            if(phaseManager.getProposta(tfConsult.getText()) == null){
+                displayDados.setText("Proposta não encontrado");
+            }else{
+                displayDados.setText(phaseManager.consultProposta(tfConsult.getText()));
             }
         }
     }
@@ -591,7 +654,40 @@ public class Phase1UI extends BorderPane {
         }else if(tipo == 2){
             phaseManager.editDocente(tfIdentify.getText(), tfTipoEdit.getText(), tfDadoEdit.getText());
         }else{
-
+            phaseManager.editProposta(tfIdentify.getText(), tfTipoEdit.getText(), tfDadoEdit.getText());
         }
+    }
+
+    private void handleDelete() {
+        this.setCenter(tfElimina);
+        if(tipo == 1){
+            phaseManager.removeAluno(Long.parseLong(tfElimina.getText()));
+        }else if(tipo == 2){
+            phaseManager.removeDocente(tfElimina.getText());
+        }else{
+            phaseManager.removeProposta(tfElimina.getText());
+        }
+    }
+
+    private void clear() {
+        for(var i : alunoGUI){
+            i.setText("");
+        }
+        for(var i : docenteGUI){
+            i.setText("");
+        }
+        for(var i : propostaGUI){
+            i.setText("");
+        }
+        tgbProjeto.setSelected(false);
+        tgbEstagio.setSelected(false);
+        tgbAutoProposta.setSelected(false);
+        tilePaneProp.getChildren().clear();
+        tfFile.setText("");
+        tfConsult.setText("");
+        tfIdentify.setText("");
+        tfDadoEdit.setText("");
+        tfTipoEdit.setText("");
+        displayDados.setText("");
     }
 }
