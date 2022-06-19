@@ -121,4 +121,8 @@ public class PhaseContext {
     public boolean nextPhase() {
         return state.nextPhase();
     }
+
+    public Aluno getAluno(long nAluno){ return phase.getAluno(nAluno); }
+    public Docente getDocente(String email){ return phase.getDocente(email); }
+    public Proposta getProposta(String ca){ return phase.getProposta(ca); }
 }
