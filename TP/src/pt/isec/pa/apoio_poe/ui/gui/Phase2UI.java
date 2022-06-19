@@ -4,11 +4,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import pt.isec.pa.apoio_poe.model.PhaseManager;
-import pt.isec.pa.apoio_poe.model.data.Candidatura;
 import pt.isec.pa.apoio_poe.model.fsm.PhaseState;
 
 public class Phase2UI extends BorderPane {
@@ -17,18 +17,22 @@ public class Phase2UI extends BorderPane {
     Background unselectedBackground = new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY));
     Background selectedBackground = new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY));
 
-    BorderPane borderPaneLista;
+    BorderPane borderPaneLista, borderPaneCandidatura;
     VBox vbox1, vbox2;
+    TilePane tilePaneInsere, tilePaneConsulta, tilePaneEdit, tilePaneRemove;
 
     Button btnProx, btnClose, btnAnterior;
     Button btnAvancar, btnVoltar;
-    Button btnCandidatura;
-    ToggleButton tgbLista;
+
+    ToggleButton tgbLista, tgbCandidatura;
     ToggleButton tgbListaAl, tgbListaProp;
     ToggleButton tgbAlAutoproposta, tgbAlCandidaturaR, tgbAlCandidatura;
     ToggleButton tgbPropAutoproposta, tgbPropDocente, tgbPropCandidaturas, tgbPropSCandidaturas;
+    ToggleButton tgbInsere, tgbConsulta, tgbRemove, tgbEdit;
 
-    Label displayLista;
+    //TextField;
+
+    Label displayLista, displayCA;
 
     public Phase2UI(PhaseManager phaseManager){
         this.phaseManager = phaseManager;
@@ -61,16 +65,16 @@ public class Phase2UI extends BorderPane {
         btnAnterior.setMinWidth(60);
         btnAnterior.setBackground(unselectedBackground);
 
-        btnCandidatura = new Button("Candidatura");
-        btnCandidatura.setMinWidth(75);
-        btnCandidatura.setBackground(unselectedBackground);
+        tgbCandidatura = new ToggleButton("Candidatura");
+        tgbCandidatura.setMinWidth(75);
+        tgbCandidatura.setBackground(unselectedBackground);
 
         tgbLista = new ToggleButton("Lista");
         tgbLista.setMinWidth(75);
         tgbLista.setBackground(unselectedBackground);
 
         HBox hboxCima = new HBox();
-        hboxCima.getChildren().addAll(btnCandidatura, tgbLista);
+        hboxCima.getChildren().addAll(tgbCandidatura, tgbLista);
         hboxCima.setPadding(new Insets(10));
         hboxCima.setAlignment(Pos.CENTER);
         hboxCima.setSpacing(90);
@@ -129,6 +133,24 @@ public class Phase2UI extends BorderPane {
         borderPaneLista = new BorderPane();
         borderPaneLista.setLeft(vBox);
         borderPaneLista.setCenter(displayLista);
+
+        tgbInsere = new ToggleButton("Insere");
+        tgbInsere.setBackground(unselectedBackground);
+        tgbConsulta = new ToggleButton("Consulta");
+        tgbConsulta.setBackground(unselectedBackground);
+        tgbRemove = new ToggleButton("Remove");
+        tgbRemove.setBackground(unselectedBackground);
+        tgbEdit = new ToggleButton("Edit");
+        tgbEdit.setBackground(unselectedBackground);
+
+        VBox vboxCA = new VBox();
+        vboxCA.getChildren().addAll(tgbInsere, tgbConsulta, tgbRemove, tgbEdit);
+        vboxCA.setAlignment(Pos.CENTER);
+        vboxCA.setSpacing(50);
+        vboxCA.setPadding(new Insets(10));
+
+        borderPaneCandidatura = new BorderPane();
+        borderPaneCandidatura.setLeft(vboxCA);
     }
 
     public void registerHandlers() {
@@ -149,6 +171,18 @@ public class Phase2UI extends BorderPane {
             update();
         });
 
+        tgbCandidatura.setOnAction(actionEvent -> {
+            tgbLista.setSelected(false);
+            tgbLista.setBackground(unselectedBackground);
+            if(tgbCandidatura.isSelected()){
+                tgbCandidatura.setBackground(selectedBackground);
+                this.setCenter(borderPaneCandidatura);
+            } else {
+                tgbCandidatura.setBackground(unselectedBackground);
+            }
+            update();
+        });
+
         tgbLista.setOnAction(actionEvent -> {
             if(tgbLista.isSelected()){
                 tgbLista.setBackground(selectedBackground);
@@ -156,6 +190,7 @@ public class Phase2UI extends BorderPane {
                 this.setCenter(borderPaneLista);
             } else {
                 tgbLista.setBackground(unselectedBackground);
+                btnAvancar.setDisable(true);
                 this.setCenter(null);
             }
         });
@@ -291,6 +326,63 @@ public class Phase2UI extends BorderPane {
             tgbPropDocente.setBackground(unselectedBackground);
             tgbPropAutoproposta.setSelected(false);
             tgbPropAutoproposta.setBackground(unselectedBackground);
+        });
+
+        tgbInsere.setOnAction(actionEvent -> {
+            if(tgbInsere.isSelected()){
+                tgbInsere.setBackground(selectedBackground);
+                //borderPaneCandidatura.setCenter();
+            } else {
+                tgbInsere.setBackground(unselectedBackground);
+            }
+            tgbConsulta.setSelected(false);
+            tgbConsulta.setBackground(unselectedBackground);
+            tgbRemove.setSelected(false);
+            tgbRemove.setBackground(unselectedBackground);
+            tgbEdit.setSelected(false);
+            tgbEdit.setBackground(unselectedBackground);
+        });
+        tgbConsulta.setOnAction(actionEvent -> {
+            if(tgbConsulta.isSelected()){
+                tgbConsulta.setBackground(selectedBackground);
+                //borderPaneCandidatura.setCenter();
+            } else {
+                tgbConsulta.setBackground(unselectedBackground);
+            }
+            tgbInsere.setSelected(false);
+            tgbInsere.setBackground(unselectedBackground);
+            tgbRemove.setSelected(false);
+            tgbRemove.setBackground(unselectedBackground);
+            tgbEdit.setSelected(false);
+            tgbEdit.setBackground(unselectedBackground);
+        });
+        tgbRemove.setOnAction(actionEvent -> {
+            if(tgbRemove.isSelected()){
+                tgbRemove.setBackground(selectedBackground);
+                //borderPaneCandidatura.setCenter();
+            } else {
+                tgbRemove.setBackground(unselectedBackground);
+            }
+            tgbConsulta.setSelected(false);
+            tgbConsulta.setBackground(unselectedBackground);
+            tgbInsere.setSelected(false);
+            tgbInsere.setBackground(unselectedBackground);
+            tgbEdit.setSelected(false);
+            tgbEdit.setBackground(unselectedBackground);
+        });
+        tgbEdit.setOnAction(actionEvent -> {
+            if(tgbEdit.isSelected()){
+                tgbEdit.setBackground(selectedBackground);
+                //borderPaneCandidatura.setCenter();
+            } else {
+                tgbEdit.setBackground(unselectedBackground);
+            }
+            tgbConsulta.setSelected(false);
+            tgbConsulta.setBackground(unselectedBackground);
+            tgbRemove.setSelected(false);
+            tgbRemove.setBackground(unselectedBackground);
+            tgbInsere.setSelected(false);
+            tgbInsere.setBackground(unselectedBackground);
         });
 
         btnAvancar.setOnAction(actionEvent -> {
