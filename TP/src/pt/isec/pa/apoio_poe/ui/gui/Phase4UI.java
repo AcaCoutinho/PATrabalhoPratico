@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import pt.isec.pa.apoio_poe.model.PhaseManager;
@@ -18,17 +19,19 @@ public class Phase4UI extends BorderPane {
     Background unselectedBackground = new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY));
     Background selectedBackground = new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY));
 
-    BorderPane borderPaneLista;
+    HBox hboxDocente;
+    BorderPane borderPaneLista, borderPaneDocente;
 
     Button btnProx, btnClose, btnAnterior;
     Button btnAvancar, btnVoltar;
     Button btnAtribuicaoAutomatica;
-    ToggleButton tgbExport, tgbLista;
-    TextField tfFile;
+    ToggleButton tgbExport, tgbLista, tgbDocente;
+    TextField tfFile, tfEmail, tfNAluno, tfTipo, tfDado;
     ToggleButton tgbListaAl, tgbListaDoc;
     ToggleButton tgbPropAtribuidasOrientador, tgbPropAtribuidasSOrientador;
+    ToggleButton tgbAssocia, tgbElimina, tgbEdita, tgbConsulta;
 
-    Label displayLista;
+    Label displayLista, displayDados;
 
     public Phase4UI(PhaseManager phaseManager) {
         this.phaseManager = phaseManager;
@@ -72,6 +75,10 @@ public class Phase4UI extends BorderPane {
         btnAtribuicaoAutomatica.setMinWidth(75);
         btnAtribuicaoAutomatica.setBackground(unselectedBackground);
 
+        tgbDocente = new ToggleButton("Docente");
+        tgbDocente.setMinWidth(75);
+        tgbDocente.setBackground(unselectedBackground);
+
         tgbLista = new ToggleButton("Lista");
         tgbLista.setMinWidth(75);
         tgbLista.setBackground(unselectedBackground);
@@ -81,7 +88,7 @@ public class Phase4UI extends BorderPane {
         tgbExport.setBackground(unselectedBackground);
 
         HBox hboxCima = new HBox();
-        hboxCima.getChildren().addAll(btnAtribuicaoAutomatica, tgbLista, tgbExport);
+        hboxCima.getChildren().addAll(btnAtribuicaoAutomatica, tgbDocente, tgbLista, tgbExport);
         hboxCima.setPadding(new Insets(10));
         hboxCima.setAlignment(Pos.CENTER);
         hboxCima.setSpacing(90);
@@ -90,6 +97,29 @@ public class Phase4UI extends BorderPane {
         tfFile = new TextField();
         tfFile.setPromptText("Nome do ficheiro:");
         tfFile.setMaxWidth(300);
+
+        tfEmail = new TextField();
+        tfEmail.setPromptText("Email do Docente:");
+        tfEmail.setMaxWidth(200);
+
+        tfNAluno = new TextField();
+        tfNAluno.setPromptText("Numero de Aluno:");
+        tfNAluno.setMaxWidth(200);
+
+        tfTipo = new TextField();
+        tfTipo.setPromptText("Tipo de dado a alterar:");
+        tfTipo.setMaxWidth(200);
+
+        tfDado = new TextField();
+        tfDado.setPromptText("Novo dado:");
+        tfDado.setMaxWidth(200);
+
+        displayDados = new Label();
+
+        hboxDocente = new HBox();
+        hboxDocente.setAlignment(Pos.CENTER);
+        hboxDocente.setSpacing(50);
+        hboxDocente.setPadding(new Insets(10));
 
         tgbListaAl = new ToggleButton("Aluno");
         tgbListaAl.setMinWidth(50);
@@ -121,6 +151,24 @@ public class Phase4UI extends BorderPane {
         borderPaneLista.setLeft(vBox);
         borderPaneLista.setRight(vBox1);
         borderPaneLista.setCenter(displayLista);
+
+        tgbAssocia = new ToggleButton("Associa");
+        tgbAssocia.setBackground(unselectedBackground);
+        tgbConsulta = new ToggleButton("Consulta");
+        tgbConsulta.setBackground(unselectedBackground);
+        tgbEdita = new ToggleButton("Edita");
+        tgbEdita.setBackground(unselectedBackground);
+        tgbElimina = new ToggleButton("Elimina");
+        tgbElimina.setBackground(unselectedBackground);
+
+        VBox vBox2 = new VBox();
+        vBox2.getChildren().addAll(tgbAssocia, tgbConsulta, tgbEdita, tgbElimina);
+        vBox2.setAlignment(Pos.CENTER);
+        vBox2.setSpacing(50);
+        vBox2.setPadding(new Insets(10));
+
+        borderPaneDocente = new BorderPane();
+        borderPaneDocente.setLeft(vBox2);
     }
 
     public void registerHandlers() {
@@ -138,6 +186,11 @@ public class Phase4UI extends BorderPane {
             if(!phaseManager.previousPhase()){
                 btnAnterior.setDisable(true);
             }
+            update();
+        });
+        btnAtribuicaoAutomatica.setOnAction(actionEvent -> {
+            btnAtribuicaoAutomatica.setBackground(selectedBackground);
+            phaseManager.assignment(0);
             update();
         });
 
@@ -164,10 +217,32 @@ public class Phase4UI extends BorderPane {
                 tgbExport.setSelected(false);
                 tgbExport.setBackground(unselectedBackground);
             }
+            if(tgbDocente.isSelected()){
+                tgbDocente.setSelected(false);
+                tgbDocente.setBackground(unselectedBackground);
+            }
             if(tgbLista.isSelected()){
                 tgbLista.setBackground(selectedBackground);
                 btnAvancar.setDisable(false);
                 this.setCenter(borderPaneLista);
+            } else {
+                tgbLista.setBackground(unselectedBackground);
+                this.setCenter(null);
+            }
+        });
+        tgbDocente.setOnAction(actionEvent -> {
+            if(tgbExport.isSelected()){
+                tgbExport.setSelected(false);
+                tgbExport.setBackground(unselectedBackground);
+            }
+            if(tgbLista.isSelected()){
+                tgbLista.setSelected(false);
+                tgbLista.setBackground(unselectedBackground);
+            }
+            if(tgbDocente.isSelected()){
+                tgbDocente.setBackground(selectedBackground);
+                btnAvancar.setDisable(false);
+                this.setCenter(borderPaneDocente);
             } else {
                 tgbLista.setBackground(unselectedBackground);
                 this.setCenter(null);
@@ -213,6 +288,126 @@ public class Phase4UI extends BorderPane {
             }
             tgbPropAtribuidasOrientador.setSelected(false);
             tgbPropAtribuidasOrientador.setBackground(unselectedBackground);
+        });
+
+        tgbAssocia.setOnAction(actionEvent -> {
+            if(tgbAssocia.isSelected()){
+                tgbAssocia.setBackground(selectedBackground);
+                hboxDocente.getChildren().clear();
+                hboxDocente.getChildren().addAll(tfEmail, tfNAluno);
+                borderPaneDocente.setCenter(hboxDocente);
+            } else {
+                tgbAssocia.setBackground(unselectedBackground);
+            }
+            tgbConsulta.setSelected(false);
+            tgbConsulta.setBackground(unselectedBackground);
+            tgbEdita.setSelected(false);
+            tgbEdita.setBackground(unselectedBackground);
+            tgbElimina.setSelected(false);
+            tgbElimina.setBackground(unselectedBackground);
+        });
+        tgbConsulta.setOnAction(actionEvent -> {
+            if(tgbConsulta.isSelected()){
+                tgbConsulta.setBackground(selectedBackground);
+                hboxDocente.getChildren().clear();
+                hboxDocente.getChildren().addAll(tfEmail, displayDados);
+            } else {
+                tgbConsulta.setBackground(unselectedBackground);
+            }
+            tgbAssocia.setSelected(false);
+            tgbAssocia.setBackground(unselectedBackground);
+            tgbEdita.setSelected(false);
+            tgbEdita.setBackground(unselectedBackground);
+            tgbElimina.setSelected(false);
+            tgbElimina.setBackground(unselectedBackground);
+        });
+        tgbElimina.setOnAction(actionEvent -> {
+            if(tgbElimina.isSelected()){
+                tgbElimina.setBackground(selectedBackground);
+                hboxDocente.getChildren().clear();
+                hboxDocente.getChildren().addAll(tfEmail);
+            } else {
+                tgbElimina.setBackground(unselectedBackground);
+            }
+            tgbConsulta.setSelected(false);
+            tgbConsulta.setBackground(unselectedBackground);
+            tgbEdita.setSelected(false);
+            tgbEdita.setBackground(unselectedBackground);
+            tgbAssocia.setSelected(false);
+            tgbAssocia.setBackground(unselectedBackground);
+        });
+        tgbEdita.setOnAction(actionEvent -> {
+            if(tgbEdita.isSelected()){
+                tgbEdita.setBackground(selectedBackground);
+                hboxDocente.getChildren().clear();
+                hboxDocente.getChildren().addAll(tfEmail, tfTipo, tfDado);
+            } else {
+                tgbEdita.setBackground(unselectedBackground);
+            }
+            tgbConsulta.setSelected(false);
+            tgbConsulta.setBackground(unselectedBackground);
+            tgbAssocia.setSelected(false);
+            tgbAssocia.setBackground(unselectedBackground);
+            tgbElimina.setSelected(false);
+            tgbElimina.setBackground(unselectedBackground);
+        });
+
+        tfEmail.setOnKeyPressed(keyEvent -> {
+            if(tgbAssocia.isSelected()){
+                if(keyEvent.getCode() == KeyCode.ENTER && tfEmail.getText() != null && tfNAluno.getText() != null) {
+                    //phaseManager.getAluno(Long.parseLong(tfNAluno.getText())).getPropAtribuida().
+                    tfEmail.clear();
+                    tfNAluno.clear();
+                }
+            }
+            if(tgbConsulta.isSelected()){
+                if(keyEvent.getCode() == KeyCode.ENTER && tfEmail.getText() != null){
+                    displayDados.setText(phaseManager.getDocente(tfEmail.getText()).toString());
+                    tfEmail.clear();
+                }
+            }
+            if(tgbEdita.isSelected()){
+                if(keyEvent.getCode() == KeyCode.ENTER && tfEmail.getText() != null && tfTipo != null && tfDado != null){
+                    phaseManager.editDocente(tfEmail.getText(), tfTipo.getText(), tfDado.getText());
+                    tfTipo.clear();
+                    tfDado.clear();
+                }
+            }
+            if(tgbElimina.isSelected()){
+                if(keyEvent.getCode() == KeyCode.ENTER && tfEmail.getText() != null){
+                    phaseManager.removeDocente(tfEmail.getText());
+                    tfEmail.clear();
+                }
+            }
+        });
+        tfNAluno.setOnKeyPressed(keyEvent -> {
+            if(tgbAssocia.isSelected()){
+                if(keyEvent.getCode() == KeyCode.ENTER && tfEmail.getText() != null && tfNAluno.getText() != null) {
+                    //phaseManager.getAluno(Long.parseLong(tfNAluno.getText())).getPropAtribuida().
+                    tfEmail.clear();
+                    tfNAluno.clear();
+                }
+            }
+        });
+        tfTipo.setOnKeyPressed(keyEvent -> {
+            if(tgbEdita.isSelected()){
+                if(keyEvent.getCode() == KeyCode.ENTER && tfEmail.getText() != null && tfTipo != null && tfDado != null){
+                    phaseManager.editDocente(tfEmail.getText(), tfTipo.getText(), tfDado.getText());
+                    tfEmail.clear();
+                    tfTipo.clear();
+                    tfDado.clear();
+                }
+            }
+        });
+        tfDado.setOnKeyPressed(keyEvent -> {
+            if(tgbEdita.isSelected()){
+                if(keyEvent.getCode() == KeyCode.ENTER && tfEmail.getText() != null && tfTipo != null && tfDado != null){
+                    phaseManager.editDocente(tfEmail.getText(), tfTipo.getText(), tfDado.getText());
+                    tfEmail.clear();
+                    tfTipo.clear();
+                    tfDado.clear();
+                }
+            }
         });
 
         btnAvancar.setOnAction(actionEvent -> {
