@@ -171,11 +171,11 @@ public class Phase3UI extends BorderPane {
         vbox2.setSpacing(50);
         vbox2.setPadding(new Insets(10));
 
+        displayLista = new Label();
+
         borderPaneLista = new BorderPane();
         borderPaneLista.setLeft(vBox);
         borderPaneLista.setCenter(displayLista);
-
-        displayLista = new Label();
     }
 
     public void registerHandlers() {
@@ -194,9 +194,15 @@ public class Phase3UI extends BorderPane {
         tgbRemover.setOnAction(actionEvent -> {
             if(tgbLista.isSelected()){
                 tgbLista.setDisable(true);
+                tgbLista.setBackground(unselectedBackground);
+            }
+            if(tgbExport.isSelected()){
+                tgbExport.setDisable(true);
+                tgbExport.setBackground(unselectedBackground);
             }
             if(tgbAtribuicaoManual.isSelected()){
                 tgbAtribuicaoManual.setDisable(true);
+                tgbAtribuicaoManual.setBackground(unselectedBackground);
             }
             if(tgbRemover.isSelected()) {
                 tgbRemover.setBackground(selectedBackground);
@@ -208,6 +214,18 @@ public class Phase3UI extends BorderPane {
         });
 
         tgbAtribuicaoManual.setOnAction(actionEvent -> {
+            if(tgbLista.isSelected()){
+                tgbLista.setDisable(true);
+                tgbLista.setBackground(unselectedBackground);
+            }
+            if(tgbExport.isSelected()){
+                tgbExport.setDisable(true);
+                tgbExport.setBackground(unselectedBackground);
+            }
+            if(tgbRemover.isSelected()){
+                tgbRemover.setDisable(true);
+                tgbRemover.setBackground(unselectedBackground);
+            }
             if(tgbAtribuicaoManual.isSelected()) {
                 tgbAtribuicaoManual.setBackground(selectedBackground);
                 this.setCenter(atManual);
@@ -241,54 +259,25 @@ public class Phase3UI extends BorderPane {
         });
 
         tgbExport.setOnAction(actionEvent -> {
+            if(tgbLista.isSelected()){
+                tgbLista.setDisable(true);
+                tgbLista.setBackground(unselectedBackground);
+            }
+            if(tgbAtribuicaoManual.isSelected()){
+                tgbAtribuicaoManual.setDisable(true);
+                tgbAtribuicaoManual.setBackground(unselectedBackground);
+            }
+            if(tgbRemover.isSelected()){
+                tgbRemover.setDisable(true);
+                tgbRemover.setBackground(unselectedBackground);
+            }
+
             if(tgbExport.isSelected()){
                 tgbExport.setBackground(selectedBackground);
                 this.setCenter(tfFile);
             } else {
                 tgbExport.setBackground(unselectedBackground);
                 this.setCenter(null);
-            }
-            update();
-        });
-
-        btnAvancar.setOnAction(actionEvent -> {
-            if(tgbAtribuicaoManual.isSelected()){
-               if(phaseManager.getPropAtribuida(Long.parseLong(tfN_aluno.getText())) == null){
-                   phaseManager.setPropAtribuida(Long.parseLong(tfN_aluno.getText()), phaseManager.getProposta(tfCa.getText()));
-               }
-            }
-            if(tgbRemover.isSelected()){
-                phaseManager.setPropAtribuida(Long.parseLong(tfRemover.getText()), null);
-            }
-            if(tgbLista.isSelected()){
-                if(tgbListaAl.isSelected()){
-                    if(tgbAlAutoproposta.isSelected()){
-                        displayLista.setText(phaseManager.listaAluno("autoproposta"));
-                    }
-                    if(tgbAlCandidatura.isSelected()){
-                        displayLista.setText(phaseManager.listaAluno("candidatura"));
-                    }
-                    if(tgbAlAtribuida.isSelected()){
-                        displayLista.setText(phaseManager.listaAluno("atribuida"));
-                    }
-                    if(tgbAlSAtribuidas.isSelected()){
-                        displayLista.setText(phaseManager.listaAluno("no_atribuida"));
-                    }
-                }
-                if(tgbListaProp.isSelected()){
-                    if(tgbPropAutoproposta.isSelected()){
-                        displayLista.setText(phaseManager.listaProposta("autoproposta"));
-                    }
-                    if(tgbPropDocente.isSelected()){
-                        displayLista.setText(phaseManager.listaProposta("docente"));
-                    }
-                    if(tgbPropDisponiveis.isSelected()){
-                        displayLista.setText(phaseManager.listaProposta("disponiveis"));
-                    }
-                    if(tgbPropAtribuidas.isSelected()){
-                        displayLista.setText(phaseManager.listaProposta("atribuida"));
-                    }
-                }
             }
             update();
         });
@@ -305,6 +294,14 @@ public class Phase3UI extends BorderPane {
             if(tgbExport.isSelected()){
                 tgbExport.setSelected(false);
                 tgbExport.setBackground(unselectedBackground);
+            }
+            if(tgbAtribuicaoManual.isSelected()){
+                tgbAtribuicaoManual.setSelected(false);
+                tgbAtribuicaoManual.setBackground(unselectedBackground);
+            }
+            if(tgbRemover.isSelected()){
+                tgbRemover.setSelected(false);
+                tgbRemover.setBackground(unselectedBackground);
             }
 
             if(tgbLista.isSelected()){
@@ -455,6 +452,48 @@ public class Phase3UI extends BorderPane {
             tgbPropDocente.setBackground(unselectedBackground);
             tgbPropDisponiveis.setSelected(false);
             tgbPropDisponiveis.setBackground(unselectedBackground);
+        });
+
+        btnAvancar.setOnAction(actionEvent -> {
+            if(tgbAtribuicaoManual.isSelected()){
+                if(phaseManager.getPropAtribuida(Long.parseLong(tfN_aluno.getText())) == null){
+                    phaseManager.setPropAtribuida(Long.parseLong(tfN_aluno.getText()), phaseManager.getProposta(tfCa.getText()));
+                }
+            }
+            if(tgbRemover.isSelected()){
+                phaseManager.setPropAtribuida(Long.parseLong(tfRemover.getText()), null);
+            }
+            if(tgbLista.isSelected()){
+                if(tgbListaAl.isSelected()){
+                    if(tgbAlAutoproposta.isSelected()){
+                        displayLista.setText(phaseManager.listaAluno("autoproposta"));
+                    }
+                    if(tgbAlCandidatura.isSelected()){
+                        displayLista.setText(phaseManager.listaAluno("candidatura"));
+                    }
+                    if(tgbAlAtribuida.isSelected()){
+                        displayLista.setText(phaseManager.listaAluno("atribuida"));
+                    }
+                    if(tgbAlSAtribuidas.isSelected()){
+                        displayLista.setText(phaseManager.listaAluno("no_atribuida"));
+                    }
+                }
+                if(tgbListaProp.isSelected()){
+                    if(tgbPropAutoproposta.isSelected()){
+                        displayLista.setText(phaseManager.listaProposta("autoproposta"));
+                    }
+                    if(tgbPropDocente.isSelected()){
+                        displayLista.setText(phaseManager.listaProposta("docente"));
+                    }
+                    if(tgbPropDisponiveis.isSelected()){
+                        displayLista.setText(phaseManager.listaProposta("disponiveis"));
+                    }
+                    if(tgbPropAtribuidas.isSelected()){
+                        displayLista.setText(phaseManager.listaProposta("atribuida"));
+                    }
+                }
+            }
+            update();
         });
     }
 

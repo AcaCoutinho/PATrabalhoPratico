@@ -21,10 +21,8 @@ public class Phase4State extends PhaseStateAdapter {
                 if(i instanceof Projeto aux){
                     for(var j : docentes){
                         if(j == aux.getProponente()){
-                            System.out.println("\nDebug1\n");
                             phase.getDocente(j.getEmail()).setOrientador(true);
                             phase.getDocente(j.getEmail()).setProjeto(aux);
-                            System.out.println("\nDebug2\n");
                         }
                     }
                 }

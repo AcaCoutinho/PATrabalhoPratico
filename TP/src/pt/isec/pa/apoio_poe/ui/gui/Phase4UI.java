@@ -147,6 +147,8 @@ public class Phase4UI extends BorderPane {
         vBox1.setSpacing(50);
         vBox.setPadding(new Insets(10));
 
+        displayLista = new Label();
+
         borderPaneLista = new BorderPane();
         borderPaneLista.setLeft(vBox);
         borderPaneLista.setRight(vBox1);
